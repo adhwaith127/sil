@@ -1,0 +1,19 @@
+im trying to implement a canteen token based food management system
+to get the idea whatever doubt u may have u can ask to get the full picture of the project
+currently an employee scans his face
+it checks it with db inside and if its present send that data to server to check if its a created user
+if created user, then display success message
+on successful authentication, goto an option selection like meal type selection breakfast or lunch or evening snacks
+this is a multilayered setup
+super admin(probably us)
+admin(different companies)-they create and add branches
+branch(of diff companies)-inside are the employees
+each device unique to branch
+each branch might have multiple facial scanners and printers
+printers meaning token dispensers
+different models are required
+for company
+branch 
+users(user details, facial scanner id, allocated printer or id ; not quite sure about teh constraints)
+these are the basic details off the top of my head
+in case of doubts ask away

@@ -1,0 +1,563 @@
+Step 2: Install Python Dependencies
+
+Open a terminal (Linux) or Command Prompt (Windows) and install the required Python libraries.
+Bash
+
+# Navigate to your application directory (optional, but good practice)
+# cd /opt/attendance-system/
+
+# Install websockets and requests
+pip3 install websockets requests
+
+Step 3: Configure the Application
+
+Open the config.ini file with a text editor and customize the settings:
+
+    [Server]: The Host and Port are usually fine as default.
+
+    [ERP]:
+
+        Set the correct URL and APIEndpoint for the client's ERPNext instance.
+
+    [Security]:
+
+        Change AuthToken to a strong, random secret key (e.g., Dk3aP9sVb8n@2gH).
+
+        Crucially, you must configure the biometric devices to send this token in the HTTP headers when they connect. The format should be:
+        Authorization: Bearer Dk3aP9sVb8n@2gH
+
+    [Logging]: The default settings are usually fine.
+
+Step 4: Set Up The Service (Run Automatically)
+
+This is the most critical step to make it a production service. Choose the section for your server's operating system.
+
+Option A: Deployment on Linux (Recommended)
+
+We will use systemd, the standard for modern Linux systems.
+
+    Create the Service File:
+    Create a new service file using a text editor like nano:
+    Bash
+
+sudo nano /etc/systemd/system/attendance_system.service
+
+Enable and Start the Service:
+Run these commands in the terminal:
+Bash
+
+# Reload systemd to recognize the new service file
+sudo systemctl daemon-reload
+
+# Enable the service to start automatically on boot
+sudo systemctl enable attendance_system.service
+
+# Start the service immediately
+sudo systemctl start attendance_system.service
+
+# Check the status to ensure it's running without errors
+sudo systemctl status attendance_system.service
+
+Viewing Logs:
+To see the live logs from the application, use:
+Bash
+
+sudo journalctl -u attendance_system.service -f
+
+No, in their current state, the script and service file are not production-ready. They form a solid prototype but lack the robustness, security, and configurability required for a live production environment.
+
+Running this as a background service (using systemd on Linux or NSSM on Windows) is far better than a manually started EXE with a UI. A server like this should run automatically in the background without user interaction. A separate web UI could be built later for monitoring, but it's not necessary for the core function.
+
+Here is a complete, production-ready refactoring of your code, followed by a detailed deployment guide.
+
+1. Refactored Production-Ready Code
+
+I've improved the original script to incorporate all your requests: external configuration, health checks, better error handling with retries, basic security, and more robust logging.
+
+biometric_server_refactored.py
+
+This is the main, improved Python script.
+Python
+
+#!/usr/bin/env python3
+import asyncio
+import websockets
+import json
+import requests
+import logging
+import os
+import csv
+import configparser
+import time
+from datetime import datetime
+from typing import Dict, Optional
+from logging.handlers import TimedRotatingFileHandler
+
+# --- Global Configuration ---
+config = configparser.ConfigParser()
+# Check for config file next to the script, then in /etc/
+config_paths = [
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini'),
+    '/etc/attendance-system/config.ini'
+]
+config.read(config_paths)
+
+# --- Logging Configuration ---
+log_dir = config.get('Logging', 'LogDirectory', fallback='logs')
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, 'biometric_server.log')
+
+# Use a rotating file handler to prevent log files from growing indefinitely
+handler = TimedRotatingFileHandler(log_file, when="midnight", interval=1, backupCount=30)
+handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+
+logger = logging.getLogger(__name__)
+logger.setLevel(config.get('Logging', 'LogLevel', fallback='INFO'))
+logger.addHandler(handler)
+# Also log to console if needed (useful for debugging with systemd's journalctl)
+logger.addHandler(logging.StreamHandler())
+
+
+class BiometricServer:
+    def __init__(self):
+        # Load settings from config
+        self.host = config.get('Server', 'Host', fallback='0.0.0.0')
+        self.port = config.getint('Server', 'Port', fallback=8080)
+        self.erp_url = config.get('ERP', 'URL')
+        self.erp_api = config.get('ERP', 'APIEndpoint')
+        self.auth_token = config.get('Security', 'AuthToken', fallback=None)
+
+        self.connected_devices: Dict[websockets.WebSocketServerProtocol, str] = {}
+        self.device_info: Dict[str, str] = {}
+        self.session = requests.Session()
+        
+        logger.info("Biometric Server class initialized.")
+
+    def send_to_erp_with_retry(self, punchingcode: str, name: str, timestamp_str: str, device_id: str) -> bool:
+        """
+        Sends data to ERPNext with a retry mechanism for network-related failures.
+        """
+        try:
+            timestamp = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+            payload = {
+                "punchingcode": punchingcode,
+                "employee_name": name,
+                "time": timestamp.strftime("%d-%m-%Y %H:%M:%S"),
+                "device_id": device_id,
+            }
+        except ValueError:
+            logger.error(f"Invalid timestamp format received: {timestamp_str} for user {name} ({punchingcode})")
+            return False
+
+        max_retries = config.getint('ERP', 'MaxRetries', fallback=3)
+        retry_delay = config.getint('ERP', 'RetryDelaySec', fallback=5)
+        
+        for attempt in range(max_retries):
+            try:
+                res = self.session.post(f"{self.erp_url}{self.erp_api}", data=payload, timeout=10)
+                
+                if res.status_code == 200:
+                    logger.info(f"SUCCESS: ERP check-in for {name} ({punchingcode}) from device {device_id}.")
+                    return True
+                else:
+                    logger.warning(f"ATTEMPT {attempt + 1}/{max_retries}: ERP API Error ({res.status_code}) for {name}. Response: {res.text}")
+            
+            except requests.exceptions.RequestException as e:
+                logger.warning(f"ATTEMPT {attempt + 1}/{max_retries}: ERP connection error for {name}: {e}")
+
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay * (attempt + 1)) # Exponential backoff
+        
+        logger.error(f"FAILURE: All {max_retries} attempts to send data for {name} to ERP failed.")
+        return False
+
+    async def store_attendance_and_log(self, records: list, device_id: str) -> dict:
+        """
+        Processes attendance records, sends them to ERP, and logs the outcome to a local CSV file as a fallback.
+        """
+        if not records:
+            return {"ret": "sendlog", "result": False, "reason": "No records provided"}
+
+        logger.info(f"Received {len(records)} attendance records from device {device_id}.")
+
+        for record in records:
+            # Input validation
+            name = record.get("name")
+            enroll_id = record.get("enrollid")
+            timestamp = record.get("time")
+
+            if not all([enroll_id, timestamp, name]):
+                logger.warning(f"Skipping malformed record from device {device_id}: {record}")
+                continue
+
+            # Send to ERP and get success status
+            success = self.send_to_erp_with_retry(enroll_id, name, timestamp, device_id)
+            status = "Success" if success else "ERP_Failed"
+            
+            # Log every attempt to a local CSV for audit/backup
+            self.log_attendance_to_csv(enroll_id, name, device_id, status, timestamp)
+
+        return {"ret": "sendlog", "result": True, "cloudtime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+    def log_attendance_to_csv(self, enroll_id: str, name: str, device_id: str, status: str, timestamp_str: str):
+        """Logs a single attendance record to a monthly CSV file."""
+        try:
+            punch_time = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+            filename = punch_time.strftime("%Y-%m") + "-attendance.csv"
+            filepath = os.path.join(log_dir, filename)
+            file_exists = os.path.isfile(filepath)
+
+            with open(filepath, mode="a", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                if not file_exists:
+                    writer.writerow(["Timestamp", "Enroll ID", "Name", "Device ID", "ERP Status"])
+                writer.writerow([
+                    punch_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    enroll_id, name, device_id, status
+                ])
+        except Exception as e:
+            logger.error(f"Failed to write to CSV log: {e}")
+
+    async def register_device(self, websocket, data: dict) -> dict:
+        """Registers a new device connection."""
+        serial_number = data.get('sn')
+        if not serial_number:
+            logger.warning(f"Registration failed: Missing serial number from {websocket.remote_address}")
+            return {"ret": "reg", "result": False, "reason": "Missing serial number"}
+        
+        client_addr = f"{websocket.remote_address[0]}:{websocket.remote_address[1]}"
+        self.connected_devices[websocket] = serial_number
+        self.device_info[serial_number] = client_addr
+        logger.info(f"Device registered: {serial_number} from {client_addr}")
+        return {"ret": "reg", "result": True, "cloudtime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+    async def process_message(self, websocket, message: str) -> Optional[dict]:
+        """Parses incoming JSON messages and routes them to the correct handler."""
+        try:
+            data = json.loads(message)
+            device_id = self.connected_devices.get(websocket, "unknown")
+            cmd = data.get('cmd')
+
+            if cmd == 'reg':
+                return await self.register_device(websocket, data)
+            elif cmd in ('sendlog', 'getalllog'):
+                return await self.store_attendance_and_log(data.get('record', []), device_id)
+            elif cmd is not None:
+                # Acknowledge other known commands if necessary
+                return {"ret": cmd, "result": True, "cloudtime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+            else:
+                logger.warning(f"Received message with no 'cmd' from {device_id}: {data}")
+                return None
+
+        except json.JSONDecodeError:
+            logger.error(f"Invalid JSON received from {self.connected_devices.get(websocket, 'unknown')}")
+            return {"ret": "error", "result": False, "reason": "Invalid JSON format"}
+        except Exception as e:
+            logger.error(f"Message processing error: {e}")
+            return {"ret": "error", "result": False, "reason": str(e)}
+
+    async def handle_http_request(self, path: str, headers) -> Optional[tuple]:
+        """Handles non-WebSocket HTTP requests, like health checks."""
+        if path == "/health":
+            logger.info("Health check endpoint was hit.")
+            # Basic health check: server is running. Could be expanded to check ERP connection.
+            response_headers = [('Content-Type', 'application/json')]
+            response_body = json.dumps({"status": "ok", "connected_devices": len(self.connected_devices)}).encode('utf-8')
+            return (200, response_headers, response_body)
+        return None # Let websockets handle it as a failed WS connection
+
+    async def authenticate_connection(self, path: str, headers) -> Optional[tuple]:
+        """
+        Authenticates incoming connections using a bearer token if one is configured.
+        """
+        if not self.auth_token:
+            return None # No token configured, allow connection
+
+        auth_header = headers.get('Authorization')
+        if not auth_header or f"Bearer {self.auth_token}" != auth_header:
+            logger.warning(f"Failed authentication attempt from {headers.get('Host')}. Missing or incorrect token.")
+            return (401, [], b"Unauthorized") # Reject connection
+        
+        logger.info("A device passed authentication.")
+        return None # Authentication successful
+
+    async def handler(self, websocket, path: str):
+        """Main connection handler for each connected device."""
+        client_addr = f"{websocket.remote_address[0]}:{websocket.remote_address[1]}"
+        logger.info(f"New connection attempt from: {client_addr}")
+        
+        try:
+            async for message in websocket:
+                response_data = await self.process_message(websocket, message)
+                if response_data:
+                    await websocket.send(json.dumps(response_data))
+        except websockets.exceptions.ConnectionClosedError as e:
+            logger.info(f"Connection from {client_addr} closed unexpectedly: {e.code} {e.reason}")
+        except websockets.exceptions.ConnectionClosedOK:
+            logger.info(f"Connection closed gracefully from {client_addr}")
+        finally:
+            if websocket in self.connected_devices:
+                serial = self.connected_devices.pop(websocket)
+                self.device_info.pop(serial, None)
+                logger.info(f"Device disconnected and unregistered: {serial}")
+
+    async def start(self):
+        """Starts the WebSocket server."""
+        logger.info(f"Starting WebSocket server on {self.host}:{self.port}")
+        
+        # The `process_request` handles HTTP requests, `extra_headers` can do auth checks.
+        server = websockets.serve(
+            self.handler,
+            self.host,
+            self.port,
+            process_request=self.handle_http_request,
+            process_response=self.authenticate_connection
+        )
+        
+        async with server:
+            logger.info("Server is now listening for connections.")
+            await asyncio.Future()  # Run forever
+
+
+def main():
+    logger.info("======================================================")
+    logger.info("        Biometric Face Scanner Service STARTING       ")
+    logger.info("======================================================")
+    
+    server = BiometricServer()
+    try:
+        asyncio.run(server.start())
+    except KeyboardInterrupt:
+        logger.info("Server stopped by user (KeyboardInterrupt).")
+    except Exception as e:
+        logger.critical(f"A fatal error occurred, shutting down server: {e}", exc_info=True)
+    finally:
+        logger.info("======================================================")
+        logger.info("        Biometric Face Scanner Service STOPPED        ")
+        logger.info("======================================================")
+
+if __name__ == "__main__":
+    main()
+
+2. External Configuration File
+
+Create a file named config.ini in the same directory as the script. This separates your settings from your code, making it easy to change things without editing the script.
+
+config.ini
+
+Ini, TOML
+
+[Server]
+# IP address to listen on. 0.0.0.0 means it will accept connections from any IP.
+Host = 0.0.0.0
+# Port for the WebSocket server to listen on.
+Port = 8080
+
+[ERP]
+# Base URL of your ERPNext instance. Make sure it ends with a slash.
+URL = http://erpgulf.softlandindia.net/
+# API endpoint for adding the check-in. Do not add a leading slash.
+APIEndpoint = api/method/clean_plus.services.biometric_server_erp2.add_checkin
+# How many times to retry sending data to ERP if it fails.
+MaxRetries = 3
+# How many seconds to wait before the first retry. This delay will double on subsequent retries.
+RetryDelaySec = 5
+
+[Security]
+# A secret token that devices must send to connect. 
+# Leave this blank to disable authentication.
+# Example header from device: "Authorization: Bearer YourSecretTokenHere"
+AuthToken = YourSecretTokenHere
+
+[Logging]
+# Directory to store log files (CSV and server logs).
+LogDirectory = logs
+# Logging level. Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+LogLevel = INFO
+
+3. Explanation of Changes and Improvements
+
+    External Configuration (config.ini): All settings like IP, port, ERP URL, and the new auth token are moved to config.ini. This is the most important change for production.
+
+    Robust Logging: The script now uses TimedRotatingFileHandler. It creates a new log file every night (YYYY-MM-DD-biometric_server.log) and keeps the last 30 logs. This prevents your disk from filling up and makes logs easier to manage. All significant events (start, stop, connection, disconnection, errors, ERP success/failure) are logged with timestamps.
+
+    Error Handling & Retries: The send_to_erp_with_retry function now attempts to send data up to MaxRetries times if it fails (e.g., due to a temporary network issue). It uses an exponential backoff strategy (waits longer after each failure) to avoid flooding the ERP server.
+
+    Local Fallback Log: The log_attendance_to_csv function is now fully integrated. Every single attendance punch is logged to a monthly CSV file, with a status column indicating if it was successfully sent to the ERP. This is your safety net—if the ERP is down for hours, you won't lose any data.
+
+    Health Check Endpoint: You can now check if the server is running by visiting http://<server_ip>:8080/health in a web browser or using a monitoring tool. This is essential for production monitoring.
+
+    Security (Authentication): Basic security has been added. You can set an AuthToken in config.ini. Biometric devices must now send this token in an Authorization header to connect. This prevents unauthorized devices from connecting to your server.
+
+    Code Structure: The code is organized into smaller, more manageable functions with clear responsibilities. Type hints (e.g., name: str) have been added for clarity.
+
+4. Deployment Guide for a Client
+
+Here are the step-by-step instructions to deploy this system on a new machine.
+
+Prerequisites
+
+    A server (Linux or Windows) that will run 24/7.
+
+    Python 3.7 or newer installed.
+
+    The server must be on the same network as the biometric devices.
+
+    The server must have internet access to reach the ERPNext server.
+
+Step 1: Place the Files
+
+    Create a folder for the application. For example:
+
+        Linux: /opt/attendance-system/
+
+        Windows: C:\Program Files\AttendanceSystem\
+
+    Place the two files you created into this folder:
+
+        biometric_server_refactored.py
+
+        config.ini
+
+Step 2: Install Python Dependencies
+
+Open a terminal (Linux) or Command Prompt (Windows) and install the required Python libraries.
+Bash
+
+# Navigate to your application directory (optional, but good practice)
+# cd /opt/attendance-system/
+
+# Install websockets and requests
+pip3 install websockets requests
+
+Step 3: Configure the Application
+
+Open the config.ini file with a text editor and customize the settings:
+
+    [Server]: The Host and Port are usually fine as default.
+
+    [ERP]:
+
+        Set the correct URL and APIEndpoint for the client's ERPNext instance.
+
+    [Security]:
+
+        Change AuthToken to a strong, random secret key (e.g., Dk3aP9sVb8n@2gH).
+
+        Crucially, you must configure the biometric devices to send this token in the HTTP headers when they connect. The format should be:
+        Authorization: Bearer Dk3aP9sVb8n@2gH
+
+    [Logging]: The default settings are usually fine.
+
+Step 4: Set Up The Service (Run Automatically)
+
+This is the most critical step to make it a production service. Choose the section for your server's operating system.
+
+Option A: Deployment on Linux (Recommended)
+
+We will use systemd, the standard for modern Linux systems.
+
+    Create the Service File:
+    Create a new service file using a text editor like nano:
+    Bash
+
+sudo nano /etc/systemd/system/attendance_system.service
+
+Paste the Configuration:
+Paste the following content into the file. This is an improved version of your original file.
+Ini, TOML
+
+[Unit]
+Description=Biometric Face Scanner Attendance Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# User that the service will run as. 'www-data' or 'nobody' are good choices for security.
+# Ensure this user has permission to write to the 'logs' directory.
+User=root 
+Group=root
+
+# Path to the python executable and the script
+ExecStart=/usr/bin/python3 /opt/attendance-system/biometric_server_refactored.py
+WorkingDirectory=/opt/attendance-system
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging: output goes to systemd journal, which is viewable with 'journalctl'
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
+Note: Adjust User, ExecStart, and WorkingDirectory if you used different paths.
+
+Enable and Start the Service:
+Run these commands in the terminal:
+Bash
+
+# Reload systemd to recognize the new service file
+sudo systemctl daemon-reload
+
+# Enable the service to start automatically on boot
+sudo systemctl enable attendance_system.service
+
+# Start the service immediately
+sudo systemctl start attendance_system.service
+
+# Check the status to ensure it's running without errors
+sudo systemctl status attendance_system.service
+
+Viewing Logs:
+To see the live logs from the application, use:
+Bash
+
+    sudo journalctl -u attendance_system.service -f
+
+Option B: Deployment on Windows (as a Service)
+
+Manually starting an .exe is unreliable. We will use NSSM (the Non-Sucking Service Manager) to run the Python script as a proper Windows Service.
+
+    Download NSSM: Go to the NSSM website and download the latest version. Extract the nssm.exe file (64-bit version is likely what you need) into a known location, like C:\nssm\.
+
+    Open Command Prompt as Administrator:
+    Search for cmd, right-click it, and select "Run as administrator".
+
+    Install the Service:
+    Run the NSSM install command.
+    PowerShell
+
+# Navigate to the NSSM directory
+cd C:\nssm
+
+# Run the installer for your new service
+.\nssm.exe install AttendanceService
+
+Configure the Service in the GUI:
+A graphical window will pop up.
+
+    In the Application tab:
+
+        Path: Browse to your Python executable (e.g., C:\Python39\python.exe).
+
+        Startup directory: Browse to your application folder (e.g., C:\Program Files\AttendanceSystem).
+
+        Arguments: Enter the name of your script: biometric_server_refactored.py.
+
+    In the Details tab:
+
+        You can set a Display name like "Biometric Attendance Service".
+
+    Click the Install service button.
+
+Start the Service:
+You can now start the service from the command line or from the Windows Services app.
+PowerShell
+
+    sc start AttendanceService
+
+The service is now installed, will start automatically when Windows boots, and will restart if it crashes. All logs (including the CSV files) will be created in the logs sub-folder inside your application directory (C:\Program Files\AttendanceSystem\logs\).

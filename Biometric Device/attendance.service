@@ -1,0 +1,26 @@
+[Unit]
+Description=Biometric Face Scanner Attendance Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# User that the service will run as. 'www-data' or 'nobody' are good choices for security.
+# Ensure this user has permission to write to the 'logs' directory.
+User=root 
+Group=root
+
+# Path to the python executable and the script
+ExecStart=/usr/bin/python3 /opt/attendance-system/biometric_server_refactored.py
+WorkingDirectory=/opt/attendance-system
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging: output goes to systemd journal, which is viewable with 'journalctl'
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

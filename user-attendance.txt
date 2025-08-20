@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attendance Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0c5054;
+            --primary-light: #e8f1fd;
+            --secondary: #afdde5;
+            --tertiary: #024950; 
+            --success: #28a745;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border: #dee2e6;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .page-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            zoom: 0.8;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .card-container:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            border-radius: 8px;
+            /* overflow: hidden; */
+            overflow-x: auto;
+        }
+
+        .table thead {
+            background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+        }
+
+        .table th {
+            color: var(--dark);
+            font-weight: 600;
+            vertical-align: middle;
+            padding: 15px;
+        }
+
+        .table td {
+            vertical-align: middle;
+            padding: 12px 15px;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(44, 111, 187, 0.03);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: #888888;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .view-report{
+            background-color: var(--primary);
+            color:white
+        }
+        .view-report:hover{
+            background: #0c595f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white;  
+        }
+        .more-button{
+            background-color: var(--primary);
+            color:white
+        }
+        .more-button:hover{
+            background: #0c595f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white;  
+        }
+
+
+        .filters-container {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-control, .form-select {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            transition: var(--transition);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(44, 111, 187, 0.25);
+        }
+
+        .search-container {
+            position: relative;
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-height: 250px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .dropdown-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .stats-label {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stats-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 0.3rem solid rgba(44, 111, 187, 0.15);
+            border-right-color: var(--primary);
+            border-radius: 50%;
+            animation: spinner-border 0.75s linear infinite;
+        }
+
+        @keyframes spinner-border {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+
+        .sort-btn {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .sort-btn:hover {
+            color: var(--primary);
+        }
+
+        .table-overlay.loading::after {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .employee-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 0;
+        }
+
+        .modal-title {
+            font-weight: 500;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group, .search-container {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .page-container {
+                padding: 15px;
+            }
+            
+            .card-container {
+                padding: 20px 15px;
+            }
+        }
+        .bg-gradient {
+    background: linear-gradient(to right, #0f766e, #155e75) !important;
+}
+.rounded-xl {
+    border-radius: 14px;
+}
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="bg-gradient border rounded-xl shadow-sm p-4 px-5 mb-6 d-flex justify-content-between align-items-center flex-wrap" style="background: linear-gradient(120deg, #0f766e, #155e75);">
+            <div class="d-flex flex-column">
+                <h2 class="text-white fw-bold mb-1" style="font-size: 1.6rem;">Attendance Dashboard</h2>
+                <small class="text-light" style="opacity: 0.85;">Track your Attendance and Performance</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <i class="fas fa-user-circle text-white me-2" style="font-size: 1.5rem;"></i>
+                <span class="text-white fw-semibold" id="name" style="font-size: 1rem;"></span>
+            </div>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card-container">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 mt-1">
+                        <h5 class="section-title mb-3 mb-md-0"><span id="employee-name" style="font-size: larger;"></span> - Attendance Summary</h5>
+                        <div class="d-flex align-items-center">
+                            <input type="date" id="date" name="date" class="form-control border border-primary" style="max-width: 200px;">
+                        </div>
+                    </div>
+
+                    <div id="main-table-container" class="table-overlay">
+                        <div id="main-spinner" class="d-none spinner-container">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div id="main-table" class="table-container" style="padding-top: 20px; margin-bottom: 40px !important;">
+                            <table class="table table-hover rounded-3">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="text-light" style="background-color: var(--primary);">Department</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Team</th>
+                                        <th class="text-light" style="background-color: var(--primary);">First CheckIn</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Last CheckOut</th>
+                                        <th class="text-light" style="background-color: var(--primary);"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="performance-table" class="col-md-4">
+                <div class="card-container w-100">
+                    <h4 class="section-title">Performance Overview</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="stats-card">
+                                <div class="stats-label" style="font-size: medium; color: var(--tertiary);"><i class="fas fa-clock me-1"></i> Today's Hours</div>
+                                <div class="stats-value" id="today-hours">0:00:00</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stats-card">
+                                <div class="stats-label" style="font-size: medium; color: var(--tertiary);"><i class="fas fa-calendar-week me-1"></i> Weekly Avg</div>
+                                <div class="stats-value" id="weekly-hours">0.00</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stats-card">
+                                <div class="stats-label" style="font-size: medium; color: var(--tertiary);"><i class="fas fa-calendar-alt me-1"></i> Monthly Avg</div>
+                                <div class="stats-value" id="monthly-hours">0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="reports-spinner" class="spinner-container">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <div id="report-container" class="card-container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+                <h4 class="section-title mb-3 mb-md-0">Team Attendance Reports</h4>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2" id="reset-filters">
+                        <i class="fas fa-sync-alt me-1"></i> Reset
+                    </button>
+                    <button class="btn btn-outline-primary me-2" onclick="openCustomFilterModal()" id="export-report">
+                        <i class="fas fa-file-export me-1"></i> Export Report
+                    </button>
+                </div>
+            </div>
+            
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-building me-1"></i> Department</label>
+                    <select class="form-control form-select" id="department-filter">
+                        <option value="">All Departments</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-users me-1"></i> Team</label>
+                    <select class="form-control form-select" id="team-filter">
+                        <option value="">All Teams</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-user-tie me-1"></i> Reports to</label>
+                    <select class="form-control form-select" id="reports-to-filter">
+                        <option value="">All Managers</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-search me-1"></i> Search Employee</label>
+                    <div id="dropdown-container" class="search-container">
+                        <div class="position-relative" style="width: 100%;">
+                            <input class="form-control" id="dropdown-search" type="text" maxlength="50" style="width: 100%;" placeholder="Enter employee name...">
+                            <ul class="dropdown-menu p-2 position-absolute" id="dropdown-options" style="display: none; width: 100%;"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-overlay">
+                <div class="table-container">
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width: 200px; background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Employee Name</span>
+                                       <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 0, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 0, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="width: 180px; background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Department</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 1, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 1, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Team</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 2, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 2, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Reports To</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 3, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortNames('reports-data', 3, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">First CheckIn</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 4, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 4, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">Last CheckOut</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 5, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 5, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">Working Hours</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 6, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 6, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">Weekly Average</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 7, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 7, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">Monthly Average</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 8, 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortTable('reports-data', 8, 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">Actions</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-data">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% if frappe.session.user != "Guest" %}
+        <script>
+            console.log("User is logged in: {{ frappe.session.user }}");
+            // Add logic for logged-in users
+        </script>
+    {% else %}
+        <script>
+            alert("Please log in to access this page.");
+            window.location.href = "/login";
+        </script>
+    {% endif %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Reset search on initial load
+            resetSearch();
+
+            document.getElementById("dropdown-search").addEventListener("keyup", filterEmployees);
+            document.getElementById("date").addEventListener("change", function() {
+                resetSearch();
+                fetchDetails();
+            });
+
+            // Add event listeners for the new filters
+            document.getElementById("department-filter").addEventListener("change", function() {
+                updateRelatedFilters('department');
+                resetSearch();
+                applyFilters();
+            });
+            document.getElementById("team-filter").addEventListener("change", function() {
+                updateRelatedFilters('team');
+                applyFilters();
+            });
+            document.getElementById("reports-to-filter").addEventListener("change", function() {
+                updateRelatedFilters('manager');
+                applyFilters();
+            });
+            document.getElementById("reset-filters").addEventListener("click", resetAllFilters);
+
+            fetchCurrentDate();
+            fetchDetails();
+
+            const searchInput = document.getElementById("dropdown-search");
+            const dropdownOptions = document.getElementById("dropdown-options");
+
+            searchInput.addEventListener("keyup", function () {
+                const searchValue = searchInput.value.trim().toLowerCase();
+                const searchTokens = searchValue.split(/\s+/);
+                const items = dropdownOptions.querySelectorAll("li");
+
+                let hasResults = false;
+
+                items.forEach(item => {
+                    const itemText = item.textContent.trim().toLowerCase();
+                    const nameWords = itemText.split(/\s+/);
+
+                    let match = true;
+                    let nameIndex = 0;
+
+                    for (let token of searchTokens) {
+                        let found = false;
+                        while (nameIndex < nameWords.length) {
+                            if (nameWords[nameIndex].startsWith(token)) {
+                                found = true;
+                                nameIndex++; // Move forward for next token
+                                break;
+                            }
+                            nameIndex++;
+                        }
+                        if (!found) {
+                            match = false;
+                            break;
+                        }
+                    }
+
+                    if (searchValue === "" || match) {
+                        item.style.display = "";
+                        hasResults = true;
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+
+                dropdownOptions.style.display = hasResults ? "block" : "none";
+            });
+
+            searchInput.addEventListener("focus", function () {
+                if (dropdownOptions.children.length > 0) {
+                    dropdownOptions.style.display = "block";
+                }
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!searchInput.contains(event.target) && !dropdownOptions.contains(event.target)) {
+                    dropdownOptions.style.display = "none";
+                }
+            });
+        });
+
+        function sortTable(tbodyId, columnIndex, order) {
+            const tbody = document.getElementById(tbodyId);
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+
+            rows.sort((a, b) => {
+                let valA = a.cells[columnIndex].textContent.trim();
+                let valB = b.cells[columnIndex].textContent.trim();
+
+                // Handle empty fields
+                if (!valA) valA = "00:00:00";
+                if (!valB) valB = "00:00:00";
+
+                // Check if the value starts with a number but includes extra text
+                const isNumericWithText = (val) => /^[\d.]+\s*\(.*\)$/.test(val);
+
+                // Try to extract a float number if it's like "9.15 (out of 2 days)"
+                const extractFloat = (val) => {
+                    const match = val.match(/^([\d.]+)/);
+                    return match ? parseFloat(match[1]) : 0;
+                };
+
+                if (isNumericWithText(valA) && isNumericWithText(valB)) {
+                    const numA = extractFloat(valA);
+                    const numB = extractFloat(valB);
+                    return order === "asc" ? numA - numB : numB - numA;
+                }
+
+                // Fallback to time-based comparison
+                const timeToSeconds = (timeStr) => {
+                    const parts = timeStr.split(":").map(Number);
+                    return (parts[0] || 0) * 3600 + (parts[1] || 0) * 60 + (parts[2] || 0);
+                };
+
+                const secondsA = timeToSeconds(valA);
+                const secondsB = timeToSeconds(valB);
+
+                if (secondsA === 0 && secondsB !== 0) return 1;
+                if (secondsB === 0 && secondsA !== 0) return -1;
+                return order === "asc" ? secondsA - secondsB : secondsB - secondsA;
+            });
+
+            // Re-attach rows in sorted order
+            rows.forEach(row => tbody.appendChild(row));
+    }
+
+        // Function to sort names in a table column
+        function sortNames(tbodyId, columnIndex, order) {
+            const tbody = document.getElementById(tbodyId);
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+
+            rows.sort((a, b) => {
+                let valA = a.cells[columnIndex].textContent.trim().toLowerCase();
+                let valB = b.cells[columnIndex].textContent.trim().toLowerCase();
+
+                // Handle empty fields
+                const isEmptyA = !valA;
+                const isEmptyB = !valB;
+
+                if (isEmptyA && !isEmptyB) return 1;  // A is empty, push down
+                if (!isEmptyA && isEmptyB) return -1; // B is empty, push down
+                if (isEmptyA && isEmptyB) return 0;   // both empty, equal
+
+                
+                // if (!valA) return 1;
+                // if (!valB) return -1;
+
+                // Sort alphabetically
+                if (valA < valB) return order === "asc" ? -1 : 1;
+                if (valA > valB) return order === "asc" ? 1 : -1;
+                return 0;
+            });
+
+            // Re-attach sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+
+        function filterEmployees() {
+            const searchValue = document.getElementById("dropdown-search").value.trim().toLowerCase();
+            const searchTokens = searchValue.split(/\s+/); // Split input into tokens
+
+            if (searchValue !== selectedEmployeeName.toLowerCase()) {
+                selectedEmployeeName = ""; // Reset selection
+            }
+
+            // Apply all filters together
+            applyFilters();
+
+            scrollToResult()
+        }
+
+        // Global variables to track filter states
+        let selectedEmployeeName = "";
+        let departments = new Set();
+        let teams = new Set();
+        let managers = new Set();
+        
+        // Store all employee data for filtering
+        let allEmployeeData = [];
+
+        function selectEmployee(employee) {
+            selectedEmployeeName = employee; // Store the selected employee globally
+            document.getElementById("dropdown-search").value = employee;
+            document.getElementById("dropdown-options").style.display = "none";
+            applyFilters();  // Apply all filters together
+        }
+
+        // New function to update related filters based on current selection
+        function updateRelatedFilters(sourceFilter) {
+            const departmentFilter = document.getElementById("department-filter").value;
+            const teamFilter = document.getElementById("team-filter").value;
+            const reportsToFilter = document.getElementById("reports-to-filter").value;
+            
+            // Create filtered sets based on current selection
+            const filteredTeams = new Set();
+            const filteredManagers = new Set();
+            
+            // Get all visible rows to determine available filter options
+            const rows = document.querySelectorAll("#reports-data tr");
+            
+            rows.forEach(row => {
+                const department = row.cells[1].textContent.trim();
+                const team = row.cells[2].textContent.trim();
+                const reportsTo = row.cells[3].textContent.trim();
+                
+                // Apply current filter logic to determine which options should be available
+                let matchesDepartment = true;
+                
+                if (departmentFilter && department !== departmentFilter) {
+                    matchesDepartment = false;
+                }
+                
+                // For team dropdown, consider department filter
+                if (sourceFilter !== 'team' && matchesDepartment && team && team !== "-") {
+                    filteredTeams.add(team);
+                }
+                
+                // For manager dropdown, consider department and team filters
+                let matchesTeam = true;
+                if (teamFilter && team !== teamFilter) {
+                    matchesTeam = false;
+                }
+                
+                if (sourceFilter !== 'manager' && matchesDepartment && matchesTeam && reportsTo && reportsTo !== "-") {
+                    filteredManagers.add(reportsTo);
+                }
+            });
+            
+            // Populate team dropdown if necessary - PRESERVE CURRENT SELECTION
+            if (sourceFilter !== 'team') {
+                const teamDropdown = document.getElementById("team-filter");
+                const currentTeamSelection = teamDropdown.value;
+                
+                // Save current selection
+                teamDropdown.innerHTML = '<option value="">All Teams</option>';
+                
+                const sortedTeams = Array.from(filteredTeams).sort();
+                
+                sortedTeams.forEach(team => {
+                    const option = document.createElement("option");
+                    option.value = team;
+                    option.textContent = team;
+                    if (team === currentTeamSelection) {
+                        option.selected = true;
+                    }
+                    teamDropdown.appendChild(option);
+                });
+            }
+            
+            // Populate manager dropdown if necessary - PRESERVE CURRENT SELECTION
+            if (sourceFilter !== 'manager') {
+                const reportsToDropdown = document.getElementById("reports-to-filter");
+                const currentManagerSelection = reportsToDropdown.value;
+                
+                // Save current selection
+                reportsToDropdown.innerHTML = '<option value="">All Managers</option>';
+                
+                const sortedManagers = Array.from(filteredManagers).sort();
+                
+                sortedManagers.forEach(manager => {
+                    const option = document.createElement("option");
+                    option.value = manager;
+                    option.textContent = manager;
+                    if (manager === currentManagerSelection) {
+                        option.selected = true;
+                    }
+                    reportsToDropdown.appendChild(option);
+                });
+            }
+            
+            // Update employee search dropdown options according to filters
+            updateEmployeeDropdown();
+        }
+
+        // New function to  update employee dropdown based on active filters
+        function updateEmployeeDropdown() {
+            const departmentFilter = document.getElementById("department-filter").value;
+            const teamFilter = document.getElementById("team-filter").value;
+            const reportsToFilter = document.getElementById("reports-to-filter").value;
+            
+            const dropdownOptions = document.getElementById("dropdown-options");
+            dropdownOptions.innerHTML = ""; // Clear current options
+            
+            // Get all rows to extract employee information
+            const rows = document.querySelectorAll("#reports-data tr");
+            
+            rows.forEach(row => {
+                const employeeName = row.cells[0].textContent.trim();
+                const reportsTo = row.cells[3].textContent.trim();
+                const department = row.cells[1].textContent.trim();
+                const team = row.cells[2].textContent.trim();
+                
+                // Apply all filters
+                const matchesDepartment = departmentFilter === "" || department === departmentFilter;
+                const matchesTeam = teamFilter === "" || team === teamFilter;
+                const matchesReportsTo = reportsToFilter === "" || reportsTo === reportsToFilter;
+                
+                if (matchesDepartment && matchesTeam && matchesReportsTo) {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<a class="dropdown-item text-uppercase" href="#" onclick="selectEmployee('${employeeName}')">${employeeName}</a>`;
+                    dropdownOptions.appendChild(li);
+                }
+            });
+        }
+
+        function applyFilters() {
+            const searchValue = document.getElementById("dropdown-search").value.trim().toLowerCase();
+            const searchTokens = searchValue.split(/\s+/);
+            const departmentFilter = document.getElementById("department-filter").value;
+            const teamFilter = document.getElementById("team-filter").value;
+            const reportsToFilter = document.getElementById("reports-to-filter").value; 
+            
+            const rows = document.querySelectorAll("#reports-data tr");
+
+            rows.forEach(row => {
+                const employeeName = row.cells[0].textContent.trim().toLowerCase();
+                const reportsTo = row.cells[3].textContent.trim();
+                const department = row.cells[1].textContent.trim();
+                const team = row.cells[2].textContent.trim();
+                
+                // Employee name filter logic (unchanged from original)
+                const nameWords = employeeName.split(/\s+/);
+                let nameMatch = true;
+                let nameIndex = 0;
+
+                for (let token of searchTokens) {
+                    let found = false;
+                    while (nameIndex < nameWords.length) {
+                        if (nameWords[nameIndex].startsWith(token)) {
+                            found = true;
+                            nameIndex++; // move to next word
+                            break;
+                        }
+                        nameIndex++;
+                    }
+                    if (!found) {
+                        nameMatch = false;
+                        break;
+                    }
+                }
+                
+                // Apply all filters together
+                const matchesNameFilter = (searchValue === "" || nameMatch) &&
+                    (selectedEmployeeName === "" || employeeName === selectedEmployeeName.toLowerCase());
+                const matchesDepartment = departmentFilter === "" || department === departmentFilter;
+                const matchesTeam = teamFilter === "" || team === teamFilter;
+                const matchesReportsTo = reportsToFilter === "" || reportsTo === reportsToFilter;
+                
+                if (matchesNameFilter && matchesDepartment && matchesTeam && matchesReportsTo) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function resetAllFilters() {
+            // Reset all filter elements
+            document.getElementById("dropdown-search").value = "";
+            document.getElementById("department-filter").value = "";
+            document.getElementById("team-filter").value = "";
+            document.getElementById("reports-to-filter").value = "";
+            
+            // Reset our tracking variable
+            selectedEmployeeName = "";
+            
+            // Repopulate the dropdowns with all available options
+            populateFilterDropdowns();
+
+            // Update employee search dropdown options according to filters
+            updateEmployeeDropdown();
+            
+            // Apply the reset (show all rows)
+            applyFilters();
+        }
+
+        // Show/hide spinner functions
+        function showSpinner(containerId) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.classList.add("loading");
+                container.querySelector(".spinner-container").style.display = "flex";
+                document.getElementById("dropdown-container").style.display = "none";
+                document.getElementById("report-container").style.display = "none";
+                document.getElementById("main-table").style.display = "none";
+                document.getElementById("performance-table").style.display = "none";
+                document.getElementById("reports-spinner").style.display = "flex";
+            }
+        }
+
+        function hideSpinner(containerId) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.classList.remove("loading");
+                container.querySelector(".spinner-container").style.display = "none";
+                document.getElementById("dropdown-container").style.display = "flex";
+                document.getElementById("main-table").style.display = "flex";
+                document.getElementById("performance-table").style.display = "flex";
+                document.getElementById("reports-spinner").style.display = "none";
+            }
+        }
+
+        // To get Date
+        async function fetchCurrentDate() {
+            try {
+                const response = await fetch('/api/method/employee_attendance.api.get_date');
+                const result = await response.json();
+                if (result.message) {
+                    document.getElementById("date").value = result.message;
+                }
+            } catch (error) {
+                console.error("Error fetching date:", error);
+            }
+        }
+
+        async function fetchDetails() {
+            // Show spinners while data is loading
+            showSpinner("main-table-container");
+            showSpinner("reports-table-container");
+            
+            // Clear filter dropdown contents
+            document.getElementById("department-filter").innerHTML = '<option value="">All Departments</option>';
+            document.getElementById("team-filter").innerHTML = '<option value="">All Teams</option>';
+            document.getElementById("reports-to-filter").innerHTML = '<option value="">All Managers</option>';
+            
+            // Reset our filter sets
+            departments = new Set();
+            teams = new Set();
+            managers = new Set();
+            allEmployeeData = [];
+            
+            try {
+                const userResponse = await fetch("/api/method/frappe.auth.get_logged_user");
+                const userData = await userResponse.json();
+                const userEmail = userData.message;
+                console.log("userEmail:", userEmail);
+
+                const nameResponse = await fetch(`/api/method/employee_attendance.api.get_user_details?email=${userEmail}`);
+                const nameResult = await nameResponse.json();
+                const employeeName = nameResult.message?.full_name || "";
+                console.log("employeeName:", employeeName);
+
+                if (userEmail === "Administrator" || userEmail === "silerp@softlandindia.co.in") {
+                    document.getElementById("name").textContent = "Administrator";
+                    document.getElementById("employee-name").textContent = "Administrator";
+                } else {
+                    document.getElementById("name").textContent = employeeName;
+                    document.getElementById("employee-name").textContent = employeeName;
+                }
+                
+                const givenEmployee = employeeName;
+                const givenDate = document.getElementById("date").value;
+
+                // Validate date
+                const today = new Date().toISOString().split('T')[0];
+                if (givenDate > today) {
+                    alert("Given date is Invalid.");
+                    window.location.reload();
+                    return;
+                }
+
+                // Fetch main attendance details
+                const response = await fetch(`/api/method/employee_attendance.api.get_main_attendance?employee_name=${givenEmployee}&date=${givenDate}`);
+                const result = await response.json();
+                const details = result.message;
+                let buttonId;
+                if (details.report_hierarchy == 0) {
+                    buttonId = `modal-btn`;
+                } else {
+                    buttonId = `modal-btn-${details.employee_name}`;
+                }
+                
+                document.getElementById("today-hours").textContent = details.total_working_hours || "0:00:00";
+                document.getElementById("weekly-hours").textContent = details.w_m_average.week_data.weekly_avg_hh_mm || "0.00";
+                document.getElementById("monthly-hours").textContent = details.w_m_average.month_data.monthly_avg_hh_mm || "0.00";
+
+                // Hide spinner once data is loaded
+                hideSpinner("main-table-container");
+                
+                document.getElementById("data").innerHTML = `
+                    <tr>
+                        <td>${details.department || "-"}</td>
+                        <td>${details.custom_team || "-"}</td>
+                        <td>${details.first_checkin || "-"}</td>
+                        <td>${details.last_logout || "-"}</td>
+                        
+                        <td><button class="btn more-button" data-employee="${givenEmployee}" id="modal-btn">More</button></td>
+                    </tr>
+                `;
+
+                setTimeout(() => {
+                    const modalBtn = document.getElementById("modal-btn");
+                    if (modalBtn) {
+                        modalBtn.addEventListener("click", function () {
+                            openModal(employeeName, givenDate);
+                        });
+                    } else {
+                        console.warn("Modal button not found.");
+                    }
+                }, 500);
+
+                if (details.report_hierarchy.report_names && details.report_hierarchy.report_names.length > 0) {
+                    document.getElementById("report-container").style.display = "block";
+                    await populateReportsTable(details.report_hierarchy, givenEmployee, givenDate);
+                    
+                    // Now populate the filter dropdowns after all data is processed
+                    populateFilterDropdowns();
+                } else {
+                    document.getElementById("report-container").style.display = "none";
+                }
+                
+                // Hide reports spinner after all data is processed
+                hideSpinner("reports-table-container");
+
+            } catch (error) {
+                console.error("Error fetching attendance data:", error);
+                alert(`Error occurred: ${error.message}`);
+                
+                // Hide spinners on error
+                hideSpinner("main-table-container");
+                hideSpinner("reports-table-container");
+            }
+        }
+
+        // Function to populate filter dropdowns
+        function populateFilterDropdowns() {
+            const departmentDropdown = document.getElementById("department-filter");
+            const teamDropdown = document.getElementById("team-filter");
+            const reportsToDropdown = document.getElementById("reports-to-filter");
+            
+            // Sort the values for better user experience
+            const sortedDepartments = Array.from(departments).sort();
+            const sortedTeams = Array.from(teams).sort();
+            const sortedManagers = Array.from(managers).sort();
+            
+            // Add departments to dropdown
+            sortedDepartments.forEach(department => {
+                if (department && department !== "-") {
+                    const option = document.createElement("option");
+                    option.value = department;
+                    option.textContent = department;
+                    departmentDropdown.appendChild(option);
+                }
+            });
+            
+            // Add teams to dropdown
+            sortedTeams.forEach(team => {
+                if (team && team !== "-") {
+                    const option = document.createElement("option");
+                    option.value = team;
+                    option.textContent = team;
+                    teamDropdown.appendChild(option);
+                }
+            });
+            
+            // Add managers to dropdown
+            sortedManagers.forEach(manager => {
+                if (manager && manager !== "-") {
+                    const option = document.createElement("option");
+                    option.value = manager;
+                    option.textContent = manager;
+                    reportsToDropdown.appendChild(option);
+                }
+            });
+        }
+
+        // Function to populate Reports table
+        async function populateReportsTable(reportHierarchy, employeeName, date) {
+            const reportsTable = document.getElementById("reports-data");
+            const dropdownOptions = document.getElementById("dropdown-options");
+
+            reportsTable.innerHTML = "";
+            dropdownOptions.innerHTML = "";
+
+            async function processReportees(reportees, reportsTo) {
+                try {
+                    if (!reportees || reportees.length === 0) return;
+                    
+                    for (const report of reportees) {
+                        const reporteeDetails = report.reportee_attendance;  // Now directly from the hierarchy
+                        
+                        // Add to our filter sets
+                        if (reporteeDetails.department) departments.add(reporteeDetails.department);
+                        if (reporteeDetails.custom_team) teams.add(reporteeDetails.custom_team);
+                        if (reportsTo) managers.add(reportsTo);
+                        
+                        // Store employee data for filtering
+                        allEmployeeData.push({
+                            name: report.employee,
+                            reportsTo: reportsTo || "-",
+                            department: reporteeDetails.department || "-",
+                            team: reporteeDetails.custom_team || "-"
+                        });
+                        
+                        const li = document.createElement("li");
+                        li.innerHTML = `<a class="dropdown-item text-uppercase" href="#" onclick="selectEmployee('${report.employee}')">${report.employee}</a>`;
+                        
+                        dropdownOptions.appendChild(li);
+                        const buttonId = `modal-btn-${reporteeDetails.employee_name.replace(/\s+/g, "-")}`;
+                        reportsTable.innerHTML += `
+                            <tr>
+                                <td class="fw-bold text-uppercase" style="width: 150px;">${reporteeDetails.employee_name || "-"}</td>
+                                <td style="width: 150px;">${reporteeDetails.department || "-"}</td>
+                                <td>${reporteeDetails.custom_team || "-"}</td>
+                                <td class="text-uppercase"">${reportsTo || "-"}</td>
+                                <td>${reporteeDetails.first_checkin || "-"}</td>
+                                <td>${reporteeDetails.last_logout || "-"}</td>
+                                <td>${reporteeDetails.total_working_hours || "0:00:00"}</td>
+                                <td>${reporteeDetails.w_m_average.week_data.weekly_avg_hh_mm || "0.00"} <span style="font-size: 12px;">(out of ${reporteeDetails.w_m_average.week_data.days_considered || "0"} days)</span></td>
+                                <td>${reporteeDetails.w_m_average.month_data.monthly_avg_hh_mm || "0.00"} <span style="font-size: 12px;">(out of ${reporteeDetails.w_m_average.month_data.days_considered || "0"} days)</span></td>
+                                <td><button class="btn view-report" data-employee="${reporteeDetails.employee_name}" id="${buttonId}">More</button></td>
+                            </tr>
+                        `;
+
+                        // Attach event listeners to modal buttons
+                        document.querySelectorAll(".view-report").forEach(button => {
+                            button.addEventListener("click", function () {
+                                const reporteeName = this.getAttribute("data-employee");
+                                openModal(reporteeName, date);
+                            });
+                        });
+
+                        if (reporteeDetails.report_hierarchy.report_names && reporteeDetails.report_hierarchy.report_names.length > 0) {
+                            await processReportees(reporteeDetails.report_hierarchy.report_names, report.employee);
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error processing reportees:", error);
+                }
+            }
+            await processReportees(reportHierarchy.report_names, employeeName);
+        }
+
+        function openModal(employeeName, date) {
+            // Remove any existing modal before inserting a new one
+            const existingModal = document.getElementById("attendanceModal");
+            if (existingModal) {
+                existingModal.remove();
+            }
+            var modalHtml = `
+                <div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">Attendance Report - <strong>${employeeName}</strong></h5>
+                            </div>
+                            <div class="modal-body">
+                                <div id="modal-spinner" class="spinner-container">
+                                    <div class="loading-spinner"></div>
+                                </div>
+                                <div class="table-container" style="zoom: 0.8;">
+                                    <table class="table table-bordered table-responsive mt-3 text-center">
+                                        <thead class="table-dark border-0">
+                                            <tr >
+                                                <th class="text-light" style="background-color: var(--primary);">Session</th>
+                                                <th class="text-light" style="background-color: var(--primary);">Check-in</th>
+                                                <th class="text-light" style="background-color: var(--primary);">Check-out</th>
+                                                <th class="text-light" style="background-color: var(--primary);">Working Hours</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modal-data"></tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="text-center font-weight-bold" style="color: var(--tertiary);">Working Days Status (Monthly)</div>
+                                <div class="table-container" style="zoom: 0.8;">
+                                    <table class="table table-bordered table-responsive mt-3 mb-3 text-center">
+                                        <thead class="table-dark border-0">
+                                            <tr>
+                                                <th class="text-light " style="position: relative; vertical-align: top; text-align: center; background-color: var(--primary);" rowspan="2">Total Working Days</th>
+                                                <th class="text-light" style="position: relative; vertical-align: top; text-align: center; background-color: var(--primary);" rowspan="2">Days Worked</th>
+                                                <th class="text-light" style="position: relative; vertical-align: top; text-align: center; background-color: var(--primary);" colspan="3">Approved Leave</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-light" style="background-color: var(--primary);">Causal</th>
+                                                <th class="text-light" style="background-color: var(--primary);">Sick</th>
+                                                <th class="text-light" style="background-color: var(--primary);">Compensatory</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="leave-data">
+                                            <tr>
+                                                <td id="totalWorkingDays"></td>
+                                                <td id="daysWorked"></td>
+                                                <td id="approvedLeave">0</td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-end">
+                                <button type="button" class="btn more-button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove any existing modal to avoid duplication
+            document.querySelectorAll("#attendanceModal").forEach(el => el.remove());
+
+            document.body.insertAdjacentHTML("beforeend", modalHtml);
+            var myModal = new bootstrap.Modal(document.getElementById("attendanceModal"));
+            myModal.show();
+
+            fetchModalData(employeeName, date);
+            fetchWorkingDaysStatus(employeeName, date);
+        }
+
+        async function fetchModalData(employeeName, date) {
+            try {
+                // Show modal loading spinner
+                document.getElementById("modal-spinner").style.display = "flex";
+                
+                const modalResponse = await fetch(`/api/method/employee_attendance.api.get_attendance?employee_name=${employeeName}&date=${date}`);
+                const modalResult = await modalResponse.json();
+
+                // Hide modal loading spinner
+                document.getElementById("modal-spinner").style.display = "none";
+
+                if (!modalResult.message || !modalResult.message.attendance_sessions) {
+                    console.error("Invalid data structure", modalResult);
+                    return;
+                }
+
+                const attendanceSessions = modalResult.message.attendance_sessions;
+                const modalTable = document.getElementById("modal-data");
+                modalTable.innerHTML = "";
+
+                attendanceSessions.forEach((sessionData, index) => {
+                    const sessionKey = Object.keys(sessionData)[0];
+                    const session = sessionData[sessionKey];
+
+                    modalTable.innerHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${session.in_time || "-"}</td>
+                            <td>${session.out_time || "-"}</td>
+                            <td>${session.working_hours || "0:00:00"}</td>
+                        </tr>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Error fetching modal data:", error);
+                // Hide modal loading spinner on error
+                document.getElementById("modal-spinner").style.display = "none";
+            }
+        }
+
+        async function fetchWorkingDaysStatus(employeeName, date) {
+            try {
+                const response = await fetch(`/api/method/employee_attendance.api.get_working_days_status?employee_name=${employeeName}&date=${date}`);
+                const result = await response.json();
+                if (result.message) {
+                    const workingDaysStatus = result.message;
+                    document.getElementById("totalWorkingDays").textContent = workingDaysStatus.total_working_days;
+                    document.getElementById("daysWorked").textContent = workingDaysStatus.days_worked;
+                    document.getElementById("approvedLeave").textContent = workingDaysStatus.approved_leave;
+                }
+            } catch (error) {
+                console.error("Error fetching working days status:", error);
+            }
+        }
+
+        function resetSearch() {
+            selectedEmployeeName = "";
+            document.getElementById("dropdown-search").value = "";
+            applyFilters(); // Apply all filters
+        }
+async function openCustomFilterModal() {
+    const existingModal = document.getElementById("filterModal");
+    if (existingModal) existingModal.remove();
+
+    // Fetch data from API
+    let data = [];
+    try {
+        const response = await fetch('/api/method/employee_attendance.export.get_all_employees_and_department');
+        const result = await response.json();
+        data = result.message || [];
+    } catch (err) {
+        console.error("Failed to fetch employee list:", err);
+    }
+
+    // Modal HTML
+    const modalHTML = `
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content shadow" style="border-radius: 12px;">
+                    <div class="modal-header" style="background: var(--primary); color: white;">
+                        <h6 class="modal-title fw-semibold" id="filterModalLabel">Export Report</h6>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-3">
+                        <form id="filterForm" class="small">
+                            <div class="row g-2">
+                                <div class="col-md-6 position-relative">
+                                    <label for="employeeInput" class="form-label fw-semibold text-uppercase" style="font-size: 0.85rem; color: var(--tertiary);">Employee</label>
+                                    <input type="text" class="form-control form-control-sm" id="employeeInput" placeholder="Select Employee Name" autocomplete="off">
+                                    <ul class="dropdown-menu small w-100" id="employeeDropdown" style="font-size: 0.85rem; max-height: 200px; overflow-y: auto;"></ul>
+                                </div>
+                                <div class="col-md-6 position-relative">
+                                    <label for="departmentInput" class="form-label fw-semibold text-uppercase" style="font-size: 0.85rem; color: var(--tertiary);">Department</label>
+                                    <input type="text" class="form-control form-control-sm" id="departmentInput" placeholder="Select Department" autocomplete="off">
+                                    <ul class="dropdown-menu small w-100" id="departmentDropdown" style="font-size: 0.85rem; max-height: 200px; overflow-y: auto;"></ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="startDate" class="form-label fw-semibold text-uppercase" style="font-size: 0.85rem; color: var(--tertiary);">Start Date</label>
+                                    <input type="date" class="form-control form-control-sm" id="startDate">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="endDate" class="form-label fw-semibold text-uppercase" style="font-size: 0.85rem; color: var(--tertiary);">End Date</label>
+                                    <input type="date" class="form-control form-control-sm" id="endDate">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer py-2 px-3">
+                        <button type="button" class="btn more-button btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="submitFilter()">Export</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const modal = new bootstrap.Modal(document.getElementById("filterModal"));
+    modal.show();
+
+    // Elements
+    const empInput = document.getElementById("employeeInput");
+    const deptInput = document.getElementById("departmentInput");
+    const empDropdown = document.getElementById("employeeDropdown");
+    const deptDropdown = document.getElementById("departmentDropdown");
+
+    // Prevent hiding when clicking on dropdown
+    empDropdown.addEventListener("mousedown", e => e.preventDefault());
+    deptDropdown.addEventListener("mousedown", e => e.preventDefault());
+
+    // Populate Employee Dropdown (Hybrid)
+    empInput.addEventListener("input", () => {
+        const value = empInput.value.trim().toLowerCase();
+        empDropdown.innerHTML = "";
+        const matched = data.filter(d => d.name.toLowerCase().includes(value));
+        if (matched.length) {
+            matched.forEach(emp => {
+                const li = document.createElement("li");
+                li.className = "dropdown-item py-1 px-2";
+                li.style.fontSize = "0.85rem";
+                li.style.cursor = "pointer";
+                li.textContent = emp.name;
+                li.onclick = () => {
+                    empInput.value = emp.name;
+                    deptInput.value = emp.department || "";
+                    empDropdown.classList.remove("show");
+                };
+                empDropdown.appendChild(li);
+            });
+            empDropdown.classList.add("show");
+        } else {
+            empDropdown.classList.remove("show");
+        }
+    });
+
+    empInput.addEventListener("focus", () => empInput.dispatchEvent(new Event("input")));
+
+    // Populate Department Dropdown (Hybrid)
+    const departments = [...new Set(data.map(d => d.department).filter(Boolean))];
+    deptInput.addEventListener("input", () => {
+        const value = deptInput.value.trim().toLowerCase();
+        deptDropdown.innerHTML = "";
+        const matched = departments.filter(d => d.toLowerCase().includes(value));
+        if (matched.length) {
+            matched.forEach(dept => {
+                const li = document.createElement("li");
+                li.className = "dropdown-item py-1 px-2";
+                li.style.fontSize = "0.85rem";
+                li.style.cursor = "pointer";
+                li.textContent = dept;
+                li.onclick = () => {
+                    deptInput.value = dept;
+                    empInput.value = "";
+                    deptDropdown.classList.remove("show");
+                };
+                deptDropdown.appendChild(li);
+            });
+            deptDropdown.classList.add("show");
+        } else {
+            deptDropdown.classList.remove("show");
+        }
+    });
+
+    deptInput.addEventListener("focus", () => deptInput.dispatchEvent(new Event("input")));
+
+    // Hide dropdown on outside click
+    document.addEventListener("click", (e) => {
+        if (!empInput.contains(e.target)) empDropdown.classList.remove("show");
+        if (!deptInput.contains(e.target)) deptDropdown.classList.remove("show");
+    });
+}
+
+
+function submitFilter() {
+    const employee = document.getElementById("employeeInput").value || "";
+    const department = document.getElementById("departmentInput").value || "";
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    // Basic validation
+    if (!startDate || !endDate) {
+        alert("Please select both start and end dates.");
+        return;
+    }
+
+    if (startDate > endDate) {
+        alert("Start Date cannot be after End Date.");
+        return;
+    }
+
+    // Build query parameters
+    const params = new URLSearchParams({
+        from_date: startDate,
+        to_date: endDate
+    });
+
+    if (employee) {
+        params.append("employee_name", employee);
+    }
+
+    if (department) {
+        params.append("department", department);
+    }
+
+    // Trigger Excel download
+    const url = `/api/method/employee_attendance.export.download_excel?${params.toString()}`;
+    window.open(url, "_blank");
+
+    // Close the modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById("filterModal"));
+    modal.hide();
+}
+
+    </script>
+</body>
+</html>
