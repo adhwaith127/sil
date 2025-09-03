@@ -1613,7 +1613,6 @@ setLoadingState('report-container', false);
 
         // Process overtime API response, which returns a list of employees
         function processOvertimeResponse(response) {
-            console.log("api response",response)
             const rawOvertimeList = Array.isArray(response) ? response : [];
             
             overtimeEmployeeData = rawOvertimeList.map(ot_record => {
@@ -1761,7 +1760,7 @@ setLoadingState('report-container', false);
                 return hours + 'h';   // show API value as-is
             }
             return '-';
-        } 
+        }
         
         // Filter data based on summary card clicks
         function filterBySummary(filterType) {

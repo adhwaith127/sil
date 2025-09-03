@@ -398,56 +398,20 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
 
         # Calculate working days based on period type using the correctly filtered holiday list
         if period_type == 'monthly':
-            is_current_month = (start_date.year == today_date.year and 
-                              start_date.month == today_date.month)
-            
-            if is_current_month and end_date >= today_date:
-                # Current month: calculate days from start to today
-                actual_start_date = start_date
-                actual_end_date = min(end_date, today_date)
+            if end_date.month==today_date.month and end_date.year==today_date.year:
+                if end_date==today_date:
+                    num_days_in_month = (today_date - start_date).days + 1
+                elif end_date<today_date:
+                    num_days_in_month = (end_date - start_date).days + 1
             else:
-                # Past month: use provided boundaries
-                actual_start_date = start_date
-                if end_date.month == start_date.month:
-                    actual_end_date = end_date
-                else:
-                    # Full month case
-                    _, days_in_month = calendar.monthrange(start_date.year, start_date.month)
-                    actual_end_date = start_date.replace(day=days_in_month)
-            
-            # ✅ NOW calculate holidays with ACTUAL boundaries
-            holidays_in_period = [h for h in all_emp_holidays 
-                                if actual_start_date <= h <= actual_end_date]
-            
-            num_days_in_period = (actual_end_date - actual_start_date).days + 1
-            total_working_days = num_days_in_period - len(holidays_in_period)
-
+                _, num_days_in_month = calendar.monthrange(start_date.year, start_date.month)
+            total_working_days = _calculate_working_days_monthly(num_days_in_month, holidays_in_period)
         elif period_type == 'weekly':
-            is_current_week = (start_date <= today_date <= end_date)
-            
-            if is_current_week:
-                # Current week: calculate from start_date to today
-                actual_start_date = start_date
-                actual_end_date = min(end_date, today_date)
-                
-                # ✅ Calculate holidays with actual boundaries
-                holidays_in_period = [h for h in all_emp_holidays 
-                                    if actual_start_date <= h <= actual_end_date]
-                
-                # For current week: actual days minus holidays
-                num_days_in_period = (actual_end_date - actual_start_date).days + 1
-                total_working_days = num_days_in_period - len(holidays_in_period)
-            else:
-                # Past week: use 5-day work week logic
-                holidays_in_period = [h for h in all_emp_holidays 
-                                    if start_date <= h <= end_date]
-                total_working_days = _calculate_working_days_weekly(holidays_in_period)
+            # This logic assumes a 5-day work week (Mon-Fri)
+            total_working_days = _calculate_working_days_weekly(holidays_in_period)
         else:
-            # Daily
-            holidays_in_period = [h for h in all_emp_holidays if h == start_date]
-            total_working_days = 1 - len(holidays_in_period)
+            total_working_days = 1  # daily
             
-        total_working_days = max(total_working_days, 0)
         avg_hours = round(stats['total_work_hours'] / total_working_days, 2) if total_working_days > 0 else 0
         
         result.append({
@@ -457,7 +421,7 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
             "total_days_worked": stats['days_worked'],
             "total_working_days_in_period": total_working_days,
             "employee_working_days": total_working_days,
-            "holidays_in_period": len(holidays_in_period)
+            "holidays_in_period": len(holidays_in_period) # Use the correctly filtered count
         })
     return result
 
@@ -592,60 +556,37 @@ def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: D
     
     # Ensure all employees have daily, weekly, and monthly records ---
     target_date_str = format_datetime(target_date, 'yyyy-MM-dd')
-    today_date = getdate(today())
-    
     for emp_name, emp_data in registry.items():
         emp_holidays = employee_holidays.get(emp_name, [])
 
-        # 1. Daily data (existing logic is fine)
+        # 1. Ensure daily data exists (existing logic, kept for clarity)
         if not emp_data['daily_data']:
             status = "Holiday" if target_date in emp_holidays else "Absent"
             emp_data['daily_data'] = {
-                'date': target_date_str, 'daily_working_hours': 0.0, 
-                'entry_time': None, 'exit_time': None, 'status': status, 'checkin_pairs': []
+                'date': target_date_str, 'daily_working_hours': 0.0, 'entry_time': None,
+                'exit_time': None, 'status': status, 'checkin_pairs': []
             }
 
-        # 2. Weekly summary with proper boundary-matched holidays
+        # 2. Ensure weekly summary exists
         if not emp_data['weekly_summary']:
-            is_current_week = boundaries['week_start'] <= today_date <= boundaries['week_end']
-            
-            if is_current_week:
-                actual_week_end = min(boundaries['week_end'], today_date)
-                holidays_in_week = [h for h in emp_holidays 
-                                  if boundaries['week_start'] <= h <= actual_week_end]
-                working_days = ((actual_week_end - boundaries['week_start']).days + 1) - len(holidays_in_week)
-            else:
-                holidays_in_week = [h for h in emp_holidays 
-                                  if boundaries['week_start'] <= h <= boundaries['week_end']]
-                working_days = _calculate_working_days_weekly(holidays_in_week)
-            
+            holidays_in_week = [h for h in emp_holidays if boundaries['week_start'] <= h <= boundaries['week_end']]
+            working_days_in_week = _calculate_working_days_weekly(holidays_in_week)
             emp_data['weekly_summary'] = {
                 "average_work_hours": 0.0, "total_hours_worked": 0.0, "total_days_worked": 0,
-                "total_working_days_in_period": max(working_days, 0),
-                "employee_working_days": max(working_days, 0),
+                "total_working_days_in_period": working_days_in_week,
+                "employee_working_days": working_days_in_week,
                 "holidays_in_period": len(holidays_in_week)
             }
 
-        # 3. Monthly summary with proper boundary-matched holidays  
+        # 3. Ensure monthly summary exists
         if not emp_data['monthly_summary']:
-            is_current_month = (boundaries['month_start'].year == today_date.year and 
-                               boundaries['month_start'].month == today_date.month)
-            
-            if is_current_month:
-                actual_month_end = min(boundaries['month_end'], today_date)
-                holidays_in_month = [h for h in emp_holidays 
-                                   if boundaries['month_start'] <= h <= actual_month_end]
-                working_days = ((actual_month_end - boundaries['month_start']).days + 1) - len(holidays_in_month)
-            else:
-                holidays_in_month = [h for h in emp_holidays 
-                                   if boundaries['month_start'] <= h <= boundaries['month_end']]
-                _, days_in_month = calendar.monthrange(boundaries['month_start'].year, boundaries['month_start'].month)
-                working_days = days_in_month - len(holidays_in_month)
-            
+            holidays_in_month = [h for h in emp_holidays if boundaries['month_start'] <= h <= boundaries['month_end']]
+            _, num_days_in_month = calendar.monthrange(boundaries['month_start'].year, boundaries['month_start'].month)
+            working_days_in_month = _calculate_working_days_monthly(num_days_in_month, holidays_in_month)
             emp_data['monthly_summary'] = {
                 "average_work_hours": 0.0, "total_hours_worked": 0.0, "total_days_worked": 0,
-                "total_working_days_in_period": max(working_days, 0),
-                "employee_working_days": max(working_days, 0),
+                "total_working_days_in_period": working_days_in_month,
+                "employee_working_days": working_days_in_month,
                 "holidays_in_period": len(holidays_in_month)
             }
 

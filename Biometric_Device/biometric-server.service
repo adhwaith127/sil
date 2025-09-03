@@ -1,0 +1,22 @@
+[Unit]
+Description=Biometric WebSocket Server
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/biometric-server
+ExecStart=/usr/bin/python3 /opt/biometric-server/biometric_to_server.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment variables (optional)
+Environment=PYTHONPATH=/opt/biometric-server
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

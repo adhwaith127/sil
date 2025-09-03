@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unified Date Selector</title>
+ <style>
+ body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  background: #f5f7fa;
+}
+
+/* Wrapper */
+.unified-date-selector {
+  position: relative;
+  width: 280px;
+}
+
+/* Input box */
+.date-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.date-display {
+  border: none;
+  outline: none;
+  flex: 1;
+  cursor: pointer;
+}
+
+.calendar-icon {
+  margin-left: 6px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Dropdown */
+.date-picker-dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 12px;
+  z-index: 100;
+}
+
+/* Mode buttons */
+.mode-selector {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mode-btn.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* Presets */
+.quick-presets {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.quick-presets button {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quick-presets button:hover {
+  background: #e6e6e6;
+}
+
+/* Calendar header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Calendar grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.calendar-grid div {
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.calendar-grid div:hover {
+  background: #f0f4ff;
+}
+
+.calendar-grid .selected {
+  background: #2563eb;
+  color: white;
+}
+
+.calendar-grid .in-range {
+  background: #dbeafe;
+}
+
+/* Actions */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.clear-btn, .apply-btn {
+  flex: 1;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 3px;
+}
+
+.clear-btn {
+  background: #f3f4f6;
+  border: 1px solid #ccc;
+}
+
+.apply-btn {
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  color: white;
+}
+
+ </style>
+</head>
+<body>
+  <div class="unified-date-selector">
+    <!-- Display Input -->
+    <div class="date-input-wrapper">
+      <input type="text" readonly class="date-display" placeholder="Select date or date range" />
+      <i class="calendar-icon">&#128197;</i> <!-- calendar icon -->
+    </div>
+
+    <!-- Dropdown -->
+    <div class="date-picker-dropdown">
+      <!-- Mode Selector -->
+      <div class="mode-selector">
+        <button class="mode-btn active" data-mode="single">Single Date</button>
+        <button class="mode-btn" data-mode="range">Date Range</button>
+      </div>
+
+      <!-- Quick Presets -->
+      <div class="quick-presets">
+        <button data-preset="today">Today</button>
+        <button data-preset="yesterday">Yesterday</button>
+        <button data-preset="last7days">Last 7 Days</button>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar-header">
+        <button class="prev-month">&lt;</button>
+        <span class="calendar-title"></span>
+        <button class="next-month">&gt;</button>
+      </div>
+      <div class="calendar-grid"></div>
+
+      <!-- Actions -->
+      <div class="action-buttons">
+        <button class="clear-btn">Clear</button>
+        <button class="apply-btn">Apply</button>
+      </div>
+    </div>
+  </div>
+   <script>
+  // ========== STATE ==========
+let datePickerState = {
+    mode: "single", // 'single' or 'range'
+    isOpen: false,
+    currentMonth: new Date().getMonth(),
+    currentYear: new Date().getFullYear(),
+    selectedDate: null,
+    selectedRange: { start: null, end: null },
+    tempSelection: null
+};
+
+// ========== DOM ==========
+const displayInput = document.querySelector(".date-display");
+const dropdown = document.querySelector(".date-picker-dropdown");
+const modeButtons = document.querySelectorAll(".mode-btn");
+const calendarTitle = document.querySelector(".calendar-title");
+const calendarGrid = document.querySelector(".calendar-grid");
+
+// ========== UTILITIES ==========
+function formatDate(date) {
+    return date.toISOString().split("T")[0];
+}
+
+// ========== DISPLAY LOGIC ==========
+function updateDisplayText() {
+    if (datePickerState.mode === "single" && datePickerState.selectedDate) {
+        displayInput.value = formatDate(datePickerState.selectedDate);
+    } else if (datePickerState.mode === "range" && datePickerState.selectedRange.start) {
+        if (datePickerState.selectedRange.end) {
+            displayInput.value = `${formatDate(datePickerState.selectedRange.start)} - ${formatDate(datePickerState.selectedRange.end)}`;
+        } else {
+            displayInput.value = `${formatDate(datePickerState.selectedRange.start)} - Select end date`;
+        }
+    } else {
+        displayInput.value = "";
+        displayInput.placeholder = datePickerState.mode === "single" ? "Select date" : "Select date range";
+    }
+}
+
+// ========== CALENDAR ==========
+function generateCalendar(year, month) {
+    calendarGrid.innerHTML = "";
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    calendarTitle.textContent = new Date(year, month).toLocaleString("default", { month: "long", year: "numeric" });
+
+    // Empty slots for days before first
+    for (let i = 0; i < firstDay; i++) {
+        calendarGrid.appendChild(document.createElement("div"));
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const cell = document.createElement("div");
+        cell.textContent = day;
+
+        // Highlight selection
+        if (datePickerState.mode === "single" && datePickerState.selectedDate &&
+            formatDate(date) === formatDate(datePickerState.selectedDate)) {
+            cell.classList.add("selected");
+        }
+        if (datePickerState.mode === "range" && datePickerState.selectedRange.start) {
+            const start = datePickerState.selectedRange.start;
+            const end = datePickerState.selectedRange.end;
+            if (formatDate(date) === formatDate(start)) {
+                cell.classList.add("selected");
+            }
+            if (end && date >= start && date <= end) {
+                cell.classList.add("in-range");
+            }
+        }
+
+        // On click
+        cell.addEventListener("click", () => handleDateClick(date));
+        calendarGrid.appendChild(cell);
+    }
+}
+
+// ========== SELECTION ==========
+function handleDateClick(date) {
+    if (datePickerState.mode === "single") {
+        datePickerState.tempSelection = date;
+    } else {
+        if (!datePickerState.selectedRange.start || (datePickerState.selectedRange.start && datePickerState.selectedRange.end)) {
+            datePickerState.selectedRange = { start: date, end: null };
+        } else {
+            datePickerState.selectedRange.end = date;
+            if (datePickerState.selectedRange.start > datePickerState.selectedRange.end) {
+                [datePickerState.selectedRange.start, datePickerState.selectedRange.end] =
+                [datePickerState.selectedRange.end, datePickerState.selectedRange.start];
+            }
+        }
+    }
+    generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+}
+
+// ========== APPLY & CLEAR ==========
+document.querySelector(".apply-btn").addEventListener("click", () => {
+    if (datePickerState.mode === "single") {
+        datePickerState.selectedDate = datePickerState.tempSelection;
+    }
+    updateDisplayText();
+    dropdown.style.display = "none";
+    datePickerState.isOpen = false;
+
+    // Integration point for API call
+    console.log("Selected:", datePickerState);
+});
+
+document.querySelector(".clear-btn").addEventListener("click", () => {
+    datePickerState.selectedDate = null;
+    datePickerState.selectedRange = { start: null, end: null };
+    updateDisplayText();
+    generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+});
+
+// ========== MODE SWITCH ==========
+modeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        modeButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        datePickerState.mode = btn.dataset.mode;
+        updateDisplayText();
+        generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+    });
+});
+
+// ========== MONTH NAV ==========
+document.querySelector(".prev-month").addEventListener("click", () => {
+    if (datePickerState.currentMonth === 0) {
+        datePickerState.currentMonth = 11;
+        datePickerState.currentYear--;
+    } else {
+        datePickerState.currentMonth--;
+    }
+    generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+});
+
+document.querySelector(".next-month").addEventListener("click", () => {
+    if (datePickerState.currentMonth === 11) {
+        datePickerState.currentMonth = 0;
+        datePickerState.currentYear++;
+    } else {
+        datePickerState.currentMonth++;
+    }
+    generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+});
+
+// ========== TOGGLE ==========
+document.querySelector(".date-input-wrapper").addEventListener("click", () => {
+    datePickerState.isOpen = !datePickerState.isOpen;
+    dropdown.style.display = datePickerState.isOpen ? "block" : "none";
+});
+
+// ========== PRESETS ==========
+document.querySelectorAll(".quick-presets button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const today = new Date();
+        if (btn.dataset.preset === "today") {
+            datePickerState.selectedDate = today;
+            datePickerState.selectedRange = { start: today, end: today };
+        }
+        if (btn.dataset.preset === "yesterday") {
+            const yest = new Date();
+            yest.setDate(today.getDate() - 1);
+            datePickerState.selectedDate = yest;
+            datePickerState.selectedRange = { start: yest, end: yest };
+        }
+        if (btn.dataset.preset === "last7days") {
+            const start = new Date();
+            start.setDate(today.getDate() - 6);
+            datePickerState.selectedRange = { start, end: today };
+        }
+        updateDisplayText();
+        generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+    });
+});
+
+// ========== INIT ==========
+generateCalendar(datePickerState.currentYear, datePickerState.currentMonth);
+
+  </script>
+
+</body>
+</html>
+

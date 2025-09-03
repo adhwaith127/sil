@@ -6,7 +6,7 @@ import calendar
 from typing import List, Dict, Any, Tuple, Optional, Set
 
 
-# Get employee holidays using same logic as weekly/monthly files
+# Get employee holidays
 def _get_employee_holidays(start_date, end_date):
     try:
         holiday_query = """
@@ -76,7 +76,7 @@ def _get_leaves_for_period(start_date, end_date):
         return {}
 
 
-# Get employee checkin data using same logic as weekly/monthly files
+# Get employee checkin data
 def _get_employee_data(start_date, end_date):
     try:
         query = """
@@ -99,7 +99,7 @@ def _get_employee_data(start_date, end_date):
         return []
 
 
-# Filter checkins to exclude holidays using same logic as weekly/monthly files
+# Filter checkins to exclude holidays
 def _filter_checkins(raw_checkin_data, employee_holidays):
     try:
         filtered_data = []
@@ -116,13 +116,19 @@ def _filter_checkins(raw_checkin_data, employee_holidays):
         return []
 
 
-# Calculate work hours using same logic as weekly/monthly files
+# Calculate work hours
 def _calculate_employee_work_hours(logs, shift_end=None):
     try:
         if not logs:
             return {
-                "employee": None, "department": None, "reports_to": None,
-                "date": None, "daily_working_hours": 0.0, "entry_time": None, "exit_time": None, "checkin_pairs": []
+                "employee": None, 
+                "department": None, 
+                "reports_to": None,
+                "date": None, 
+                "daily_working_hours": 0.0, 
+                "entry_time": None, 
+                "exit_time": None, 
+                "checkin_pairs": []
             }
 
         total_working_hours = 0.0
@@ -150,7 +156,7 @@ def _calculate_employee_work_hours(logs, shift_end=None):
 
                 last_out_time = log['time']
         
-        if last_in_time and shift_end:
+        if last_in_time and shift_end and last_in_time.date()<date.today():
             session_duration = time_diff_in_hours(shift_end, last_in_time)
             total_working_hours += session_duration
             checkin_pairs.append({
@@ -183,7 +189,7 @@ def _calculate_employee_work_hours(logs, shift_end=None):
         return {"error": "Error in calculating work hours"}
 
 
-# Sort and process checkin data using same logic as weekly/monthly files
+# Sort and process checkin data
 def _sort_checkin_data(filtered_checkin_data):
     try:
         grouped_emp_data = defaultdict(lambda: defaultdict(list))
@@ -199,9 +205,9 @@ def _sort_checkin_data(filtered_checkin_data):
                     if isinstance(shift_end, timedelta):
                         # Convert timedelta to a time object
                         shift_end = (datetime.min + shift_end).time()
-                    elif isinstance(shift_end, str):   # check whether shift end is string or datetime then convert
+                    elif isinstance(shift_end, str):   # check whether shift end is string 
                         shift_end = datetime.strptime(shift_end, "%H:%M").time()
-                    elif isinstance(shift_end, datetime):  
+                    elif isinstance(shift_end, datetime):  # or datetime then convert
                         shift_end = shift_end.time() 
                     
                     # getdate gets the date part from datetime and combine with end time(str/time obj) for datetime
@@ -215,13 +221,6 @@ def _sort_checkin_data(filtered_checkin_data):
     except Exception as e:
         frappe.log_error("Error in processing checkin data", str(e))
         return []
-
-
-# Calculate working days using monthly logic
-def _calculate_working_days_monthly(num_days_in_month, employee_holidays):
-    holiday_count = len(employee_holidays)
-    working_days = num_days_in_month - holiday_count
-    return max(working_days, 0)
 
 
 # Calculate working days using weekly logic
@@ -290,17 +289,17 @@ def _calculate_daily_work_hours_with_status(logs, employee_holidays, employee_le
 
 
 # Process checkin data with holiday and leave integration using weekly/monthly logic
-def get_processed_checkin_data(from_date: date, to_date: date) -> List[Dict[str, Any]]:
+def _get_processed_checkin_data(from_date: date, to_date: date) -> List[Dict[str, Any]]:
     try:
         if not from_date or not to_date:
             return []
         
-        # Get data using same logic as weekly/monthly files
+        # Get data
         raw_checkin_data = _get_employee_data(from_date, to_date)
         if not raw_checkin_data:
             return []
         
-        # Get holidays using same logic as weekly/monthly files
+        # Get holidays
         employee_holidays = _get_employee_holidays(from_date, to_date)
         if not employee_holidays:
             frappe.log_error("No holiday data found", "Holiday mapping is empty")
@@ -415,7 +414,7 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
                     _, days_in_month = calendar.monthrange(start_date.year, start_date.month)
                     actual_end_date = start_date.replace(day=days_in_month)
             
-            # ✅ NOW calculate holidays with ACTUAL boundaries
+            # NOW calculate holidays with ACTUAL boundaries
             holidays_in_period = [h for h in all_emp_holidays 
                                 if actual_start_date <= h <= actual_end_date]
             
@@ -430,7 +429,7 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
                 actual_start_date = start_date
                 actual_end_date = min(end_date, today_date)
                 
-                # ✅ Calculate holidays with actual boundaries
+                # Calculate holidays with actual boundaries
                 holidays_in_period = [h for h in all_emp_holidays 
                                     if actual_start_date <= h <= actual_end_date]
                 
@@ -474,8 +473,8 @@ def _add_to_registry(registry: Dict, data: List[Dict], data_key: str):
             registry[emp_name][data_key] = clean_record
 
 
-# Get manager to subordinates mapping
-def get_hierarchy_map() -> defaultdict[str, List[str]]:
+# manager to subordinates mapping
+def _get_hierarchy_map() -> defaultdict[str, List[str]]:
     try:
         employees = frappe.get_all("Employee", filters={"status": "Active"}, fields=["name", "reports_to"])
         hierarchy = defaultdict(list)
@@ -489,10 +488,10 @@ def get_hierarchy_map() -> defaultdict[str, List[str]]:
 
 
 # Get all subordinates using breadth-first search
-def get_all_subordinates(manager_id: str, hierarchy_map: Dict) -> List[str]:
+def _get_all_subordinates(manager_id: str, hierarchy_map: Dict) -> List[str]:
     if not manager_id or not hierarchy_map:
         return []
-    
+
     all_subordinates = set()
     queue = hierarchy_map.get(manager_id, [])
     visited = set(queue)
@@ -510,7 +509,7 @@ def get_all_subordinates(manager_id: str, hierarchy_map: Dict) -> List[str]:
     return list(all_subordinates)
 
 
-# Calculate week/month boundaries for given date with proper today handling
+# Calculate week/month boundaries for given date
 def _get_date_boundaries(target_date: date) -> Dict[str, date]:
     today_date = getdate(today())
     
@@ -679,26 +678,50 @@ def fetch_checkins(from_date: str = None, to_date: str = None, specific_date: st
         if not any([from_date, to_date, specific_date]):
             specific_date = today()
 
+        # Determine user hierarchy
+        if frappe.session.user == 'Administrator':
+            manager_id = "Administrator"
+            all_employees = frappe.get_all("Employee", 
+                filters=[['status', '=', 'Active']], 
+                fields=["name", 'department', 'reports_to', 'image']
+            )
+            subordinate_ids = [emp.name for emp in all_employees if emp.name != manager_id]
+        else:
+            manager_id = frappe.db.get_value("Employee", {"user_id": frappe.session.user}, "name")
+            if not manager_id:
+                frappe.throw("User not linked to active employee record.")
+            
+            hierarchy_map = _get_hierarchy_map()
+            subordinate_ids = _get_all_subordinates(manager_id, hierarchy_map)
+            allowed_employees = set(subordinate_ids + [manager_id])
+            all_employees = frappe.get_all("Employee", 
+                filters={"name": ["in", list(allowed_employees)]},
+                fields=["name", "department", "reports_to", 'image']
+            )
+
+        # Build registry and process data
+        registry = _build_employee_registry(all_employees)
+
         # Handle date range request
         if from_date and to_date:
             try:
                 start_date, end_date = getdate(from_date), getdate(to_date)
-                processed_data = get_processed_checkin_data(start_date, end_date)
+                processed_data = _get_processed_checkin_data(start_date, end_date)
                 
                 if not processed_data:
                     return {"message": f"No check-in data found between {from_date} and {to_date}."}
                 
+                boundaries = {"earliest_date": start_date, "latest_date": end_date}
+                
                 # Get holidays for working days calculation
                 employee_holidays = _get_employee_holidays(start_date, end_date)
                 
-                # Calculate period type
-                days_diff = (end_date - start_date).days + 1
-                if days_diff <= 7:
-                    period_type = 'weekly'
-                else:
-                    period_type = 'monthly'
+                all_data = _get_processed_checkin_data(start_date, end_date)
+                _process_data_by_periods(registry, all_data, boundaries, target_date, employee_holidays)
+                
+                return _create_hierarchy_response(registry, manager_id, subordinate_ids)
                     
-                return _create_summary_with_working_days(processed_data, period_type, start_date, end_date, employee_holidays)
+                # return _create_summary_with_working_days(processed_data, period_type, start_date, end_date, employee_holidays)
                 
             except Exception as e:
                 frappe.log_error("Error in date range processing", str(e))
@@ -711,35 +734,12 @@ def fetch_checkins(from_date: str = None, to_date: str = None, specific_date: st
                 if target_date > getdate(today()):
                     return {"error": "Cannot fetch data for future date."}
                 
-                # Determine user hierarchy
-                if frappe.session.user == 'Administrator':
-                    manager_id = "Administrator"
-                    all_employees = frappe.get_all("Employee", 
-                        filters=[['status', '=', 'Active']], 
-                        fields=["name", 'department', 'reports_to', 'image']
-                    )
-                    subordinate_ids = [emp.name for emp in all_employees if emp.name != manager_id]
-                else:
-                    manager_id = frappe.db.get_value("Employee", {"user_id": frappe.session.user}, "name")
-                    if not manager_id:
-                        frappe.throw("User not linked to active employee record.")
-                    
-                    hierarchy_map = get_hierarchy_map()
-                    subordinate_ids = get_all_subordinates(manager_id, hierarchy_map)
-                    allowed_employees = set(subordinate_ids + [manager_id])
-                    all_employees = frappe.get_all("Employee", 
-                        filters={"name": ["in", list(allowed_employees)]}, 
-                        fields=["name", "department", "reports_to", 'image']
-                    )
-
-                # Build registry and process data
-                registry = _build_employee_registry(all_employees)
                 boundaries = _get_date_boundaries(target_date)
                 
                 # Get holidays for the entire period
                 employee_holidays = _get_employee_holidays(boundaries['earliest_date'], boundaries['latest_date'])
                 
-                all_data = get_processed_checkin_data(boundaries['earliest_date'], boundaries['latest_date'])
+                all_data = _get_processed_checkin_data(boundaries['earliest_date'], boundaries['latest_date'])
                 _process_data_by_periods(registry, all_data, boundaries, target_date, employee_holidays)
                 
                 return _create_hierarchy_response(registry, manager_id, subordinate_ids)

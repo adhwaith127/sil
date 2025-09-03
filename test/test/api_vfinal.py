@@ -4,8 +4,6 @@ from collections import OrderedDict, defaultdict
 from datetime import datetime, date, timedelta
 import calendar
 
-# --- Core Data Processing ---
-
 
 # Calculates the number of working days (Mon-Fri) in a given date range.
 def _get_working_days(start_date, end_date):
@@ -82,7 +80,7 @@ def get_processed_checkin_data(from_date, to_date):
     
     return daily_summaries
 
-# --- Data Summarization and Aggregation ---
+
 
 # function to create a summary from a list of daily processed records.
 def _create_period_summary(daily_records, total_working_days, result_type):
@@ -133,7 +131,7 @@ def _populate_registry(registry, data, data_key):
 
     return registry
 
-# --- Hierarchy and Filtering Logic ---
+
 
 # Builds a map of manager to their direct reports(a hierarchy list) 
 def get_hierarchy_map():
@@ -145,7 +143,7 @@ def get_hierarchy_map():
     return hierarchy
 
 
-# finds all direct and indirect subordinates for a given manager -> using recursion here ????  (through iteration, not actual recursion)(cgpt)
+# finds all direct and indirect subordinates for a given manager
 def get_all_subordinates(manager_id, hierarchy_map):
     all_subs = set()
     queue = hierarchy_map.get(manager_id, [])   
@@ -180,7 +178,7 @@ def _structure_data_for_hierarchy(employee_registry, manager_id, subordinate_ids
         "total_count(with manager)": len(subordinates_data) + (1 if manager_data else 0)
     }
 
-# --- Main API Function ---
+# Main Function
 
 @frappe.whitelist(allow_guest=True)
 def fetch_checkins(from_date=None, to_date=None, specific_date=None):

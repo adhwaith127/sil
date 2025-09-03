@@ -60,24 +60,25 @@
 
         /* Card container styling with shadow effects */
         .card-container {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
-    padding: 25px;
-    margin-bottom: 25px;
-    transition: all 0.4s ease;
-    opacity: 1;
-    transform: translateY(0);
-}
-card-container.loading {
-    opacity: 0.7;
-    transform: translateY(3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-container.loading {
+            opacity: 0.7;
+            transform: translateY(3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
 
-.card-container.loaded {
-    animation: cardFadeIn 0.6s ease;
-}
+        .card-container.loaded {
+            animation: cardFadeIn 0.6s ease;
+        }
 
 @keyframes cardFadeIn {
     from {
@@ -250,15 +251,6 @@ card-container.loading {
 .fixed-table.attendance-view th:nth-child(8) { width: 12%; }  /* Work Time */
 .fixed-table.attendance-view th:nth-child(9) { width: 10%; }  /* Actions */
 
-/* Improved overtime view columns */
-.fixed-table.overtime-view th:nth-child(1) { width: 8%; }     /* Image */
-.fixed-table.overtime-view th:nth-child(2) { width: 25%; }    /* Employee Name */
-.fixed-table.overtime-view th:nth-child(3) { width: 18%; }    /* Department */
-.fixed-table.overtime-view th:nth-child(4) { width: 18%; }    /* Reports To */
-.fixed-table.overtime-view th:nth-child(5) { width: 12%; }    /* Check In */
-.fixed-table.overtime-view th:nth-child(6) { width: 12%; }    /* Check Out */
-.fixed-table.overtime-view th:nth-child(7) { width: 7%; }     /* Overtime */
-
         /* Table header styling */
         .table thead {
             background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
@@ -342,38 +334,6 @@ card-container.loading {
             color: white; 
         }
 
-        /* Toggle buttons for data view selection */
-        .data-view-toggle {
-            display: flex;
-            gap: 10px;
-            margin-left: 30px;
-        }
-
-        .toggle-btn {
-            padding: 8px 16px;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
-            border-radius: 30px;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            font-weight: 500;
-            width: 200px;
-            height: 50px;
-        }
-
-        .toggle-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .toggle-btn:hover {
-            background: var(--primary-light);
-        }
-
-        .toggle-btn.active:hover {
-            background: #0c595f;
-        }
 
         /* Filters container styling */
         .filters-container {
@@ -853,6 +813,30 @@ card-container.loading {
             color: var(--dark);
         }
 
+                /* Ongoing session styling */
+        .status-present.ongoing {
+            background: linear-gradient(135deg, #d4edda, #a3d977);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .table-success {
+            background-color: rgba(40, 167, 69, 0.1) !important;
+        }
+
+        .badge.bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .badge.bg-warning {
+            background-color: #ffc107 !important;
+            color: #212529 !important;
+        }
+
         /* Responsive design for mobile devices */
         @media (max-width: 768px) {
             .filters-container {
@@ -884,11 +868,6 @@ card-container.loading {
 
             .attendance-summary {
                 flex-direction: column;
-            }
-
-            .data-view-toggle {
-                margin-top: 10px;
-                margin-left: 0;
             }
 
             .date-picker-container {
@@ -1007,14 +986,6 @@ card-container.loading {
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
                 <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
                     <h4 class="section-title mb-3 mb-md-0">Team Attendance Report</h4>
-                    <div class="data-view-toggle">
-                        <button class="toggle-btn active" id="attendance-toggle" onclick="toggleDataView('attendance')">
-                            <i class="fas fa-calendar-check me-1"></i> Daily Data
-                        </button>
-                        <button class="toggle-btn" id="overtime-toggle" onclick="toggleDataView('overtime')">
-                            <i class="fas fa-clock me-1"></i> Overtime Data
-                        </button>
-                    </div>
                 </div>
                 <div class="d-flex">
                     <button class="btn btn-outline-primary me-2" id="reset-filters">
@@ -1297,7 +1268,6 @@ card-container.loading {
         let totalRecords = 0;
         let allEmployeeData = [];
         let filteredData = [];
-        let overtimeEmployeeData = [];
         
         // Date management
         let currentDate = new Date().toISOString().split('T')[0];
@@ -1307,15 +1277,14 @@ card-container.loading {
         let subordinatesData = {};
         
         // UI state management
-        let currentDataView = 'attendance'; // 'attendance' or 'overtime'
+        const currentDataView = 'attendance'; 
         let isAdminUser = false;
         let searchTimeout;
         let activeSummaryFilter = 'total'; // 'total', 'present', 'absent'
         
         // API configuration
         const baseUrl = window.location.origin;
-        const API_BASE_URL = `${baseUrl}/api/method/sil.test.api.fetch_checkins`;
-        const OVERTIME_API_URL = `${baseUrl}/api/method/sil.test.overtime.fetch_overtime`;
+        const API_BASE_URL = `${baseUrl}/api/method/sil.test.api_test.fetch_checkins`;
         const EXPORT_API_URL = `${baseUrl}/api/method/sil.test.export.export_attendance`;
       
         // Initialize the dashboard when DOM is loaded
@@ -1480,10 +1449,8 @@ function setLoadingState(elementId, isLoading, loadingText = 'Loading...') {
         // Main function to load all dashboard data
         async function loadDashboardData() {
             showLoading('main-table-container');
-setLoadingState('report-container', true);
+            setLoadingState('report-container', true);
 
-            // Reset overtime data on each full load to ensure it's fresh for the new date
-            overtimeEmployeeData = [];
             
             try {
                 // Load main attendance data which is the source of truth for all employees
@@ -1492,17 +1459,9 @@ setLoadingState('report-container', true);
                 if (attendanceResponse && !attendanceResponse.error) {
                     processApiResponse(attendanceResponse);
                     
-                    // Conditionally load overtime data if the view is already set to overtime
-                    if (currentDataView === 'overtime') {
-                        const overtimeResponse = await fetchOvertimeData(currentDate);
-                        if (overtimeResponse && !overtimeResponse.error) {
-                            processOvertimeResponse(overtimeResponse);
-                        }
-                    }
-                    
                     updateDashboard();
                     updateUserInterface();
-                    populateEmployeeData(); // This will apply filters and display data
+                    populateEmployeeData(); 
                     populateFilterDropdowns();
                     populateExportModal();
                 } else {
@@ -1515,8 +1474,8 @@ setLoadingState('report-container', true);
                 showErrorMessage('An unexpected error occurred. Please try again.');
             } finally {
                 hideLoading('main-table-container');
-setLoadingState('report-container', false);
-            }
+                setLoadingState('report-container', false);
+                }
         }
 
         // Fetch attendance data from API with timeout and error handling
@@ -1558,43 +1517,6 @@ setLoadingState('report-container', false);
             }
         }
 
-        // Fetch overtime data from API
-        async function fetchOvertimeData(date) {
-            const url = new URL(OVERTIME_API_URL);
-            // The python script expects 'ot_date' as the parameter name
-            url.searchParams.append("ot_date", date);
-
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    signal: controller.signal
-                });
-
-                clearTimeout(timeoutId);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                return data.message || data;
-
-            } catch (error) {
-                console.error('Overtime API call failed:', error);
-                if (error.name === 'AbortError') {
-                    return { error: 'Request timeout. The server is taking too long to respond.' };
-                }
-                return { error: `An error occurred: ${error.message}` };
-            }
-        }
-
         // Process the API response and extract relevant data
         function processApiResponse(response) {
             isAdminUser = response.user_id === "Administrator";
@@ -1611,32 +1533,11 @@ setLoadingState('report-container', false);
             allEmployeeData.sort((a, b) => a.employee.localeCompare(b.employee));
         }
 
-        // Process overtime API response, which returns a list of employees
-        function processOvertimeResponse(response) {
-            console.log("api response",response)
-            const rawOvertimeList = Array.isArray(response) ? response : [];
-            
-            overtimeEmployeeData = rawOvertimeList.map(ot_record => {
-                // The API response for overtime does not contain an employee ID.
-                // We find the corresponding employee from our main data source `allEmployeeData`
-                // by matching the employee name. This ensures data integrity.
-                const masterRecord = allEmployeeData.find(emp => emp.employee === ot_record.employee_name);
-                
-                const empId = masterRecord ? masterRecord.id : ot_record.employee_name; // Use name as fallback ID
-                
-                return createOvertimeRecord(ot_record, empId);
-
-            }).filter(Boolean);
-            
-            overtimeEmployeeData.sort((a, b) => a.employee.localeCompare(b.employee));
-        }
-
 
         // Create a standardized employee record from API data
         function createEmployeeRecord(empData, empId) {
             const empInfo = empData?.employee_info || {};
             const dailyData = empData?.daily_data || {};
-            const overtimeData = empData?.overtime_data || {};
 
             return {
                 id: empId,
@@ -1648,32 +1549,13 @@ setLoadingState('report-container', false);
                 entry_time: dailyData.entry_time || '-',
                 exit_time: dailyData.exit_time || '-',
                 work_time: dailyData.daily_working_hours || 0,
-                overtime_hours: overtimeData.overtime_hours || 0,
                 weekly_avg: empData.weekly_summary?.average_work_hours || 0,
                 monthly_avg: empData.monthly_summary?.average_work_hours || 0,
-                checkin_pairs: dailyData.checkin_pairs || [], // Store checkin pairs for modal
-                raw_data: empData // Store original data for detailed views
+                checkin_pairs: dailyData.checkin_pairs || [],
+                raw_data: empData
             };
         }
-
-        // Create overtime record from API data with corrected field names
-        function createOvertimeRecord(empData, empId) {
-            // empData is one object from the python script's response list.
-            // Find the corresponding employee from main data to get image
-            const masterRecord = allEmployeeData.find(emp => emp.employee === empData.employee_name);
-            
-            return {
-                id: empId,
-                image: masterRecord ? masterRecord.image : null,
-                employee: empData.employee_name || empId,
-                department: empData.department || 'Unknown',
-                reports_to: empData.reports_to || 'N/A',
-                entry_time: empData.first_in || '-',      // Mapped from 'first_in'
-                exit_time: empData.last_out || '-',       // Mapped from 'last_out'
-                overtime_hours: empData.total_overtime || 0 // Mapped from 'total_overtime'
-            };
-        }
-        
+  
         // Update summary cards and manager performance data
         function updateDashboard() {
             const totalEmployees = allEmployeeData.length;
@@ -1726,15 +1608,16 @@ setLoadingState('report-container', false);
                 return;
             }
 
-            const status=managerData.daily_data?.status || managerRecord.status
-            if (status==="Present"){
-                MstatusBadge='<span class="status-badge status-present">Present</span>'
-            }else if(status==="Absent"){
-                MstatusBadge='<span class="status-badge status-absent">Absent</span>';
-            }else if(status==="On Leave"){
-                MstatusBadge='<span class="status-badge status-absent">On Leave</span>';
-            }else if(status==="Holiday"){
-                MstatusBadge='<span class="status-badge status-absent">Holiday</span>';
+            const status = managerData.daily_data?.status || managerRecord.status;
+            let statusBadge = '';
+            if (status === "Present") {
+                statusBadge = '<span class="status-badge status-present">Present</span>';
+            } else if (status === "Absent") {
+                statusBadge = '<span class="status-badge status-absent">Absent</span>';
+            } else if (status === "On Leave") {
+                statusBadge = '<span class="status-badge status-absent">On Leave</span>';
+            } else if (status === "Holiday") {
+                statusBadge = '<span class="status-badge status-absent">Holiday</span>';
             }
 
             const row = `
@@ -1742,10 +1625,10 @@ setLoadingState('report-container', false);
                     <td class="employee-name">${managerRecord.employee}</td>
                     <td>${managerRecord.department}</td>
                     <td>${managerRecord.reports_to}</td>
-                    <td>${MstatusBadge}</td>
+                    <td>${statusBadge}</td>
                     <td>${managerRecord.entry_time}</td>
                     <td>${managerRecord.exit_time}</td>
-                    <td>${(managerRecord.daily_data?.daily_working_hours || managerRecord.work_time || 0).toFixed(2)}</td>
+                    <td>${(managerRecord.work_time || 0).toFixed(2)}</td>
                 </tr>`;
             tbody.innerHTML = row;
         }
@@ -1776,19 +1659,9 @@ setLoadingState('report-container', false);
             if (filterType === 'total') {
                 filteredData = [...getCurrentDataSource()];
             } else if (filterType === 'present') {
-                // Summary filters only apply to attendance view
-                if (currentDataView === 'attendance') {
-                    filteredData = getCurrentDataSource().filter(emp => emp.status === 'Present');
-                } else {
-                    filteredData = [...getCurrentDataSource()];
-                }
+                filteredData = getCurrentDataSource().filter(emp => emp.status === 'Present');
             } else if (filterType === 'absent') {
-                 // Summary filters only apply to attendance view
-                if (currentDataView === 'attendance') {
-                    filteredData = getCurrentDataSource().filter(emp => emp.status === 'Absent');
-                } else {
-                     filteredData = [...getCurrentDataSource()];
-                }
+                filteredData = getCurrentDataSource().filter(emp => emp.status !== 'Present');
             }
             
             totalRecords = filteredData.length;
@@ -1801,84 +1674,9 @@ setLoadingState('report-container', false);
 
         // Get current data source based on view
         function getCurrentDataSource() {
-            return currentDataView === 'overtime' ? overtimeEmployeeData : allEmployeeData;
+            return allEmployeeData;
         }
 
-        
-        // DATA VIEW TOGGLE FUNCTIONALITY
-        
-        
-        // Toggle between attendance and overtime data views
-        async function toggleDataView(viewType) {
-            currentDataView = viewType;
-            
-            // Update toggle button states
-            document.getElementById('attendance-toggle').classList.toggle('active', viewType === 'attendance');
-            document.getElementById('overtime-toggle').classList.toggle('active', viewType === 'overtime');
-            
-            // Show loading for overtime data if not loaded yet for the current date
-            if (viewType === 'overtime' && overtimeEmployeeData.length === 0) {
-                setLoadingState('report-container', true, 'Loading overtime data...');                
-                try {
-                    const overtimeResponse = await fetchOvertimeData(currentDate);
-                    if (overtimeResponse && !overtimeResponse.error) {
-                        processOvertimeResponse(overtimeResponse);
-                    } else {
-                        console.error("Error fetching overtime data:", overtimeResponse.error);
-                        showErrorMessage(overtimeResponse.error || "Could not fetch overtime data.");
-                    }
-                } catch (error) {
-                    console.error('Error loading overtime data:', error);
-                    showErrorMessage("An error occurred while fetching overtime data.");
-                } finally {
-setLoadingState('report-container', false);                }
-            }
-            
-            updateTableLayout(viewType);
-            populateEmployeeData();
-        }
-
-        // Update table layout and column visibility based on view type
-        function updateTableLayout(viewType) {
-            const table = document.getElementById('main-data-table');
-            const workTimeHeader = document.getElementById('work-time-header');
-            const statusTh = document.getElementById('status-th');
-            const actionsTh = document.getElementById('more-btn-th');
-            const imageHeader = document.getElementById('emp-image');
-            const entryTimeTh = document.getElementById('entry-time-th').querySelector('span');
-            const exitTimeTh = document.getElementById('exit-time-th').querySelector('span');
-            
-            const isAttendanceView = viewType === 'attendance';
-            
-            // Update table classes for proper column widths
-            table.className = isAttendanceView 
-                ? 'table table-hover table-responsive fixed-table attendance-view'
-                : 'table table-hover table-responsive fixed-table overtime-view';
-            
-            // Update header text and show/hide columns based on view
-            workTimeHeader.textContent = isAttendanceView ? 'Work Time (hrs)' : 'Overtime (hrs)';
-            entryTimeTh.textContent = isAttendanceView ? 'Checkin' : 'Check In';
-            exitTimeTh.textContent = isAttendanceView ? 'Checkout' : 'Check Out';
-
-            // Show image column in both views
-            imageHeader.parentElement.classList.remove('hide-column');
-            
-            // Hide status and actions columns only in overtime view
-            statusTh.classList.toggle('hide-column', !isAttendanceView);
-            actionsTh.classList.toggle('hide-column', !isAttendanceView);
-            
-            // The sortData function needs to know which field to sort by for work time/overtime
-            const workTimeSortButtons = document.getElementById('work-time-header').parentElement.querySelectorAll('.sort-btn');
-            workTimeSortButtons[0].setAttribute('onclick', isAttendanceView ? "sortData('work_time', 'asc')" : "sortData('overtime_hours', 'asc')");
-            workTimeSortButtons[1].setAttribute('onclick', isAttendanceView ? "sortData('work_time', 'desc')" : "sortData('overtime_hours', 'desc')");
-
-            displayCurrentPage();
-        }
-
-        
-        // EMPLOYEE DATA MANAGEMENT
-        
-        
         // Initialize employee data display and pagination
         function populateEmployeeData() {
             const dataSource = getCurrentDataSource();
@@ -1981,6 +1779,7 @@ setLoadingState('report-container', false);                }
                                 <th>Check In</th>
                                 <th>Check Out</th>
                                 <th>Duration (hrs)</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody id="more-table-body">`;
@@ -1992,20 +1791,31 @@ setLoadingState('report-container', false);                }
                     const checkOut = pair.out_time || pair.Out || '-';
                     const duration = pair.duration || pair.Session || 0;
                     totalHours += duration || 0;
+                    
+                    // Determine session status
+                    let statusBadge = '';
+                    if (pair.ongoing) {
+                        statusBadge = '<span class="badge bg-success">🟢 Ongoing</span>';
+                    } else if (pair.auto_closed) {
+                        statusBadge = '<span class="badge bg-warning">Auto-closed</span>';
+                    } else {
+                        statusBadge = '<span class="badge bg-secondary">Completed</span>';
+                    }
 
                     tableHtml += `
-                        <tr>
+                        <tr ${pair.ongoing ? 'class="table-success"' : ''}>
                             <td><strong>Session ${sessionNumber}</strong></td>
                             <td>${checkIn}</td>
                             <td>${checkOut}</td>
                             <td>${duration ? duration.toFixed(2) : '0.00'}</td>
+                            <td>${statusBadge}</td>
                         </tr>`;
                 });
 
                 tableHtml += `
                         <tr class="table-info">
                             <td><strong>Total</strong></td>
-                            <td colspan="2"><strong>Total Work Time</strong></td>
+                            <td colspan="3"><strong>Total Work Time</strong></td>
                             <td><strong>${totalHours.toFixed(2)}</strong></td>
                         </tr>`;
                 tableHtml += `</tbody></table>`;
@@ -2034,23 +1844,21 @@ setLoadingState('report-container', false);                }
 
         // Auto-populate department when employee is selected
         document.getElementById('export-employee').addEventListener('change', function(event) {
-            let modalEmp = event.target.value;
-            const modalDept = document.getElementById('export-department');
+            const modalEmp = event.target.value;
+            const departmentSelect = document.getElementById('export-department');
 
-            if (modalEmp === "") {
-                // If the default/empty option is selected, reset the department field
-                modalDept.value = '';
-                modalDept.style.pointerEvents = 'auto'; // Re-enable clicks
-                modalDept.style.backgroundColor = ''; // Remove disabled styling
-                modalDept.readOnly = false; // Make sure it's not read-only
+            if (modalEmp === '') {
+                departmentSelect.value = '';
+                departmentSelect.style.pointerEvents = 'auto';
+                departmentSelect.style.backgroundColor = '';
+                departmentSelect.readOnly = false;
             } else {
-                // Find the employee if a valid ID is selected
-                const emp = allEmployeeData.find(e => e.id === modalEmp);
-                if (emp) {
-                    modalDept.value = emp.department || '';
-                    modalDept.style.pointerEvents = 'none'; // Disable clicks
-                    modalDept.style.backgroundColor = '#e9ecef'; // Add disabled styling
-                    modalDept.readOnly = true; // Make it read-only
+                const employee = allEmployeeData.find(emp => emp.id === modalEmp);
+                if (employee) {
+                    departmentSelect.value = employee.department || '';
+                    departmentSelect.style.pointerEvents = 'none';
+                    departmentSelect.style.backgroundColor = '#e9ecef';
+                    departmentSelect.readOnly = true;
                 }
             }
         });
@@ -2227,12 +2035,10 @@ setLoadingState('report-container', false);                }
                 
                 // Summary filters (present/absent) only apply to attendance view
                 let matchesSummary = true;
-                if (currentDataView === 'attendance') {
-                    if (activeSummaryFilter === 'present') {
-                        matchesSummary = employee.status === 'Present';
-                    } else if (activeSummaryFilter === 'absent') {
-                        matchesSummary = employee.status === 'Absent';
-                    }
+                if (activeSummaryFilter === 'present') {
+                    matchesSummary = employee.status === 'Present';
+                } else if (activeSummaryFilter === 'absent') {
+                    matchesSummary = employee.status !== 'Present';
                 }
                 
                 return matchesDepartment && matchesReportsTo && matchesSearch && matchesSummary;
@@ -2291,21 +2097,14 @@ setLoadingState('report-container', false);                }
             tbody.innerHTML = ''; // Clear previous data
             
             if (pageData.length === 0) {
-                const colspan = currentDataView === 'attendance' ? '9' : '7';
+                const colspan = '9'
                 tbody.innerHTML = `<tr><td colspan="${colspan}" class="text-center">No matching records found.</td></tr>`;
                 return;
             }
                         
             const isAttendanceView = currentDataView === 'attendance';
             
-            // Generate table rows based on current view mode
-            const allRowsHTML = pageData.map(employee => {
-                if (isAttendanceView) {
-                    return generateAttendanceRow(employee);
-                } else {
-                    return generateOvertimeRow(employee);
-                }
-            }).join('');
+            const allRowsHTML = pageData.map(employee => generateAttendanceRow(employee)).join('');
             
             tbody.innerHTML = allRowsHTML;
         }
@@ -2313,70 +2112,57 @@ setLoadingState('report-container', false);                }
         // Generate attendance view row
         // REPLACE your generateAttendanceRow function with this enhanced version:
 
-function generateAttendanceRow(employee) {
-    let statusBadge = '';
-    if (employee.status === "Present") {
-        statusBadge = '<span class="status-badge status-present">Present</span>';
-    } else if (employee.status === "Absent") {
-        statusBadge = '<span class="status-badge status-absent">Absent</span>';
-    } else if (employee.status === "On Leave") {
-        statusBadge = '<span class="status-badge status-absent">On Leave</span>';
-    } else if (employee.status === "Holiday") {
-        statusBadge = '<span class="status-badge status-absent">Holiday</span>';
-    }
-
-    const rootPath = window.location.origin;
-    
-
-    const imageUrl = `${rootPath}${employee.image}`;
-    const defaultImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWIiLz4KPHBhdGggZD0iTTIwIDIwYzIuNzYgMCA1LTIuMjQgNS01cy0yLjI0LTUtNS01LTUgMi4yNC01IDUgMi4yNCA1IDUgNXptMCAyYy0zLjMzIDAtMTAgMS42Ny0xMCA1djNoMjB2LTNjMC0zLjMzLTYuNjctNS0xMC01eiIgZmlsbD0iIzljYTNhZiIvPgo8L3N2Zz4K';
-
-    return `
-        <tr>
-            <td class="image-cell" style="--hover-image: url('${imageUrl}')">
-                <img id="emp-img-tag" src="${imageUrl}" 
-                    alt="${employee.employee}" 
-                    onerror="this.src='${defaultImage}'; this.parentElement.style.setProperty('--hover-image', 'url(${defaultImage})')"/>
-            </td>
-            <td class="employee-name">${employee.employee}</td>
-            <td>${employee.department}</td>
-            <td>${employee.reports_to}</td>
-            <td>${statusBadge}</td>
-            <td>${employee.entry_time}</td>
-            <td>${employee.exit_time}</td>
-            <td><strong>${(employee.work_time || 0).toFixed(2)}h</strong></td>
-            <td>
-                <button class="btn btn-sm more-button" onclick="showEmployeeDetails('${employee.id}')" 
-                        title="View detailed attendance logs">
-                    <i class="fas fa-eye me-1"></i>More
-                </button>
-            </td>
-        </tr>
-    `;
-}
-
-        // Generate overtime view row
-        function generateOvertimeRow(employee) {
-            const rootPath = window.location.origin;
-            const imageUrl = `${rootPath}${employee.image}`;
-            const defaultImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWIiLz4KPHBhdGggZD0iTTIwIDIwYzIuNzYgMCA1LTIuMjQgNS01cy0yLjI0LTUtNS01LTUgMi4yNC01IDUgMi4yNCA1IDUgNXptMCAyYy0zLjMzIDAtMTAgMS42Ny0xMCA1djNoMjB2LTNjMC0zLjMzLTYuNjctNS0xMC01eiIgZmlsbD0iIzljYTNhZiIvPgo8L3N2Zz4K';
-            
-            return `
-                <tr>
-                    <td class="image-cell" style="--hover-image: url('${imageUrl}')">
-                        <img id="emp-img-tag" src="${imageUrl}" 
-                            alt="${employee.employee}" 
-                            onerror="this.src='${defaultImage}'; this.parentElement.style.setProperty('--hover-image', 'url(${defaultImage})')"/>
-                    </td>
-                    <td class="employee-name">${employee.employee}</td>
-                    <td>${employee.department}</td>
-                    <td>${employee.reports_to}</td>
-                    <td>${employee.entry_time}</td>
-                    <td>${employee.exit_time}</td>
-                    <td><strong>${(employee.overtime_hours || 0)}h</strong></td>
-                </tr>
-            `;
+    function generateAttendanceRow(employee) {
+        let statusBadge = '';
+        if (employee.status === "Present") {
+            // Check if there's an ongoing session
+            const hasOngoingSession = employee.raw_data?.daily_data?.has_ongoing_session;
+            if (hasOngoingSession) {
+                statusBadge = '<span class="status-badge status-present">🟢 Present (In)</span>';
+            } else {
+                statusBadge = '<span class="status-badge status-present">Present</span>';
+            }
+        } else if (employee.status === "Absent") {
+            statusBadge = '<span class="status-badge status-absent">Absent</span>';
+        } else if (employee.status === "On Leave") {
+            statusBadge = '<span class="status-badge status-absent">On Leave</span>';
+        } else if (employee.status === "Holiday") {
+            statusBadge = '<span class="status-badge status-absent">Holiday</span>';
         }
+
+        // Handle exit time display for ongoing sessions
+        let exitTimeDisplay = employee.exit_time;
+        if (employee.raw_data?.daily_data?.has_ongoing_session && !employee.exit_time) {
+            exitTimeDisplay = "Ongoing";
+        }
+
+        const rootPath = window.location.origin;
+        const imageUrl = `${rootPath}${employee.image}`;
+        const defaultImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWIiLz4KPHBhdGggZD0iTTIwIDIwYzIuNzYgMCA1LTIuMjQgNS01cy0yLjI0LTUtNS01LTUgMi4yNC01IDUgMi4yNCA1IDUgNXptMCAyYy0zLjMzIDAtMTAgMS42Ny0xMCA1djNoMjB2LTNjMC0zLjMzLTYuNjctNS0xMC01eiIgZmlsbD0iIzljYTNhZiIvPgo8L3N2Zz4K';
+
+        return `
+            <tr>
+                <td class="image-cell" style="--hover-image: url('${imageUrl}')">
+                    <img id="emp-img-tag" src="${imageUrl}" 
+                        alt="${employee.employee}" 
+                        onerror="this.src='${defaultImage}'; this.parentElement.style.setProperty('--hover-image', 'url(${defaultImage})')"/>
+                </td>
+                <td class="employee-name">${employee.employee}</td>
+                <td>${employee.department}</td>
+                <td>${employee.reports_to}</td>
+                <td>${statusBadge}</td>
+                <td>${employee.entry_time}</td>
+                <td>${exitTimeDisplay}</td>
+                <td><strong>${(employee.work_time || 0).toFixed(2)}h</strong></td>
+                <td>
+                    <button class="btn btn-sm more-button" onclick="showEmployeeDetails('${employee.id}')" 
+                            title="View detailed attendance logs">
+                        <i class="fas fa-eye me-1"></i>More
+                    </button>
+                </td>
+            </tr>
+        `;
+    }
 
         // Update pagination information display
         function updatePaginationInfo() {
@@ -2452,7 +2238,7 @@ function generateAttendanceRow(employee) {
                 let bValue = b[field];
 
                 // Handle numbers
-                const numericFields = ['work_time', 'weekly_avg', 'monthly_avg', 'overtime_hours'];
+                const numericFields = ['work_time', 'weekly_avg', 'monthly_avg'];
                 if (numericFields.includes(field)) {
                     aValue = parseFloat(aValue) || 0;
                     bValue = parseFloat(bValue) || 0;
@@ -2495,7 +2281,7 @@ function generateAttendanceRow(employee) {
         
         // Display error message in tables
         function showErrorMessage(message) {
-            const attendanceColspan = currentDataView === 'attendance' ? '9' : '7';
+            const attendanceColspan = '9'
             const errorHtml = `<tr><td colspan="${attendanceColspan}" class="error-message">${message}</td></tr>`;
             if (!isAdminUser) {
                 document.getElementById('main-data').innerHTML = `<tr><td colspan="7" class="error-message">${message}</td></tr>`;

@@ -6,7 +6,7 @@ import calendar
 from typing import List, Dict, Any, Tuple, Optional, Set
 
 
-# Get employee holidays using same logic as weekly/monthly files
+# Get employee holidays
 def _get_employee_holidays(start_date, end_date):
     try:
         holiday_query = """
@@ -76,7 +76,7 @@ def _get_leaves_for_period(start_date, end_date):
         return {}
 
 
-# Get employee checkin data using same logic as weekly/monthly files
+# Get employee checkin data
 def _get_employee_data(start_date, end_date):
     try:
         query = """
@@ -99,7 +99,7 @@ def _get_employee_data(start_date, end_date):
         return []
 
 
-# Filter checkins to exclude holidays using same logic as weekly/monthly files
+# Filter checkins to exclude holidays
 def _filter_checkins(raw_checkin_data, employee_holidays):
     try:
         filtered_data = []
@@ -116,13 +116,19 @@ def _filter_checkins(raw_checkin_data, employee_holidays):
         return []
 
 
-# Calculate work hours using same logic as weekly/monthly files
+# Calculate work hours
 def _calculate_employee_work_hours(logs, shift_end=None):
     try:
         if not logs:
             return {
-                "employee": None, "department": None, "reports_to": None,
-                "date": None, "daily_working_hours": 0.0, "entry_time": None, "exit_time": None, "checkin_pairs": []
+                "employee": None, 
+                "department": None, 
+                "reports_to": None,
+                "date": None, 
+                "daily_working_hours": 0.0, 
+                "entry_time": None, 
+                "exit_time": None, 
+                "checkin_pairs": []
             }
 
         total_working_hours = 0.0
@@ -130,6 +136,12 @@ def _calculate_employee_work_hours(logs, shift_end=None):
         first_in_time = None
         last_out_time = None
         checkin_pairs = []
+        current_time = datetime.now()
+        current_date = date.today()
+        log_date = logs[0]['time'].date()
+
+        # Define default close time (23:59 of log_date)
+        default_close_time = datetime.combine(log_date, datetime.strptime("23:59", "%H:%M").time())
 
         for log in logs:
             if log['log_type'] == "IN":
@@ -147,24 +159,40 @@ def _calculate_employee_work_hours(logs, shift_end=None):
                         "duration": round(session_duration, 2)
                     })
                     last_in_time = None
-
                 last_out_time = log['time']
         
-        if last_in_time and shift_end:
-            session_duration = time_diff_in_hours(shift_end, last_in_time)
-            total_working_hours += session_duration
-            checkin_pairs.append({
-                "in_time": last_in_time.strftime("%H:%M"),
-                "out_time": shift_end.strftime("%H:%M"),
-                "duration": round(session_duration, 2)
-            })
+        # Handle unclosed sessions
+        if last_in_time:
+            # Decide candidate close time: shift_end if given, else 23:59
+            candidate_close_time = shift_end if shift_end else default_close_time
 
-        if last_in_time and shift_end is None:
-            checkin_pairs.append({
-                "in_time": last_in_time.strftime("%H:%M"),
-                "out_time": last_in_time.strftime("%H:%M"),
-                "duration": 0.0
-            })
+            # Pick whichever is later (so we don’t close before IN time)
+            effective_close_time = max(last_in_time, candidate_close_time)
+
+            # Only auto-close if the day is over or we’ve passed effective_close_time
+            should_auto_close = (
+                (log_date < current_date) or
+                (log_date == current_date and current_time >= effective_close_time)
+            )
+
+            if should_auto_close:
+                session_duration = time_diff_in_hours(effective_close_time, last_in_time)
+                total_working_hours += session_duration
+                checkin_pairs.append({
+                    "in_time": last_in_time.strftime("%H:%M"),
+                    "out_time": effective_close_time.strftime("%H:%M"),
+                    "duration": round(session_duration, 2),
+                    "auto_closed": True
+                })
+                last_out_time = effective_close_time
+            else:
+                # Still ongoing session
+                checkin_pairs.append({
+                    "in_time": last_in_time.strftime("%H:%M"),
+                    "out_time": "Ongoing",
+                    "duration": 0.0,
+                    "ongoing": True
+                })
 
         return {
             "employee": logs[0]['employee'],
@@ -175,7 +203,11 @@ def _calculate_employee_work_hours(logs, shift_end=None):
             "daily_working_hours": round(total_working_hours, 2),
             "entry_time": first_in_time.strftime("%H:%M") if first_in_time else None,
             "exit_time": last_out_time.strftime("%H:%M") if last_out_time else None,
-            "checkin_pairs": checkin_pairs
+            "checkin_pairs": checkin_pairs,
+            "has_ongoing_session": last_in_time is not None and not (
+                (log_date < current_date) or 
+                (log_date == current_date and current_time >= effective_close_time)
+            )
         }
 
     except Exception as e:
@@ -183,7 +215,8 @@ def _calculate_employee_work_hours(logs, shift_end=None):
         return {"error": "Error in calculating work hours"}
 
 
-# Sort and process checkin data using same logic as weekly/monthly files
+
+# Sort and process checkin data
 def _sort_checkin_data(filtered_checkin_data):
     try:
         grouped_emp_data = defaultdict(lambda: defaultdict(list))
@@ -199,9 +232,9 @@ def _sort_checkin_data(filtered_checkin_data):
                     if isinstance(shift_end, timedelta):
                         # Convert timedelta to a time object
                         shift_end = (datetime.min + shift_end).time()
-                    elif isinstance(shift_end, str):   # check whether shift end is string or datetime then convert
+                    elif isinstance(shift_end, str):   # check whether shift end is string 
                         shift_end = datetime.strptime(shift_end, "%H:%M").time()
-                    elif isinstance(shift_end, datetime):  
+                    elif isinstance(shift_end, datetime):  # or datetime then convert
                         shift_end = shift_end.time() 
                     
                     # getdate gets the date part from datetime and combine with end time(str/time obj) for datetime
@@ -215,20 +248,6 @@ def _sort_checkin_data(filtered_checkin_data):
     except Exception as e:
         frappe.log_error("Error in processing checkin data", str(e))
         return []
-
-
-# Calculate working days using monthly logic
-def _calculate_working_days_monthly(num_days_in_month, employee_holidays):
-    holiday_count = len(employee_holidays)
-    working_days = num_days_in_month - holiday_count
-    return max(working_days, 0)
-
-
-# Calculate working days using weekly logic
-def _calculate_working_days_weekly(employee_holidays):
-    holiday_count = len(employee_holidays)
-    working_days = 5 - holiday_count  # 5 weekdays minus holidays
-    return max(working_days, 0)
 
 
 # Enhanced daily work hours calculation with status and leave handling
@@ -290,17 +309,17 @@ def _calculate_daily_work_hours_with_status(logs, employee_holidays, employee_le
 
 
 # Process checkin data with holiday and leave integration using weekly/monthly logic
-def get_processed_checkin_data(from_date: date, to_date: date) -> List[Dict[str, Any]]:
+def _get_processed_checkin_data(from_date: date, to_date: date) -> List[Dict[str, Any]]:
     try:
         if not from_date or not to_date:
-            return []
+            return [], {}, {} 
         
-        # Get data using same logic as weekly/monthly files
+        # Get data
         raw_checkin_data = _get_employee_data(from_date, to_date)
         if not raw_checkin_data:
-            return []
+            return [], {}, {} 
         
-        # Get holidays using same logic as weekly/monthly files
+        # Get holidays
         employee_holidays = _get_employee_holidays(from_date, to_date)
         if not employee_holidays:
             frappe.log_error("No holiday data found", "Holiday mapping is empty")
@@ -314,7 +333,7 @@ def get_processed_checkin_data(from_date: date, to_date: date) -> List[Dict[str,
         # Process daily summaries
         daily_summaries = _sort_checkin_data(filtered_checkin_data)
         if not daily_summaries:
-            return []
+            return [], employee_holidays, employee_leaves
 
         # Get all employees that had checkin data
         employees_with_data = set()
@@ -358,16 +377,15 @@ def get_processed_checkin_data(from_date: date, to_date: date) -> List[Dict[str,
             
             enhanced_summaries.append(enhanced)
 
-        return enhanced_summaries
+        return enhanced_summaries,employee_holidays, employee_leaves
         
     except Exception as e:
         frappe.log_error("Error in processing checkin data", str(e))
-        return []
+        return [], {}, {}  
 
 
 # Create period summary from daily records with individual working days
-def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], period_type: str, start_date: date, end_date: date, employee_holidays: dict) -> List[Dict[str, Any]]:
-
+def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], period_type: str, start_date: date, end_date: date, employee_holidays: dict, employee_leaves: dict) -> List[Dict[str, Any]]:
     start_date = getdate(start_date)
     end_date = getdate(end_date)
     today_date = getdate(today())
@@ -390,13 +408,14 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
     
     result = []
     for emp_name, stats in employee_stats.items():
-        # Get all holidays for the employee
+        # Get all holidays and leaves for the employee
         all_emp_holidays = employee_holidays.get(emp_name, [])
+        all_emp_leaves = employee_leaves.get(emp_name, set())
         
-        # Filter holidays to only include those within the specific period
-        holidays_in_period = [h for h in all_emp_holidays if start_date <= h <= end_date]
+        # Convert leave strings to date objects for comparison
+        emp_leave_dates = [getdate(leave_str) for leave_str in all_emp_leaves]
 
-        # Calculate working days based on period type using the correctly filtered holiday list
+        # Calculate working days based on period type
         if period_type == 'monthly':
             is_current_month = (start_date.year == today_date.year and 
                               start_date.month == today_date.month)
@@ -415,12 +434,17 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
                     _, days_in_month = calendar.monthrange(start_date.year, start_date.month)
                     actual_end_date = start_date.replace(day=days_in_month)
             
-            # ✅ NOW calculate holidays with ACTUAL boundaries
+            # Filter holidays and leaves to actual boundaries
             holidays_in_period = [h for h in all_emp_holidays 
                                 if actual_start_date <= h <= actual_end_date]
+            leaves_in_period = [l for l in emp_leave_dates 
+                              if actual_start_date <= l <= actual_end_date]
+            
+            # Combine holidays and leaves, removing duplicates (same day holiday + leave)
+            non_working_days = set(holidays_in_period + leaves_in_period)
             
             num_days_in_period = (actual_end_date - actual_start_date).days + 1
-            total_working_days = num_days_in_period - len(holidays_in_period)
+            total_working_days = num_days_in_period - len(non_working_days)
 
         elif period_type == 'weekly':
             is_current_week = (start_date <= today_date <= end_date)
@@ -430,22 +454,38 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
                 actual_start_date = start_date
                 actual_end_date = min(end_date, today_date)
                 
-                # ✅ Calculate holidays with actual boundaries
+                # Filter holidays and leaves to actual boundaries
                 holidays_in_period = [h for h in all_emp_holidays 
                                     if actual_start_date <= h <= actual_end_date]
+                leaves_in_period = [l for l in emp_leave_dates 
+                                  if actual_start_date <= l <= actual_end_date]
                 
-                # For current week: actual days minus holidays
+                # Combine holidays and leaves, removing duplicates
+                non_working_days = set(holidays_in_period + leaves_in_period)
+                
+                # For current week: actual days minus non-working days
                 num_days_in_period = (actual_end_date - actual_start_date).days + 1
-                total_working_days = num_days_in_period - len(holidays_in_period)
+                total_working_days = num_days_in_period - len(non_working_days)
             else:
-                # Past week: use 5-day work week logic
+                # Past week: use 5-day work week logic with leaves
                 holidays_in_period = [h for h in all_emp_holidays 
                                     if start_date <= h <= end_date]
-                total_working_days = _calculate_working_days_weekly(holidays_in_period)
+                leaves_in_period = [l for l in emp_leave_dates 
+                                  if start_date <= l <= end_date]
+                
+                # Combine holidays and leaves, removing duplicates
+                non_working_days = set(holidays_in_period + leaves_in_period)
+                
+                total_working_days = 5 - len(non_working_days)  # 5 weekdays minus non-working days
         else:
             # Daily
             holidays_in_period = [h for h in all_emp_holidays if h == start_date]
-            total_working_days = 1 - len(holidays_in_period)
+            leaves_in_period = [l for l in emp_leave_dates if l == start_date]
+            
+            # Combine holidays and leaves, removing duplicates
+            non_working_days = set(holidays_in_period + leaves_in_period)
+            
+            total_working_days = 1 - len(non_working_days)
             
         total_working_days = max(total_working_days, 0)
         avg_hours = round(stats['total_work_hours'] / total_working_days, 2) if total_working_days > 0 else 0
@@ -457,7 +497,8 @@ def _create_summary_with_working_days(daily_records: List[Dict[str, Any]], perio
             "total_days_worked": stats['days_worked'],
             "total_working_days_in_period": total_working_days,
             "employee_working_days": total_working_days,
-            "holidays_in_period": len(holidays_in_period)
+            "holidays_in_period": len(holidays_in_period),
+            "leaves_in_period": len(leaves_in_period)  # Added for tracking
         })
     return result
 
@@ -474,8 +515,8 @@ def _add_to_registry(registry: Dict, data: List[Dict], data_key: str):
             registry[emp_name][data_key] = clean_record
 
 
-# Get manager to subordinates mapping
-def get_hierarchy_map() -> defaultdict[str, List[str]]:
+# manager to subordinates mapping
+def _get_hierarchy_map() -> defaultdict[str, List[str]]:
     try:
         employees = frappe.get_all("Employee", filters={"status": "Active"}, fields=["name", "reports_to"])
         hierarchy = defaultdict(list)
@@ -489,10 +530,10 @@ def get_hierarchy_map() -> defaultdict[str, List[str]]:
 
 
 # Get all subordinates using breadth-first search
-def get_all_subordinates(manager_id: str, hierarchy_map: Dict) -> List[str]:
+def _get_all_subordinates(manager_id: str, hierarchy_map: Dict) -> List[str]:
     if not manager_id or not hierarchy_map:
         return []
-    
+
     all_subordinates = set()
     queue = hierarchy_map.get(manager_id, [])
     visited = set(queue)
@@ -510,7 +551,7 @@ def get_all_subordinates(manager_id: str, hierarchy_map: Dict) -> List[str]:
     return list(all_subordinates)
 
 
-# Calculate week/month boundaries for given date with proper today handling
+# Calculate week/month boundaries for given date
 def _get_date_boundaries(target_date: date) -> Dict[str, date]:
     today_date = getdate(today())
     
@@ -562,7 +603,7 @@ def _build_employee_registry(employees: List[Dict]) -> Dict:
 
 
 # Process and categorize data into daily/weekly/monthly periods
-def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: Dict, target_date: date, employee_holidays: dict):
+def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: Dict, target_date: date, employee_holidays: dict, employee_leaves: dict):
     if not all_data:
         # If there's no check-in data at all, we still need to process absences/holidays
         pass
@@ -583,19 +624,21 @@ def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: D
         _add_to_registry(registry, daily_data, 'daily_data')
 
     if weekly_data:
-        summary = _create_summary_with_working_days(weekly_data, 'weekly', boundaries['week_start'], boundaries['week_end'], employee_holidays)
+        summary = _create_summary_with_working_days(weekly_data, 'weekly', boundaries['week_start'], boundaries['week_end'], employee_holidays, employee_leaves)
         _add_to_registry(registry, summary, 'weekly_summary')
 
     if monthly_data:
-        summary = _create_summary_with_working_days(monthly_data, 'monthly', boundaries['month_start'], boundaries['month_end'], employee_holidays)
+        summary = _create_summary_with_working_days(monthly_data, 'monthly', boundaries['month_start'], boundaries['month_end'], employee_holidays, employee_leaves)
         _add_to_registry(registry, summary, 'monthly_summary')
     
-    # Ensure all employees have daily, weekly, and monthly records ---
+    # Ensure all employees have daily, weekly, and monthly records
     target_date_str = format_datetime(target_date, 'yyyy-MM-dd')
     today_date = getdate(today())
     
     for emp_name, emp_data in registry.items():
         emp_holidays = employee_holidays.get(emp_name, [])
+        emp_leaves = employee_leaves.get(emp_name, set())
+        emp_leave_dates = [getdate(leave_str) for leave_str in emp_leaves]
 
         # 1. Daily data (existing logic is fine)
         if not emp_data['daily_data']:
@@ -605,7 +648,7 @@ def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: D
                 'entry_time': None, 'exit_time': None, 'status': status, 'checkin_pairs': []
             }
 
-        # 2. Weekly summary with proper boundary-matched holidays
+        # 2. Weekly summary with holidays and leaves
         if not emp_data['weekly_summary']:
             is_current_week = boundaries['week_start'] <= today_date <= boundaries['week_end']
             
@@ -613,20 +656,31 @@ def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: D
                 actual_week_end = min(boundaries['week_end'], today_date)
                 holidays_in_week = [h for h in emp_holidays 
                                   if boundaries['week_start'] <= h <= actual_week_end]
-                working_days = ((actual_week_end - boundaries['week_start']).days + 1) - len(holidays_in_week)
+                leaves_in_week = [l for l in emp_leave_dates 
+                                if boundaries['week_start'] <= l <= actual_week_end]
+                
+                # Combine holidays and leaves, removing duplicates
+                non_working_days = set(holidays_in_week + leaves_in_week)
+                working_days = ((actual_week_end - boundaries['week_start']).days + 1) - len(non_working_days)
             else:
                 holidays_in_week = [h for h in emp_holidays 
                                   if boundaries['week_start'] <= h <= boundaries['week_end']]
-                working_days = _calculate_working_days_weekly(holidays_in_week)
+                leaves_in_week = [l for l in emp_leave_dates 
+                                if boundaries['week_start'] <= l <= boundaries['week_end']]
+                
+                # Combine holidays and leaves, removing duplicates
+                non_working_days = set(holidays_in_week + leaves_in_week)
+                working_days = 5 - len(non_working_days)  # 5 weekdays minus non-working days
             
             emp_data['weekly_summary'] = {
                 "average_work_hours": 0.0, "total_hours_worked": 0.0, "total_days_worked": 0,
                 "total_working_days_in_period": max(working_days, 0),
                 "employee_working_days": max(working_days, 0),
-                "holidays_in_period": len(holidays_in_week)
+                "holidays_in_period": len(holidays_in_week),
+                "leaves_in_period": len(leaves_in_week)
             }
 
-        # 3. Monthly summary with proper boundary-matched holidays  
+        # 3. Monthly summary with holidays and leaves
         if not emp_data['monthly_summary']:
             is_current_month = (boundaries['month_start'].year == today_date.year and 
                                boundaries['month_start'].month == today_date.month)
@@ -635,18 +689,29 @@ def _process_data_by_periods(registry: Dict, all_data: List[Dict], boundaries: D
                 actual_month_end = min(boundaries['month_end'], today_date)
                 holidays_in_month = [h for h in emp_holidays 
                                    if boundaries['month_start'] <= h <= actual_month_end]
-                working_days = ((actual_month_end - boundaries['month_start']).days + 1) - len(holidays_in_month)
+                leaves_in_month = [l for l in emp_leave_dates 
+                                 if boundaries['month_start'] <= l <= actual_month_end]
+                
+                # Combine holidays and leaves, removing duplicates
+                non_working_days = set(holidays_in_month + leaves_in_month)
+                working_days = ((actual_month_end - boundaries['month_start']).days + 1) - len(non_working_days)
             else:
                 holidays_in_month = [h for h in emp_holidays 
                                    if boundaries['month_start'] <= h <= boundaries['month_end']]
+                leaves_in_month = [l for l in emp_leave_dates 
+                                 if boundaries['month_start'] <= l <= boundaries['month_end']]
+                
+                # Combine holidays and leaves, removing duplicates
+                non_working_days = set(holidays_in_month + leaves_in_month)
                 _, days_in_month = calendar.monthrange(boundaries['month_start'].year, boundaries['month_start'].month)
-                working_days = days_in_month - len(holidays_in_month)
+                working_days = days_in_month - len(non_working_days)
             
             emp_data['monthly_summary'] = {
                 "average_work_hours": 0.0, "total_hours_worked": 0.0, "total_days_worked": 0,
                 "total_working_days_in_period": max(working_days, 0),
                 "employee_working_days": max(working_days, 0),
-                "holidays_in_period": len(holidays_in_month)
+                "holidays_in_period": len(holidays_in_month),
+                "leaves_in_period": len(leaves_in_month)
             }
 
 
@@ -683,13 +748,10 @@ def fetch_checkins(from_date: str = None, to_date: str = None, specific_date: st
         if from_date and to_date:
             try:
                 start_date, end_date = getdate(from_date), getdate(to_date)
-                processed_data = get_processed_checkin_data(start_date, end_date)
+                processed_data, employee_holidays, employee_leaves = _get_processed_checkin_data(start_date, end_date)
                 
                 if not processed_data:
                     return {"message": f"No check-in data found between {from_date} and {to_date}."}
-                
-                # Get holidays for working days calculation
-                employee_holidays = _get_employee_holidays(start_date, end_date)
                 
                 # Calculate period type
                 days_diff = (end_date - start_date).days + 1
@@ -698,7 +760,7 @@ def fetch_checkins(from_date: str = None, to_date: str = None, specific_date: st
                 else:
                     period_type = 'monthly'
                     
-                return _create_summary_with_working_days(processed_data, period_type, start_date, end_date, employee_holidays)
+                return _create_summary_with_working_days(processed_data, period_type, start_date, end_date, employee_holidays, employee_leaves)
                 
             except Exception as e:
                 frappe.log_error("Error in date range processing", str(e))
@@ -724,24 +786,22 @@ def fetch_checkins(from_date: str = None, to_date: str = None, specific_date: st
                     if not manager_id:
                         frappe.throw("User not linked to active employee record.")
                     
-                    hierarchy_map = get_hierarchy_map()
-                    subordinate_ids = get_all_subordinates(manager_id, hierarchy_map)
+                    hierarchy_map = _get_hierarchy_map()
+                    subordinate_ids = _get_all_subordinates(manager_id, hierarchy_map)
                     allowed_employees = set(subordinate_ids + [manager_id])
                     all_employees = frappe.get_all("Employee", 
-                        filters={"name": ["in", list(allowed_employees)]}, 
+                        filters={"name": ["in", list(allowed_employees)]},
                         fields=["name", "department", "reports_to", 'image']
                     )
 
                 # Build registry and process data
                 registry = _build_employee_registry(all_employees)
                 boundaries = _get_date_boundaries(target_date)
-                
-                # Get holidays for the entire period
-                employee_holidays = _get_employee_holidays(boundaries['earliest_date'], boundaries['latest_date'])
-                
-                all_data = get_processed_checkin_data(boundaries['earliest_date'], boundaries['latest_date'])
-                _process_data_by_periods(registry, all_data, boundaries, target_date, employee_holidays)
-                
+
+                # function below returns processed data along with employee holidays and leaves
+                all_data, employee_holidays, employee_leaves = _get_processed_checkin_data(boundaries['earliest_date'], boundaries['latest_date'])
+                _process_data_by_periods(registry, all_data, boundaries, target_date, employee_holidays, employee_leaves)
+
                 return _create_hierarchy_response(registry, manager_id, subordinate_ids)
                 
             except Exception as e:
