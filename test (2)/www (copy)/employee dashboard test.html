@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attendance Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #0c5054;
+            --primary-light: #e8f1fd;
+            --secondary: #afdde5;
+            --tertiary: #024950; 
+            --success: #28a745;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border: #dee2e6;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base body styling */
+        body {
+            background-color: #e2eaeb;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Main page container with responsive sizing */
+        .page-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            zoom: 0.8;
+        }
+
+        /* Dashboard header styling with gradient background */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Equal height row for layout consistency */
+        .equal-height-row {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .equal-height-row .card-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Card container styling with shadow effects */
+        .card-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-container.loading {
+            opacity: 0.7;
+            transform: translateY(3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-container.loaded {
+            animation: cardFadeIn 0.6s ease;
+        }
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0.7;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loading-text {
+    margin-top: 15px;
+    color: var(--primary);
+    font-weight: 500;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+        .card-container:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Section title styling */
+        .section-title {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Table container with rounded corners and shadow */
+        .table-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+.table-container.loading {
+    opacity: 0.6;
+    transform: translateY(5px);
+    pointer-events: none;
+}
+
+.table-container.loaded {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideInUp 0.5s ease;
+}
+
+
+#emp-img-tag {
+    width: 40px;           /* Fixed width for consistency */
+    height: 40px;          /* Fixed height for consistency */
+    object-fit: cover;     /* Crop image to fit container */
+    border-radius: 50%;    /* Make circular */
+    border: 2px solid var(--primary-light); /* Add border */
+    display: block;        /* Remove inline spacing */
+    margin: 0 auto;        /* Center in table cell */
+    cursor: pointer;       /* Show it's interactive */
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+#emp-img-tag {
+    width: 40px;           /* Fixed width for consistency */
+    height: 40px;          /* Fixed height for consistency */
+    object-fit: cover;     /* Crop image to fit container */
+    border-radius: 50%;    /* Make circular */
+    border: 2px solid var(--primary-light); /* Add border */
+    display: block;        /* Remove inline spacing */
+    margin: 0 auto;        /* Center in table cell */
+    cursor: pointer;       /* Show it's interactive */
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.image-cell {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    width: 60px;           /* Fixed width for image column */
+    position: relative;    /* For absolute positioning of hover */
+}
+
+/* Hover enlarged image */
+.image-cell::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;           /* Position to the right of the cell */
+    transform: translateY(-50%);
+    width: 120px;
+    height: 150px;
+    background-image: var(--hover-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    border: 3px solid var(--primary);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background-color: white;
+    padding: 2px;
+}
+
+.image-cell:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Add hover effect to the small image */
+#emp-img-tag:hover {
+    transform: scale(1.1);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Ensure table doesn't interfere with hover */
+.table-container {
+    position: relative;
+    z-index: 1;
+}
+
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        /* Fixed table layout for consistent column widths */
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .fixed-table th,
+        .fixed-table td {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Column width definitions for attendance view */
+.fixed-table.attendance-view th:nth-child(1) { width: 8%; }   /* Image */
+.fixed-table.attendance-view th:nth-child(2) { width: 20%; }  /* Employee Name */
+.fixed-table.attendance-view th:nth-child(3) { width: 15%; }  /* Department */
+.fixed-table.attendance-view th:nth-child(4) { width: 15%; }  /* Reports To */
+.fixed-table.attendance-view th:nth-child(5) { width: 10%; }  /* Status */
+.fixed-table.attendance-view th:nth-child(6) { width: 10%; }  /* Check In */
+.fixed-table.attendance-view th:nth-child(7) { width: 10%; }  /* Check Out */
+.fixed-table.attendance-view th:nth-child(8) { width: 12%; }  /* Work Time */
+.fixed-table.attendance-view th:nth-child(9) { width: 10%; }  /* Actions */
+
+        /* Table header styling */
+        .table thead {
+            background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+        }
+
+        #attendance-logs th{
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .table th {
+            color: var(--dark);
+            font-weight: 600;
+            vertical-align: middle;
+            padding: 15px;
+        }
+
+        .table td {
+            vertical-align: middle;
+            padding: 12px 15px;
+        }
+
+        /* Table row styling with hover effects */
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(44, 111, 187, 0.03);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* Button styling */
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: #249ba1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Custom button styling */
+        .view-report {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .view-report:hover {
+            background: #0c595f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white; 
+        }
+        
+        .more-button {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .more-button:hover {
+            background: #0c595f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white; 
+        }
+
+
+        /* Filters container styling */
+        .filters-container {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Date picker styling for admin reports section */
+        .date-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Form control styling */
+        .form-control, .form-select {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            transition: var(--transition);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(44, 111, 187, 0.25);
+        }
+
+        /* Search container with dropdown */
+        .search-container {
+            position: relative;
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-height: 280px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .dropdown-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Statistics card styling */
+        .stats-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid var(--primary);
+        }
+
+        .stats-label {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stats-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Loading spinner animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+            border: 0.4rem solid rgba(12, 80, 84, 0.2);
+            border-top: 0.4rem solid var(--primary);
+            border-radius: 50%;
+            animation: spinner-border 1s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+
+        @keyframes spinner-border {
+            0% { 
+                transform: rotate(0deg);
+                border-top-color: var(--primary);
+            }
+            25% {
+                border-top-color: var(--secondary);
+            }
+            50% { 
+                transform: rotate(180deg);
+                border-top-color: var(--primary);
+            }
+            75% {
+                border-top-color: var(--secondary);
+            }
+            100% { 
+                transform: rotate(360deg);
+                border-top-color: var(--primary);
+            }
+        }
+
+        .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.spinner-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* ADD these new styles for better average display */
+
+.avg-value {
+    color: var(--primary);
+    font-weight: 500;
+    background-color: rgba(12, 80, 84, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.avg-empty {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Better button styling for More button */
+.more-button {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.more-button:hover {
+    background: linear-gradient(135deg, #0c595f, #7fb8c1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    color: white;
+}
+
+.more-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Enhanced status badges */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-present {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-absent {
+    background: linear-gradient(135deg, #f8d7da, #f1b0b7);
+    color: #721c24;
+    border: 1px solid #f1b0b7;
+}
+
+.spinner-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+        /* Sort button styling */
+        .sort-btn {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .sort-btn:hover {
+            color: var(--primary);
+        }
+
+        .table-overlay.loading::after {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .employee-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Modal styling */
+        .modal-header {
+            background: linear-gradient(to right, #0f766e, #155e75) !important;
+            color: white;
+            border-radius: 0;
+        }
+
+        .modal-title {
+            font-weight: 500;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .performance-summary {
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+        }
+
+        .performance-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            border-left: 3px solid var(--primary);
+        }
+
+        .performance-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(to right, #0f766e, #155e75) !important;
+        }
+        
+        .rounded-xl {
+            border-radius: 14px;
+        }
+
+        
+
+        /* Status badge styling */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-present {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-absent {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Attendance summary cards */
+        .attendance-summary {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            margin-top: 15px;
+        }
+
+        .summary-card {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .present-number { color: #28a745; }
+        .absent-number { color: #dc3545; }
+        .total-number { color: var(--primary); }
+
+        /* Pagination styling */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 15px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .pagination-info {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-left: 12px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 12px;
+        }
+
+        .pagination-select {
+            min-width: 120px;
+        }
+
+        .pagination {
+            margin: 0;
+        }
+
+        .page-link {
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            transition: var(--transition);
+        }
+
+        .page-link:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-item.active .page-link {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            background-color: #fff;
+            border-color: var(--border);
+        }
+
+        .records-per-page {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            pointer-events: none;
+        }
+
+        /* Hidden class for elements */
+        .hidden {
+            display: none;
+        }
+
+        /* Column hiding utility */
+        .hide-column {
+            display: none !important;
+        }
+
+        /* Session styling for attendance logs */
+        .session-group {
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .session-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            font-weight: 600;
+        }
+
+        .session-details {
+            background-color: var(--light);
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+                /* Ongoing session styling */
+        .status-present.ongoing {
+            background: linear-gradient(135deg, #d4edda, #a3d977);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .table-success {
+            background-color: rgba(40, 167, 69, 0.1) !important;
+        }
+
+        .badge.bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .badge.bg-warning {
+            background-color: #ffc107 !important;
+            color: #212529 !important;
+        }
+
+        /* Responsive design for mobile devices */
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group, .search-container {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .page-container {
+                padding: 15px;
+            }
+            
+            .card-container {
+                padding: 20px 15px;
+            }
+
+            .pagination-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .pagination-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .attendance-summary {
+                flex-direction: column;
+            }
+
+            .date-picker-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="bg-gradient border rounded-xl shadow-sm p-4 px-5 mb-6 d-flex justify-content-between align-items-center flex-wrap" style="background: linear-gradient(120deg, #0f766e, #155e75);">
+            <div class="d-flex flex-column">
+                <h2 class="text-white fw-bold mb-1" style="font-size: 1.6rem;">Attendance Dashboard</h2>
+                <small class="text-light" style="opacity: 0.85;">Track Employee Attendance and Performance</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <i class="fas fa-user-circle text-white me-2" style="font-size: 1.5rem;"></i>
+                <span class="text-white fw-semibold" id="current-user-name" style="font-size: 1rem;"></span>
+            </div>
+        </header>
+
+        <div class="attendance-summary">
+            <div class="summary-card" onclick="filterBySummary('total')">
+                <div class="summary-number total-number" id="total-employees">-</div>
+                <div class="summary-label">Total Employees</div>
+            </div>
+            <div class="summary-card" onclick="filterBySummary('present')">
+                <div class="summary-number present-number" id="present-count">-</div>
+                <div class="summary-label">Present Today</div>
+            </div>
+            <div class="summary-card" onclick="filterBySummary('absent')">
+                <div class="summary-number absent-number" id="absent-count">-</div>
+                <div class="summary-label">Absent Today</div>
+            </div>
+        </div>
+
+        <div class="row equal-height-row" style="margin-top: 20px;" id="manager-daily-section">
+            <div class="col-lg-8">
+                <div class="card-container">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-2 mt-1">
+                        <h5 class="section-title mb-3 mb-md-0">
+                            <span id="manager-title" style="font-size: 24px;"></span>
+                            <span style="font-size: 22px;" id="daily-summary-text-span"> - Daily Summary</span>
+                        </h5>
+                        <div class="d-flex align-items-center">
+                            <input type="date" id="date-picker-manager" name="date" class="form-control border border-primary" style="max-width: 200px;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i id="reset-to-today-manager" class="fa fa-refresh" style="font-size:24px; cursor: pointer;"></i>
+                        </div>
+                    </div>
+
+                    <div id="main-table-container" class="table-overlay">
+                        <div id="main-spinner" class="d-none spinner-container">
+    <div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading attendance data...</div>
+    </div>
+</div>
+                        <div id="main-table" class="table-container" style="padding-top: 20px; margin-bottom: 40px !important;">
+                            <table class="table table-hover rounded-3" id="manager-daily-table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="text-light" style="background-color: var(--primary); border-top-left-radius: 8px;">Employee Name</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Department</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Reports To</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Status</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Checkin</th>
+                                        <th class="text-light" style="background-color: var(--primary);">Checkout</th>
+                                        <th class="text-light" style="background-color: var(--primary); border-top-right-radius: 8px;">Work Time (hrs)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="main-data">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="performance-table" class="col-lg-4">
+                <div class="card-container w-100">
+                    <h4 class="section-title">Performance Overview</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="stats-card">
+                                <div class="stats-label" style="font-size: medium; color: var(--tertiary);"><i class="fas fa-clock me-1"></i> Today's Hours</div>
+                                <div class="stats-value" id="manager-today-hours">-</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stats-card">
+                                <div class="stats-label" style="font-size: medium; color: var(--tertiary);"><i class="fas fa-calendar-week me-1"></i> Weekly Average</div>
+                                <div class="stats-value" id="manager-weekly-hours">-</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stats-card">
+                                <div class="stats-label" style="font-size: medium; color: var(--tertiary);"><i class="fas fa-calendar-alt me-1"></i> Monthly Average</div>
+                                <div class="stats-value" id="manager-monthly-hours">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="reports-spinner" class="d-none spinner-container">
+    <div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading reports...</div>
+    </div>
+</div>
+
+        <div id="report-container" class="card-container" style="margin-top: 20px;">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                    <h4 class="section-title mb-3 mb-md-0">Team Attendance Report</h4>
+                </div>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2" id="reset-filters">
+                        <i class="fas fa-sync-alt me-1"></i> Reset
+                    </button>
+                    <button class="btn btn-outline-primary me-2" onclick="showExportModal()" id="export-report">
+                        <i class="fas fa-file-export me-1"></i> Export Report
+                    </button>
+                </div>
+            </div>
+            
+            <div class="date-picker-container" id="admin-date-picker" style="display: none;">
+                <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-calendar me-1"></i> Select Date:</label>
+                <input type="date" id="date-picker-admin" name="date" class="form-control border border-primary" style="max-width: 200px;">
+                <i id="reset-to-today-admin" class="fa fa-refresh" style="font-size:24px; cursor: pointer; margin-left: 10px;"></i>
+            </div>
+            
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-building me-1"></i> Department</label>
+                    <select class="form-control form-select" id="department-filter">
+                        <option value="">All Departments</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-user-tie me-1"></i> Reports To</label>
+                    <select class="form-control form-select" id="reports-to-filter">
+                        <option value="">All Managers</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" style="color: var(--tertiary);"><i class="fas fa-search me-1"></i> Search Employee</label>
+                    <div id="dropdown-container" class="search-container">
+                        <div class="position-relative" style="width: 100%;">
+                            <input class="form-control" id="dropdown-search" type="text" maxlength="50" style="width: 100%; padding-right: 35px;" placeholder="Enter employee name...">
+                            <i class="fas fa-search search-icon"></i>
+                            <div class="dropdown-options" id="dropdown-options">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-overlay">
+                <div class="table-container">
+                    <table class="table table-hover table-responsive fixed-table attendance-view" id="main-data-table">
+                        <thead>
+                            <tr>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light" id="emp-image">Image</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Employee Name</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortData('employee', 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortData('employee', 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Department</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortData('department', 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortData('department', 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Reports To</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortData('reports_to', 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortData('reports_to', 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);" id="status-th">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Status</span>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);" id="entry-time-th">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light">Checkin</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortData('entry_time', 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortData('entry_time', 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);" id="exit-time-th">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2">Checkout</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortData('exit_time', 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortData('exit_time', 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-light me-2" id="work-time-header">Work Time (hrs)</span>
+                                        <div class="sort-indicator" style="display: flex; flex-direction: column; align-items: center;">
+                                            <button class="sort-btn" onclick="sortData('work_time', 'asc')">↑</button>
+                                            <button class="sort-btn" onclick="sortData('work_time', 'desc')">↓</button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="background-color: var(--primary);" id="more-btn-th">
+                                    <span class="text-light">Action</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-data">
+                        </tbody>
+                    </table>
+                    
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="pagination-info">Showing 0 to 0 of 0 entries</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <div class="records-per-page">
+                                <label for="records-per-page-select">Show:</label>
+                                <select class="form-select form-select-sm pagination-select" id="records-per-page-select">
+                                    <option value="10" selected>10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                <span>entries</span>
+                            </div>
+                            
+                            <nav aria-label="Table pagination">
+                                <ul class="pagination pagination-sm" id="pagination-controls">
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="employeeDetailsModal" tabindex="-1" aria-labelledby="employeeDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="employeeDetailsModalLabel">
+                        <i class="fas fa-user-clock me-2"></i>Employee Attendance Details
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="employee-info mb-4">
+                        <h6 class="fw-bold text-black mb-2" style="font-size: larger;" id="employee-modal-name">Employee Name</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted">Department: </small>
+                                <span id="employee-modal-department" style="font-weight: bold;">-</span>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">Reports To: </small>
+                                <span id="employee-modal-reports" style="font-weight: bold;">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="performance-summary mb-4">
+                        <h6 class="mb-3">Performance Overview:</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="performance-card">
+                                    <small class="text-muted">Weekly Average:</small>
+                                    <div class="performance-value" id="employee-modal-weekly">-</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="performance-card">
+                                    <small class="text-muted">Monthly Average:</small>
+                                    <div class="performance-value" id="employee-modal-monthly">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="attendance-logs">
+                        <h6 class="mb-3">Check-in/Check-out Sessions:</h6>
+                        <div id="logs-container">
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">
+                        <i class="fas fa-file-export me-2"></i>Export Attendance Report
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="export-employee" class="form-label">
+                                        <i class="fas fa-user me-1"></i>Employee Name
+                                    </label>
+                                    <select class="form-select" id="export-employee">
+                                        <option value="">Select Employee (Optional)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="export-department" class="form-label">
+                                        <i class="fas fa-building me-1"></i>Department
+                                    </label>
+                                    <select class="form-select" id="export-department">
+                                        <option value="">Select Department (Optional)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="export-from-date" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>From Date <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" class="form-control" id="export-from-date" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="export-to-date" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>To Date <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" class="form-control" id="export-to-date" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="processExport()">
+                        <i class="fas fa-download me-1"></i>Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// ================== GLOBAL CONFIG ==================
+let currentPage = 1;
+let recordsPerPage = 10;
+let totalRecords = 0;
+let currentDate = new Date().toISOString().split('T')[0];
+let activeSummaryFilter = 'total'; // 'total', 'present', 'absent'
+let searchTimeout;
+
+const baseUrl = window.location.origin;
+const API_BASE_URL = `${baseUrl}/api/method/sil.test.api_test.fetch_checkins`;
+
+// Global cache of API response
+let employeeRegistry = {};
+
+
+// ================== MAIN DATA LOADER ==================
+async function loadDashboardData() {
+    try {
+        const response = await fetch(`${API_BASE_URL}?specific_date=${currentDate}`);
+        const data = await response.json();
+        updateDashboardUI(data);
+    } catch (err) {
+        console.error("Error loading dashboard:", err);
+    }
+}
+
+
+// ================== UPDATE DASHBOARD ==================
+function updateDashboardUI(apiResponse) {
+    if (!apiResponse || !apiResponse.message || !apiResponse.message.registry) {
+        console.error("Invalid API response:", apiResponse);
+        return;
+    }
+
+    employeeRegistry = apiResponse.message.registry;
+    const employees = Object.values(employeeRegistry);
+
+    // --- Summary counts ---
+    const total = employees.length;
+    const present = employees.filter(e => e.daily_data.status === "Present").length;
+    const absent = employees.filter(e => e.daily_data.status === "Absent").length;
+
+    document.getElementById('total-employees').textContent = total;
+    document.getElementById('present-count').textContent = present;
+    document.getElementById('absent-count').textContent = absent;
+
+    // --- Manager performance ---
+    const managerId = apiResponse.message.manager_id || null;
+    if (managerId && employeeRegistry[managerId]) {
+        const mgr = employeeRegistry[managerId];
+        document.getElementById('manager-today-hours').textContent =
+            mgr.daily_data?.daily_working_hours ?? "-";
+        document.getElementById('manager-weekly-hours').textContent =
+            mgr.weekly_summary?.average_work_hours ?? "-";
+        document.getElementById('manager-monthly-hours').textContent =
+            mgr.monthly_summary?.average_work_hours ?? "-";
+        document.getElementById('manager-title').textContent = mgr.employee_info?.name || "";
+    }
+
+    // --- Manager Daily Table ---
+    const dailyTableBody = document.getElementById('main-data');
+    dailyTableBody.innerHTML = "";
+
+    employees.forEach(e => {
+        const daily = e.daily_data || {};
+        const status = daily.status || "Absent";
+        const statusClass = status === "Present" ? "status-present" : "status-absent";
+        const ongoingClass = daily.has_ongoing_session ? "ongoing" : "";
+
+        const row = `
+            <tr>
+                <td class="employee-name">${e.employee_info?.name || "-"}</td>
+                <td>${e.employee_info?.department || "-"}</td>
+                <td>${e.employee_info?.reports_to || "-"}</td>
+                <td><span class="status-badge ${statusClass} ${ongoingClass}">${status}</span></td>
+                <td>${daily.entry_time || "-"}</td>
+                <td>${daily.exit_time || "-"}</td>
+                <td>${daily.daily_working_hours ?? "0"}</td>
+            </tr>`;
+        dailyTableBody.insertAdjacentHTML("beforeend", row);
+    });
+
+    // --- Team Attendance Report Table ---
+    const reportsTableBody = document.getElementById('reports-data');
+    reportsTableBody.innerHTML = "";
+
+    employees.forEach(e => {
+        const daily = e.daily_data || {};
+        const status = daily.status || "Absent";
+        const statusClass = status === "Present" ? "status-present" : "status-absent";
+        const ongoingClass = daily.has_ongoing_session ? "ongoing" : "";
+
+        const row = `
+            <tr>
+                <td class="image-cell">
+                    <img src="${e.employee_info?.image || '/assets/default-avatar.png'}"
+                         alt="emp"
+                         id="emp-img-tag">
+                </td>
+                <td class="employee-name">${e.employee_info?.name || "-"}</td>
+                <td>${e.employee_info?.department || "-"}</td>
+                <td>${e.employee_info?.reports_to || "-"}</td>
+                <td><span class="status-badge ${statusClass} ${ongoingClass}">${status}</span></td>
+                <td>${daily.entry_time || "-"}</td>
+                <td>${daily.exit_time || "-"}</td>
+                <td>${daily.daily_working_hours ?? "0"}</td>
+                <td>
+                    <button class="btn btn-sm more-button" onclick="openEmployeeModal('${e.employee_info?.name}')">
+                        More
+                    </button>
+                </td>
+            </tr>`;
+        reportsTableBody.insertAdjacentHTML("beforeend", row);
+    });
+
+    // --- Pagination info ---
+    totalRecords = employees.length;
+    document.getElementById('pagination-info').textContent =
+        `Showing 1 to ${employees.length} of ${employees.length} entries`;
+
+    // --- Populate filters (department + reports_to + employee dropdown) ---
+    populateFilters(employees);
+}
+
+
+// ================== EMPLOYEE MODAL ==================
+function openEmployeeModal(empName) {
+    const emp = employeeRegistry[empName];
+    if (!emp) return;
+
+    // Basic info
+    document.getElementById('employee-modal-name').textContent = emp.employee_info?.name || "-";
+    document.getElementById('employee-modal-department').textContent = emp.employee_info?.department || "-";
+    document.getElementById('employee-modal-reports').textContent = emp.employee_info?.reports_to || "-";
+
+    // Performance summary
+    document.getElementById('employee-modal-weekly').textContent =
+        emp.weekly_summary?.average_work_hours ?? "-";
+    document.getElementById('employee-modal-monthly').textContent =
+        emp.monthly_summary?.average_work_hours ?? "-";
+
+    // Sessions
+    const logsContainer = document.getElementById('logs-container');
+    logsContainer.innerHTML = "";
+
+    const daily = emp.daily_data || {};
+    const sessions = daily.checkin_pairs || [];
+    if (sessions.length === 0) {
+        logsContainer.innerHTML = `<div class="text-muted">No sessions available</div>`;
+    } else {
+        sessions.forEach((s, idx) => {
+            const ongoingBadge = s.ongoing ? `<span class="badge bg-warning ms-2">Ongoing</span>` : "";
+            const autoBadge = s.auto_closed ? `<span class="badge bg-success ms-2">Auto-Closed</span>` : "";
+
+            const sessionHtml = `
+                <div class="session-group">
+                    <div class="session-header">Session ${idx + 1}</div>
+                    <div class="session-details">
+                        <div><b>In:</b> ${s.in_time}</div>
+                        <div><b>Out:</b> ${s.out_time} ${ongoingBadge} ${autoBadge}</div>
+                        <div><b>Duration:</b> ${s.duration} hrs</div>
+                    </div>
+                </div>`;
+            logsContainer.insertAdjacentHTML("beforeend", sessionHtml);
+        });
+    }
+
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('employeeDetailsModal'));
+    modal.show();
+}
+
+
+// ================== FILTERS ==================
+function populateFilters(employees) {
+    const deptSelect = document.getElementById('department-filter');
+    const reportsSelect = document.getElementById('reports-to-filter');
+    const searchDropdown = document.getElementById('dropdown-options');
+
+    // Reset
+    deptSelect.innerHTML = `<option value="">All Departments</option>`;
+    reportsSelect.innerHTML = `<option value="">All Managers</option>`;
+    searchDropdown.innerHTML = "";
+
+    // Unique sets
+    const depts = [...new Set(employees.map(e => e.employee_info?.department).filter(Boolean))];
+    const managers = [...new Set(employees.map(e => e.employee_info?.reports_to).filter(Boolean))];
+
+    depts.forEach(d => {
+        deptSelect.insertAdjacentHTML("beforeend", `<option value="${d}">${d}</option>`);
+    });
+
+    managers.forEach(m => {
+        reportsSelect.insertAdjacentHTML("beforeend", `<option value="${m}">${m}</option>`);
+    });
+
+    employees.forEach(e => {
+        const li = `<div class="dropdown-item" onclick="filterByEmployee('${e.employee_info?.name}')">
+                        ${e.employee_info?.name}
+                    </div>`;
+        searchDropdown.insertAdjacentHTML("beforeend", li);
+    });
+}
+
+function handleDepartmentFilter(event) {
+    const val = event.target.value;
+    const employees = Object.values(employeeRegistry);
+    const filtered = val ? employees.filter(e => e.employee_info?.department === val) : employees;
+    updateDashboardUI({ message: { registry: Object.fromEntries(filtered.map(e => [e.employee_info.name, e])) } });
+}
+
+function handleReportsToFilter(event) {
+    const val = event.target.value;
+    const employees = Object.values(employeeRegistry);
+    const filtered = val ? employees.filter(e => e.employee_info?.reports_to === val) : employees;
+    updateDashboardUI({ message: { registry: Object.fromEntries(filtered.map(e => [e.employee_info.name, e])) } });
+}
+
+function handleSearchInput(event) {
+    const val = event.target.value.toLowerCase();
+    const dropdown = document.getElementById('dropdown-options');
+    dropdown.style.display = val ? "block" : "none";
+
+    [...dropdown.children].forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(val) ? "block" : "none";
+    });
+}
+
+function filterByEmployee(empName) {
+    if (!employeeRegistry[empName]) return;
+    updateDashboardUI({ message: { registry: { [empName]: employeeRegistry[empName] } } });
+    document.getElementById('dropdown-search').value = empName;
+    document.getElementById('dropdown-options').style.display = "none";
+}
+
+function resetFilters() {
+    updateDashboardUI({ message: { registry: employeeRegistry } });
+    document.getElementById('department-filter').value = "";
+    document.getElementById('reports-to-filter').value = "";
+    document.getElementById('dropdown-search').value = "";
+}
+
+
+// ================== DATE PICKERS ==================
+function initializeDatePickers() {
+    const managerDatePicker = document.getElementById('date-picker-manager');
+    const adminDatePicker = document.getElementById('date-picker-admin');
+
+    if (managerDatePicker) {
+        managerDatePicker.value = currentDate;
+        managerDatePicker.setAttribute("max", currentDate);
+    }
+
+    if (adminDatePicker) {
+        adminDatePicker.value = currentDate;
+        adminDatePicker.setAttribute("max", currentDate);
+    }
+}
+
+function handleDateChange(event) {
+    currentDate = event.target.value;
+    const managerPicker = document.getElementById('date-picker-manager');
+    const adminPicker = document.getElementById('date-picker-admin');
+    if (managerPicker) managerPicker.value = currentDate;
+    if (adminPicker) adminPicker.value = currentDate;
+    loadDashboardData();
+}
+
+function handleRefresh() {
+    currentDate = new Date().toISOString().split('T')[0];
+    loadDashboardData();
+}
+
+
+// ================== EVENT LISTENERS ==================
+function setupEventListeners() {
+    const managerDatePicker = document.getElementById('date-picker-manager');
+    const adminDatePicker = document.getElementById('date-picker-admin');
+    const resetManagerBtn = document.getElementById('reset-to-today-manager');
+    const resetAdminBtn = document.getElementById('reset-to-today-admin');
+
+    if (managerDatePicker) managerDatePicker.addEventListener('change', handleDateChange);
+    if (adminDatePicker) adminDatePicker.addEventListener('change', handleDateChange);
+    if (resetManagerBtn) resetManagerBtn.addEventListener('click', handleRefresh);
+    if (resetAdminBtn) resetAdminBtn.addEventListener('click', handleRefresh);
+
+    document.getElementById('department-filter').addEventListener('change', handleDepartmentFilter);
+    document.getElementById('reports-to-filter').addEventListener('change', handleReportsToFilter);
+    document.getElementById('dropdown-search').addEventListener('input', handleSearchInput);
+    document.getElementById('reset-filters').addEventListener('click', resetFilters);
+}
+
+
+// ================== INIT ==================
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDatePickers();
+    loadDashboardData();
+    setupEventListeners();
+});
+</script>
+
+</body>
+</html>
