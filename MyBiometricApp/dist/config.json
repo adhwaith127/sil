@@ -1,0 +1,26 @@
+{
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8190,
+        "base_dir": "E:\\BiometricServer"
+    },
+    "erp": {
+        "url": "http://192.168.0.61:8000",
+        "api_endpoint": "api/method/sil.test.biometric_to_erp.add_checkin"
+    },
+    "retry": {
+        "interval_seconds": 60,
+        "max_attempts": 10,
+        "max_hours": 24
+    },
+    "logging": {
+        "max_file_size_mb": 50,
+        "backup_count": 7,
+        "auto_scroll": true
+    },
+    "gui": {
+        "window_width": 900,
+        "window_height": 600,
+        "theme": "default"
+    }
+}

@@ -1,0 +1,122 @@
+/* BillReport.css - responsive form; prevents overflow and wraps labels/text */
+
+.bill-report {
+  width: 100%;
+  max-width: 980px; /* safe maximum */
+  margin: 0 auto;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.bill-report__card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(12,18,28,0.04);
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.bill-report__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+
+/* Fieldset and radio controls */
+.bill-report__fieldset {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: #fafbfc;
+  box-sizing: border-box;
+}
+
+.bill-report__controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.bill-report__controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+}
+
+/* Grid forms: safe min and flexible behavior */
+.bill-report__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+/* Labels and inputs */
+.bill-report__label {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  overflow-wrap: anywhere; /* break long words */
+}
+
+.bill-report__input,
+.bill-report__select {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.bill-report__input:focus,
+.bill-report__select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 8px 20px rgba(59,130,246,0.08);
+}
+
+/* Buttons aligned to end but never overflow */
+.bill-report__buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.bill-report__button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.bill-report__button--primary {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Small screens stack */
+@media (max-width: 760px) {
+  .bill-report__grid { grid-template-columns: 1fr; }
+  .bill-report__buttons { justify-content: center; }
+}

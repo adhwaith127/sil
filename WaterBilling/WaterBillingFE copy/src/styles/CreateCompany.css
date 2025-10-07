@@ -1,0 +1,88 @@
+/* CreateCompany.css - centered registration form that never overflows width */
+
+.company-registration-component {
+  box-sizing: border-box;
+  padding: 12px;
+  width: 100%;
+}
+
+.company-registration-component .registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 72px);
+  padding: 18px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f6ff 100%);
+  box-sizing: border-box;
+}
+
+.company-registration-component .form-wrapper {
+  width: 100%;
+  max-width: 680px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(12,18,28,0.06);
+  box-sizing: border-box;
+}
+
+.company-registration-component .form-title {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 14px;
+}
+
+/* Form layout: flexible rows that wrap */
+.company-registration-component .input-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.company-registration-component .input-row .input-group {
+  flex: 1 1 200px;
+  min-width: 0; /* critical so children can shrink */
+  box-sizing: border-box;
+}
+
+.company-registration-component .input-group label {
+  display: block;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.company-registration-component .input-group input,
+.company-registration-component .input-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.company-registration-component .submit-btn {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  box-sizing: border-box;
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .company-registration-component .form-wrapper { padding: 14px; }
+  .company-registration-component .input-row { flex-direction: column; gap: 8px; }
+  .company-registration-component .form-title { font-size: 1.2rem; }
+}

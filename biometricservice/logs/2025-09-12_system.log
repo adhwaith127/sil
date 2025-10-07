@@ -1,0 +1,687 @@
+2025-09-12 14:19:59,419 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:19:59,420 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:19:59,421 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:19:59,438 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:19:59,438 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:19:59,469 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:51358 | Status:SYSTEM
+2025-09-12 14:19:59,502 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:51358 | Status:SYSTEM
+2025-09-12 14:19:59,551 - INFO - Event:PROCESSING_BATCH | Details:Processing 10 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:20:04,361 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:20:04,361 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:20:04,378 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:20:58,032 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:20:58,033 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:20:58,033 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:20:58,046 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:20:58,046 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:20:58,082 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56304 | Status:SYSTEM
+2025-09-12 14:20:58,145 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56304 | Status:SYSTEM
+2025-09-12 14:21:06,433 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:21:08,521 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 1 | Status:SYSTEM
+2025-09-12 14:21:09,118 - INFO - Event:PROCESSING_BATCH | Details:Processing 2 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:21:11,194 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 2 | Status:SYSTEM
+2025-09-12 14:21:13,271 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 3 | Status:SYSTEM
+2025-09-12 14:21:14,188 - INFO - Event:PROCESSING_BATCH | Details:Processing 2 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:21:16,271 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 4 | Status:SYSTEM
+2025-09-12 14:21:18,347 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 5 | Status:SYSTEM
+2025-09-12 14:21:21,887 - INFO - Event:PROCESSING_BATCH | Details:Processing 3 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:21:23,971 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 6 | Status:SYSTEM
+2025-09-12 14:21:26,049 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 7 | Status:SYSTEM
+2025-09-12 14:21:28,126 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 8 | Status:SYSTEM
+2025-09-12 14:21:38,451 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56304 | Status:SYSTEM
+2025-09-12 14:21:38,452 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:21:38,582 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56306 | Status:SYSTEM
+2025-09-12 14:21:38,609 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56306 | Status:SYSTEM
+2025-09-12 14:21:38,647 - INFO - Event:PROCESSING_BATCH | Details:Processing 5 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:21:40,733 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 9 | Status:SYSTEM
+2025-09-12 14:21:42,825 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 10 | Status:SYSTEM
+2025-09-12 14:21:44,903 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 11 | Status:SYSTEM
+2025-09-12 14:21:46,982 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 12 | Status:SYSTEM
+2025-09-12 14:21:49,044 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 13 | Status:SYSTEM
+2025-09-12 14:22:09,388 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56306 | Status:SYSTEM
+2025-09-12 14:22:09,389 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:22:09,456 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56308 | Status:SYSTEM
+2025-09-12 14:22:09,490 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56308 | Status:SYSTEM
+2025-09-12 14:22:40,194 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56308 | Status:SYSTEM
+2025-09-12 14:22:40,195 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:22:40,255 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56310 | Status:SYSTEM
+2025-09-12 14:22:40,636 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56310 | Status:SYSTEM
+2025-09-12 14:23:00,425 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56310 | Status:SYSTEM
+2025-09-12 14:23:00,425 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:23:00,478 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56312 | Status:SYSTEM
+2025-09-12 14:23:00,526 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56312 | Status:SYSTEM
+2025-09-12 14:23:20,590 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56312 | Status:SYSTEM
+2025-09-12 14:23:20,591 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:23:21,745 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56314 | Status:SYSTEM
+2025-09-12 14:23:21,767 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56314 | Status:SYSTEM
+2025-09-12 14:23:52,473 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56314 | Status:SYSTEM
+2025-09-12 14:23:52,473 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:23:53,540 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56316 | Status:SYSTEM
+2025-09-12 14:23:55,948 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56316 | Status:SYSTEM
+2025-09-12 14:23:58,050 - INFO - Event:RETRY_BATCH | Details:Processing 13 queued records | Status:SYSTEM
+2025-09-12 14:24:35,296 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56316 | Status:SYSTEM
+2025-09-12 14:24:35,296 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:24:37,708 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56318 | Status:SYSTEM
+2025-09-12 14:24:37,890 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56318 | Status:SYSTEM
+2025-09-12 14:25:07,978 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56318 | Status:SYSTEM
+2025-09-12 14:25:07,978 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:25:08,124 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56320 | Status:SYSTEM
+2025-09-12 14:25:08,699 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56320 | Status:SYSTEM
+2025-09-12 14:25:38,694 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56320 | Status:SYSTEM
+2025-09-12 14:25:38,694 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:25:39,249 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56322 | Status:SYSTEM
+2025-09-12 14:25:39,323 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56322 | Status:SYSTEM
+2025-09-12 14:26:10,033 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56322 | Status:SYSTEM
+2025-09-12 14:26:10,033 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:26:10,070 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56324 | Status:SYSTEM
+2025-09-12 14:26:10,124 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56324 | Status:SYSTEM
+2025-09-12 14:26:40,769 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56324 | Status:SYSTEM
+2025-09-12 14:26:40,770 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:26:40,870 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56326 | Status:SYSTEM
+2025-09-12 14:26:40,981 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56326 | Status:SYSTEM
+2025-09-12 14:27:12,200 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:56326 | Status:SYSTEM
+2025-09-12 14:27:12,200 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:27:12,569 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:56328 | Status:SYSTEM
+2025-09-12 14:27:12,601 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:56328 | Status:SYSTEM
+2025-09-12 14:27:25,019 - INFO - Event:RETRY_BATCH | Details:Processing 13 queued records | Status:SYSTEM
+2025-09-12 14:27:33,134 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:27:33,135 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:27:33,155 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:30:06,449 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:30:06,449 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:30:06,450 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:30:06,462 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:30:06,463 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:30:06,490 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45444 | Status:SYSTEM
+2025-09-12 14:30:06,529 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45444 | Status:SYSTEM
+2025-09-12 14:30:14,342 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:30:16,437 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 1 | Status:SYSTEM
+2025-09-12 14:30:39,516 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45444 | Status:SYSTEM
+2025-09-12 14:30:39,517 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:30:40,119 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45446 | Status:SYSTEM
+2025-09-12 14:30:40,661 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45446 | Status:SYSTEM
+2025-09-12 14:31:10,342 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45446 | Status:SYSTEM
+2025-09-12 14:31:10,344 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:31:12,614 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45448 | Status:SYSTEM
+2025-09-12 14:31:13,435 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45448 | Status:SYSTEM
+2025-09-12 14:31:43,890 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45448 | Status:SYSTEM
+2025-09-12 14:31:43,890 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:31:44,792 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45450 | Status:SYSTEM
+2025-09-12 14:31:46,009 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45450 | Status:SYSTEM
+2025-09-12 14:32:16,201 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45450 | Status:SYSTEM
+2025-09-12 14:32:16,202 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:32:16,564 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45452 | Status:SYSTEM
+2025-09-12 14:32:17,664 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45452 | Status:SYSTEM
+2025-09-12 14:32:48,178 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45452 | Status:SYSTEM
+2025-09-12 14:32:48,178 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:32:49,080 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45454 | Status:SYSTEM
+2025-09-12 14:32:49,975 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45454 | Status:SYSTEM
+2025-09-12 14:33:06,471 - INFO - Event:RETRY_BATCH | Details:Processing 1 queued records | Status:SYSTEM
+2025-09-12 14:33:19,885 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45454 | Status:SYSTEM
+2025-09-12 14:33:19,886 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:33:21,231 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45456 | Status:SYSTEM
+2025-09-12 14:33:22,685 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45456 | Status:SYSTEM
+2025-09-12 14:33:51,772 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45456 | Status:SYSTEM
+2025-09-12 14:33:51,773 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:33:52,266 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45458 | Status:SYSTEM
+2025-09-12 14:33:53,175 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45458 | Status:SYSTEM
+2025-09-12 14:34:22,892 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45458 | Status:SYSTEM
+2025-09-12 14:34:22,893 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:34:23,199 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45460 | Status:SYSTEM
+2025-09-12 14:34:23,518 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45460 | Status:SYSTEM
+2025-09-12 14:34:54,645 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45460 | Status:SYSTEM
+2025-09-12 14:34:54,646 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:34:55,875 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45462 | Status:SYSTEM
+2025-09-12 14:34:56,568 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45462 | Status:SYSTEM
+2025-09-12 14:35:28,538 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45462 | Status:SYSTEM
+2025-09-12 14:35:28,539 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:35:28,847 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45464 | Status:SYSTEM
+2025-09-12 14:35:29,769 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45464 | Status:SYSTEM
+2025-09-12 14:35:59,836 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45464 | Status:SYSTEM
+2025-09-12 14:35:59,836 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:36:01,309 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45466 | Status:SYSTEM
+2025-09-12 14:36:01,535 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45466 | Status:SYSTEM
+2025-09-12 14:36:08,572 - INFO - Event:RETRY_BATCH | Details:Processing 1 queued records | Status:SYSTEM
+2025-09-12 14:36:31,621 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45466 | Status:SYSTEM
+2025-09-12 14:36:31,621 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:36:32,133 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45468 | Status:SYSTEM
+2025-09-12 14:36:33,719 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45468 | Status:SYSTEM
+2025-09-12 14:37:03,101 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45468 | Status:SYSTEM
+2025-09-12 14:37:03,102 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:37:04,185 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45470 | Status:SYSTEM
+2025-09-12 14:37:04,614 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45470 | Status:SYSTEM
+2025-09-12 14:37:35,516 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45470 | Status:SYSTEM
+2025-09-12 14:37:35,516 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:37:38,386 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45472 | Status:SYSTEM
+2025-09-12 14:37:38,808 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45472 | Status:SYSTEM
+2025-09-12 14:38:09,003 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45472 | Status:SYSTEM
+2025-09-12 14:38:09,004 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:38:09,290 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45474 | Status:SYSTEM
+2025-09-12 14:38:09,864 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45474 | Status:SYSTEM
+2025-09-12 14:38:41,115 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45474 | Status:SYSTEM
+2025-09-12 14:38:41,116 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:38:41,815 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45476 | Status:SYSTEM
+2025-09-12 14:38:42,900 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45476 | Status:SYSTEM
+2025-09-12 14:39:12,723 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45476 | Status:SYSTEM
+2025-09-12 14:39:12,724 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:39:14,542 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45478 | Status:SYSTEM
+2025-09-12 14:39:14,949 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45478 | Status:SYSTEM
+2025-09-12 14:39:36,631 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:39:38,701 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 1 | Status:SYSTEM
+2025-09-12 14:39:52,302 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45478 | Status:SYSTEM
+2025-09-12 14:39:52,302 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:39:52,335 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45480 | Status:SYSTEM
+2025-09-12 14:39:52,358 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45480 | Status:SYSTEM
+2025-09-12 14:39:52,375 - INFO - Event:PROCESSING_BATCH | Details:Processing 2 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:39:54,462 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 2 | Status:SYSTEM
+2025-09-12 14:39:56,556 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 3 | Status:SYSTEM
+2025-09-12 14:40:23,251 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45480 | Status:SYSTEM
+2025-09-12 14:40:23,251 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:40:24,643 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45482 | Status:SYSTEM
+2025-09-12 14:40:25,070 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45482 | Status:SYSTEM
+2025-09-12 14:40:55,683 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45482 | Status:SYSTEM
+2025-09-12 14:40:55,683 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:40:56,935 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45484 | Status:SYSTEM
+2025-09-12 14:40:57,465 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45484 | Status:SYSTEM
+2025-09-12 14:41:28,752 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45484 | Status:SYSTEM
+2025-09-12 14:41:28,753 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:41:29,608 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45486 | Status:SYSTEM
+2025-09-12 14:41:30,422 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45486 | Status:SYSTEM
+2025-09-12 14:41:59,806 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45486 | Status:SYSTEM
+2025-09-12 14:41:59,806 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:41:59,999 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45488 | Status:SYSTEM
+2025-09-12 14:42:00,886 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45488 | Status:SYSTEM
+2025-09-12 14:42:09,122 - INFO - Event:RETRY_BATCH | Details:Processing 3 queued records | Status:SYSTEM
+2025-09-12 14:42:31,559 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:45488 | Status:SYSTEM
+2025-09-12 14:42:31,560 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:42:32,380 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:45490 | Status:SYSTEM
+2025-09-12 14:42:33,113 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:45490 | Status:SYSTEM
+2025-09-12 14:42:56,041 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:42:56,042 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:42:56,059 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:45:00,983 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:45:00,983 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:45:00,983 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:45:00,996 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:45:00,997 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:45:01,023 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:58998 | Status:SYSTEM
+2025-09-12 14:45:01,048 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:58998 | Status:SYSTEM
+2025-09-12 14:45:32,048 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:58998 | Status:SYSTEM
+2025-09-12 14:45:32,048 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:45:32,914 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59000 | Status:SYSTEM
+2025-09-12 14:45:33,024 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59000 | Status:SYSTEM
+2025-09-12 14:46:03,890 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59000 | Status:SYSTEM
+2025-09-12 14:46:03,891 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:46:04,441 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59002 | Status:SYSTEM
+2025-09-12 14:46:04,702 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59002 | Status:SYSTEM
+2025-09-12 14:46:44,867 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59002 | Status:SYSTEM
+2025-09-12 14:46:44,868 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:46:44,937 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59004 | Status:SYSTEM
+2025-09-12 14:46:45,315 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59004 | Status:SYSTEM
+2025-09-12 14:47:16,938 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59004 | Status:SYSTEM
+2025-09-12 14:47:16,938 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:47:17,757 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59006 | Status:SYSTEM
+2025-09-12 14:47:18,090 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59006 | Status:SYSTEM
+2025-09-12 14:47:43,370 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59006 | Status:SYSTEM
+2025-09-12 14:47:43,370 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:47:43,891 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59008 | Status:SYSTEM
+2025-09-12 14:47:44,401 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59008 | Status:SYSTEM
+2025-09-12 14:48:14,142 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59008 | Status:SYSTEM
+2025-09-12 14:48:14,143 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:48:15,500 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59010 | Status:SYSTEM
+2025-09-12 14:48:15,605 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59010 | Status:SYSTEM
+2025-09-12 14:48:41,393 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:48:41,394 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:48:41,407 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:48:59,156 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:48:59,156 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:48:59,157 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:48:59,171 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:48:59,172 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:48:59,213 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59968 | Status:SYSTEM
+2025-09-12 14:48:59,233 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59968 | Status:SYSTEM
+2025-09-12 14:48:59,267 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:49:05,608 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:49:05,609 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:49:05,625 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:49:09,884 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:49:09,885 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:49:09,885 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:49:09,898 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:49:09,899 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:49:10,119 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59978 | Status:SYSTEM
+2025-09-12 14:49:10,156 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59978 | Status:SYSTEM
+2025-09-12 14:49:18,296 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:49:28,537 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:49:31,100 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:49:41,841 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59978 | Status:SYSTEM
+2025-09-12 14:49:41,842 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:49:43,900 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59980 | Status:SYSTEM
+2025-09-12 14:49:45,230 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59980 | Status:SYSTEM
+2025-09-12 14:49:45,712 - INFO - Event:PROCESSING_BATCH | Details:Processing 8 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:50:09,196 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59980 | Status:SYSTEM
+2025-09-12 14:50:09,197 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:50:09,602 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59982 | Status:SYSTEM
+2025-09-12 14:50:09,631 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59982 | Status:SYSTEM
+2025-09-12 14:50:43,026 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59982 | Status:SYSTEM
+2025-09-12 14:50:43,028 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:50:43,157 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59984 | Status:SYSTEM
+2025-09-12 14:50:43,832 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59984 | Status:SYSTEM
+2025-09-12 14:51:04,283 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:59984 | Status:SYSTEM
+2025-09-12 14:51:04,284 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:51:04,676 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:59986 | Status:SYSTEM
+2025-09-12 14:51:05,481 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:59986 | Status:SYSTEM
+2025-09-12 14:51:19,711 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:51:19,712 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:51:19,722 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:53:35,470 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:53:35,471 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:53:35,472 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:53:35,485 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:53:35,485 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:53:35,518 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44808 | Status:SYSTEM
+2025-09-12 14:53:35,543 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44808 | Status:SYSTEM
+2025-09-12 14:53:35,598 - INFO - Event:PROCESSING_BATCH | Details:Processing 4 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:53:37,680 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 1 | Status:SYSTEM
+2025-09-12 14:53:39,758 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 2 | Status:SYSTEM
+2025-09-12 14:53:41,851 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 3 | Status:SYSTEM
+2025-09-12 14:53:43,929 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 4 | Status:SYSTEM
+2025-09-12 14:54:07,531 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:54:07,532 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:54:07,550 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:54:08,809 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:54:08,811 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:54:08,812 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:54:08,829 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:54:08,831 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:54:08,832 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 4 pending records from previous session | Status:SYSTEM
+2025-09-12 14:54:09,172 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44824 | Status:SYSTEM
+2025-09-12 14:54:09,737 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44824 | Status:SYSTEM
+2025-09-12 14:54:40,151 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:44824 | Status:SYSTEM
+2025-09-12 14:54:40,152 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:54:40,625 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44826 | Status:SYSTEM
+2025-09-12 14:54:41,254 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44826 | Status:SYSTEM
+2025-09-12 14:55:02,090 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:44826 | Status:SYSTEM
+2025-09-12 14:55:02,091 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:55:02,753 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44828 | Status:SYSTEM
+2025-09-12 14:55:03,086 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44828 | Status:SYSTEM
+2025-09-12 14:55:33,803 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:44828 | Status:SYSTEM
+2025-09-12 14:55:33,804 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:55:34,553 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44830 | Status:SYSTEM
+2025-09-12 14:55:35,001 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44830 | Status:SYSTEM
+2025-09-12 14:56:05,210 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:44830 | Status:SYSTEM
+2025-09-12 14:56:05,211 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:56:07,289 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44832 | Status:SYSTEM
+2025-09-12 14:56:09,504 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44832 | Status:SYSTEM
+2025-09-12 14:56:38,315 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:44832 | Status:SYSTEM
+2025-09-12 14:56:38,316 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:56:38,387 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44834 | Status:SYSTEM
+2025-09-12 14:56:38,897 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44834 | Status:SYSTEM
+2025-09-12 14:57:08,837 - INFO - Event:RETRY_BATCH | Details:Processing 4 queued records | Status:SYSTEM
+2025-09-12 14:57:09,957 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:44834 | Status:SYSTEM
+2025-09-12 14:57:09,957 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:57:10,268 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:44836 | Status:SYSTEM
+2025-09-12 14:57:10,674 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:44836 | Status:SYSTEM
+2025-09-12 14:57:19,576 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 14:57:19,576 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 14:57:19,589 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:57:53,615 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 14:57:53,616 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 14:57:53,616 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:57:53,629 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 14:57:53,630 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 14:57:53,718 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48100 | Status:SYSTEM
+2025-09-12 14:57:53,754 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48100 | Status:SYSTEM
+2025-09-12 14:58:00,542 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:58:02,627 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 1 | Status:SYSTEM
+2025-09-12 14:58:24,700 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48100 | Status:SYSTEM
+2025-09-12 14:58:24,701 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:58:25,018 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48102 | Status:SYSTEM
+2025-09-12 14:58:25,410 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48102 | Status:SYSTEM
+2025-09-12 14:58:25,431 - INFO - Event:PROCESSING_BATCH | Details:Processing 2 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:58:27,512 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 2 | Status:SYSTEM
+2025-09-12 14:58:29,590 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 3 | Status:SYSTEM
+2025-09-12 14:58:57,140 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48102 | Status:SYSTEM
+2025-09-12 14:58:57,141 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:58:57,203 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48104 | Status:SYSTEM
+2025-09-12 14:58:57,338 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48104 | Status:SYSTEM
+2025-09-12 14:59:28,695 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48104 | Status:SYSTEM
+2025-09-12 14:59:28,696 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 14:59:28,752 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48106 | Status:SYSTEM
+2025-09-12 14:59:28,799 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48106 | Status:SYSTEM
+2025-09-12 15:00:00,003 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48106 | Status:SYSTEM
+2025-09-12 15:00:00,004 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:00:00,848 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48108 | Status:SYSTEM
+2025-09-12 15:00:01,258 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48108 | Status:SYSTEM
+2025-09-12 15:00:20,950 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48108 | Status:SYSTEM
+2025-09-12 15:00:20,950 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:00:22,149 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48110 | Status:SYSTEM
+2025-09-12 15:00:22,449 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48110 | Status:SYSTEM
+2025-09-12 15:00:42,217 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48110 | Status:SYSTEM
+2025-09-12 15:00:42,218 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:00:42,825 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48112 | Status:SYSTEM
+2025-09-12 15:00:42,949 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48112 | Status:SYSTEM
+2025-09-12 15:00:53,638 - INFO - Event:RETRY_BATCH | Details:Processing 3 queued records | Status:SYSTEM
+2025-09-12 15:01:08,125 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48112 | Status:SYSTEM
+2025-09-12 15:01:08,126 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:01:09,323 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48114 | Status:SYSTEM
+2025-09-12 15:01:09,354 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48114 | Status:SYSTEM
+2025-09-12 15:01:49,802 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48114 | Status:SYSTEM
+2025-09-12 15:01:49,803 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:01:50,111 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48116 | Status:SYSTEM
+2025-09-12 15:01:50,912 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48116 | Status:SYSTEM
+2025-09-12 15:02:22,563 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48116 | Status:SYSTEM
+2025-09-12 15:02:22,564 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:02:22,628 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48118 | Status:SYSTEM
+2025-09-12 15:02:22,701 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48118 | Status:SYSTEM
+2025-09-12 15:02:53,521 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48118 | Status:SYSTEM
+2025-09-12 15:02:53,521 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:02:53,879 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48120 | Status:SYSTEM
+2025-09-12 15:02:54,211 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48120 | Status:SYSTEM
+2025-09-12 15:03:24,259 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48120 | Status:SYSTEM
+2025-09-12 15:03:24,259 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:03:24,320 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48122 | Status:SYSTEM
+2025-09-12 15:03:24,426 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48122 | Status:SYSTEM
+2025-09-12 15:03:54,909 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48122 | Status:SYSTEM
+2025-09-12 15:03:54,909 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:03:54,978 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48124 | Status:SYSTEM
+2025-09-12 15:03:55,007 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48124 | Status:SYSTEM
+2025-09-12 15:03:59,871 - INFO - Event:RETRY_BATCH | Details:Processing 3 queued records | Status:SYSTEM
+2025-09-12 15:04:12,041 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:14,139 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 4 | Status:SYSTEM
+2025-09-12 15:04:19,155 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:21,261 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 5 | Status:SYSTEM
+2025-09-12 15:04:24,223 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:26,321 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 6 | Status:SYSTEM
+2025-09-12 15:04:27,704 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:29,815 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 7 | Status:SYSTEM
+2025-09-12 15:04:32,513 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:34,635 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 8 | Status:SYSTEM
+2025-09-12 15:04:35,809 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48124 | Status:SYSTEM
+2025-09-12 15:04:35,810 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:36,684 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48126 | Status:SYSTEM
+2025-09-12 15:04:36,931 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48126 | Status:SYSTEM
+2025-09-12 15:04:37,323 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:39,448 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 9 | Status:SYSTEM
+2025-09-12 15:04:49,775 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:04:51,889 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 10 | Status:SYSTEM
+2025-09-12 15:05:07,225 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48126 | Status:SYSTEM
+2025-09-12 15:05:07,225 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:05:07,284 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48128 | Status:SYSTEM
+2025-09-12 15:05:07,330 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48128 | Status:SYSTEM
+2025-09-12 15:05:38,642 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48128 | Status:SYSTEM
+2025-09-12 15:05:38,643 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:05:38,995 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48130 | Status:SYSTEM
+2025-09-12 15:05:39,029 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48130 | Status:SYSTEM
+2025-09-12 15:06:09,344 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48130 | Status:SYSTEM
+2025-09-12 15:06:09,345 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:06:09,391 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48132 | Status:SYSTEM
+2025-09-12 15:06:09,437 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48132 | Status:SYSTEM
+2025-09-12 15:06:40,070 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48132 | Status:SYSTEM
+2025-09-12 15:06:40,070 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:06:40,136 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48134 | Status:SYSTEM
+2025-09-12 15:06:40,198 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48134 | Status:SYSTEM
+2025-09-12 15:07:06,116 - INFO - Event:RETRY_BATCH | Details:Processing 10 queued records | Status:SYSTEM
+2025-09-12 15:07:10,773 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48134 | Status:SYSTEM
+2025-09-12 15:07:10,774 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:07:14,105 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48136 | Status:SYSTEM
+2025-09-12 15:07:14,151 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48136 | Status:SYSTEM
+2025-09-12 15:07:31,542 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 15:07:31,543 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 15:07:31,560 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:07:33,276 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 15:07:33,277 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 15:07:33,278 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 15:07:33,294 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 15:07:33,296 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 15:07:33,683 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48142 | Status:SYSTEM
+2025-09-12 15:07:33,767 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48142 | Status:SYSTEM
+2025-09-12 15:08:03,895 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48142 | Status:SYSTEM
+2025-09-12 15:08:03,896 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:08:03,956 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48144 | Status:SYSTEM
+2025-09-12 15:08:04,094 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48144 | Status:SYSTEM
+2025-09-12 15:08:34,653 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48144 | Status:SYSTEM
+2025-09-12 15:08:34,653 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:08:35,046 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48146 | Status:SYSTEM
+2025-09-12 15:08:35,078 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48146 | Status:SYSTEM
+2025-09-12 15:09:05,302 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48146 | Status:SYSTEM
+2025-09-12 15:09:05,303 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:09:05,360 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48148 | Status:SYSTEM
+2025-09-12 15:09:05,390 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48148 | Status:SYSTEM
+2025-09-12 15:09:36,047 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48148 | Status:SYSTEM
+2025-09-12 15:09:36,048 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:09:37,088 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48150 | Status:SYSTEM
+2025-09-12 15:09:37,124 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48150 | Status:SYSTEM
+2025-09-12 15:10:07,442 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48150 | Status:SYSTEM
+2025-09-12 15:10:07,443 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:10:07,484 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48152 | Status:SYSTEM
+2025-09-12 15:10:07,516 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48152 | Status:SYSTEM
+2025-09-12 15:10:38,143 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48152 | Status:SYSTEM
+2025-09-12 15:10:38,144 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:10:38,426 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48154 | Status:SYSTEM
+2025-09-12 15:10:38,512 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48154 | Status:SYSTEM
+2025-09-12 15:11:08,838 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48154 | Status:SYSTEM
+2025-09-12 15:11:08,838 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:11:08,897 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48156 | Status:SYSTEM
+2025-09-12 15:11:09,142 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48156 | Status:SYSTEM
+2025-09-12 15:11:39,577 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48156 | Status:SYSTEM
+2025-09-12 15:11:39,578 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:11:39,619 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48158 | Status:SYSTEM
+2025-09-12 15:11:39,673 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48158 | Status:SYSTEM
+2025-09-12 15:12:10,293 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48158 | Status:SYSTEM
+2025-09-12 15:12:10,294 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:12:10,359 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48160 | Status:SYSTEM
+2025-09-12 15:12:10,405 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48160 | Status:SYSTEM
+2025-09-12 15:12:40,975 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48160 | Status:SYSTEM
+2025-09-12 15:12:40,976 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:12:41,045 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48162 | Status:SYSTEM
+2025-09-12 15:12:41,079 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48162 | Status:SYSTEM
+2025-09-12 15:13:11,743 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48162 | Status:SYSTEM
+2025-09-12 15:13:11,743 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:13:11,792 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48164 | Status:SYSTEM
+2025-09-12 15:13:11,911 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48164 | Status:SYSTEM
+2025-09-12 15:13:42,434 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48164 | Status:SYSTEM
+2025-09-12 15:13:42,435 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:13:42,508 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48166 | Status:SYSTEM
+2025-09-12 15:13:42,549 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48166 | Status:SYSTEM
+2025-09-12 15:14:13,197 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48166 | Status:SYSTEM
+2025-09-12 15:14:13,198 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:14:13,270 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48168 | Status:SYSTEM
+2025-09-12 15:14:13,308 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48168 | Status:SYSTEM
+2025-09-12 15:14:33,712 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48168 | Status:SYSTEM
+2025-09-12 15:14:33,712 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:14:33,918 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48170 | Status:SYSTEM
+2025-09-12 15:14:34,225 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48170 | Status:SYSTEM
+2025-09-12 15:15:04,343 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48170 | Status:SYSTEM
+2025-09-12 15:15:04,344 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:15:04,535 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48172 | Status:SYSTEM
+2025-09-12 15:15:05,260 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48172 | Status:SYSTEM
+2025-09-12 15:15:44,577 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48172 | Status:SYSTEM
+2025-09-12 15:15:44,577 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:15:44,651 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48174 | Status:SYSTEM
+2025-09-12 15:15:44,696 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48174 | Status:SYSTEM
+2025-09-12 15:16:15,369 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48174 | Status:SYSTEM
+2025-09-12 15:16:15,370 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:16:15,457 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48176 | Status:SYSTEM
+2025-09-12 15:16:15,507 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48176 | Status:SYSTEM
+2025-09-12 15:16:46,125 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48176 | Status:SYSTEM
+2025-09-12 15:16:46,126 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:16:46,254 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48178 | Status:SYSTEM
+2025-09-12 15:16:46,665 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48178 | Status:SYSTEM
+2025-09-12 15:17:16,829 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48178 | Status:SYSTEM
+2025-09-12 15:17:16,829 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:17:16,903 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48180 | Status:SYSTEM
+2025-09-12 15:17:16,980 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48180 | Status:SYSTEM
+2025-09-12 15:17:47,564 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48180 | Status:SYSTEM
+2025-09-12 15:17:47,564 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:17:47,619 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48182 | Status:SYSTEM
+2025-09-12 15:17:47,972 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48182 | Status:SYSTEM
+2025-09-12 15:18:18,281 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:48182 | Status:SYSTEM
+2025-09-12 15:18:18,281 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 15:18:18,376 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:48184 | Status:SYSTEM
+2025-09-12 15:18:18,510 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:48184 | Status:SYSTEM
+2025-09-12 15:18:25,268 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 15:18:25,268 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 15:18:25,287 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:38:00,584 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 17:38:00,586 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 17:38:00,587 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:38:00,622 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 17:38:00,623 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:38:41,045 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:35780 | Status:SYSTEM
+2025-09-12 17:38:41,147 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:35780 | Status:SYSTEM
+2025-09-12 17:38:54,586 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:38:55,835 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:39:11,377 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:35780 | Status:SYSTEM
+2025-09-12 17:39:11,377 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:39:13,304 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:35782 | Status:SYSTEM
+2025-09-12 17:39:15,760 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:35782 | Status:SYSTEM
+2025-09-12 17:39:16,271 - INFO - Event:PROCESSING_BATCH | Details:Processing 2 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:39:51,119 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:35784 | Status:SYSTEM
+2025-09-12 17:39:54,414 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:35784 | Status:SYSTEM
+2025-09-12 17:39:55,145 - INFO - Event:PROCESSING_BATCH | Details:Processing 4 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:40:11,784 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:13,548 - INFO - Event:SHUTDOWN_INITIATED | Details:Starting graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:13,549 - INFO - Event:CLOSING_CONNECTIONS | Details:Closing 2 device connections | Status:SYSTEM
+2025-09-12 17:40:13,550 - INFO - Event:SHUTDOWN_INITIATED | Details:Starting graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:13,550 - INFO - Event:CLOSING_CONNECTIONS | Details:Closing 2 device connections | Status:SYSTEM
+2025-09-12 17:40:13,551 - INFO - Event:RETRY_TASK_STOPPED | Details:Queue retry task stopped | Status:SYSTEM
+2025-09-12 17:40:23,559 - INFO - Event:HTTP_SESSION_CLOSED | Details:HTTP session closed | Status:SYSTEM
+2025-09-12 17:40:23,559 - INFO - Event:STOPPING_SERVER | Details:Stopping WebSocket server | Status:SYSTEM
+2025-09-12 17:40:23,560 - INFO - Event:HTTP_SESSION_CLOSED | Details:HTTP session closed | Status:SYSTEM
+2025-09-12 17:40:23,560 - INFO - Event:STOPPING_SERVER | Details:Stopping WebSocket server | Status:SYSTEM
+2025-09-12 17:40:39,472 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:45,896 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:46,224 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:48,607 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:50,088 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:50,519 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:50,880 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:51,160 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:51,383 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:40:51,591 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:41:19,058 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 17:41:19,058 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 17:41:19,058 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:41:19,071 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 17:41:19,071 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:41:19,072 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 1 pending records from previous session | Status:SYSTEM
+2025-09-12 17:41:19,113 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:41656 | Status:SYSTEM
+2025-09-12 17:41:19,145 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:41656 | Status:SYSTEM
+2025-09-12 17:41:19,165 - INFO - Event:PROCESSING_BATCH | Details:Processing 4 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:41:20,143 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:41:21,232 - INFO - Event:SHUTDOWN_INITIATED | Details:Starting graceful shutdown | Status:SYSTEM
+2025-09-12 17:41:21,233 - INFO - Event:CLOSING_CONNECTIONS | Details:Closing 1 device connections | Status:SYSTEM
+2025-09-12 17:41:21,234 - INFO - Event:SHUTDOWN_INITIATED | Details:Starting graceful shutdown | Status:SYSTEM
+2025-09-12 17:41:21,234 - INFO - Event:CLOSING_CONNECTIONS | Details:Closing 1 device connections | Status:SYSTEM
+2025-09-12 17:41:23,313 - INFO - Event:RETRY_TASK_STOPPED | Details:Queue retry task stopped | Status:SYSTEM
+2025-09-12 17:41:23,314 - INFO - Event:HTTP_SESSION_CLOSED | Details:HTTP session closed | Status:SYSTEM
+2025-09-12 17:41:23,314 - INFO - Event:STOPPING_SERVER | Details:Stopping WebSocket server | Status:SYSTEM
+2025-09-12 17:41:23,314 - INFO - Event:HTTP_SESSION_CLOSED | Details:HTTP session closed | Status:SYSTEM
+2025-09-12 17:41:23,315 - INFO - Event:STOPPING_SERVER | Details:Stopping WebSocket server | Status:SYSTEM
+2025-09-12 17:41:23,315 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:41658 | Status:SYSTEM
+2025-09-12 17:41:37,839 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-12 17:42:12,644 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 17:42:12,645 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 17:42:12,645 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:42:12,658 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 17:42:12,658 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:42:12,659 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 2 pending records from previous session | Status:SYSTEM
+2025-09-12 17:42:12,695 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46048 | Status:SYSTEM
+2025-09-12 17:42:12,714 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46048 | Status:SYSTEM
+2025-09-12 17:42:12,753 - INFO - Event:PROCESSING_BATCH | Details:Processing 4 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:42:14,834 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 3 | Status:SYSTEM
+2025-09-12 17:42:16,912 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 4 | Status:SYSTEM
+2025-09-12 17:42:18,996 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 5 | Status:SYSTEM
+2025-09-12 17:42:21,083 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 6 | Status:SYSTEM
+2025-09-12 17:42:27,950 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 17:42:27,951 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 17:42:27,985 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:42:29,619 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 17:42:29,620 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 17:42:29,620 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:42:29,642 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 17:42:29,642 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:42:29,643 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 6 pending records from previous session | Status:SYSTEM
+2025-09-12 17:42:29,674 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46168 | Status:SYSTEM
+2025-09-12 17:42:29,706 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46168 | Status:SYSTEM
+2025-09-12 17:42:59,861 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46168 | Status:SYSTEM
+2025-09-12 17:42:59,861 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:42:59,915 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46170 | Status:SYSTEM
+2025-09-12 17:43:00,053 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46170 | Status:SYSTEM
+2025-09-12 17:43:15,087 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 17:43:15,088 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 17:43:15,105 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:43:18,825 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-12 17:43:18,826 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-12 17:43:18,826 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:43:18,851 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-12 17:43:18,853 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-12 17:43:18,855 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 6 pending records from previous session | Status:SYSTEM
+2025-09-12 17:43:18,902 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46448 | Status:SYSTEM
+2025-09-12 17:43:18,924 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46448 | Status:SYSTEM
+2025-09-12 17:43:49,746 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46448 | Status:SYSTEM
+2025-09-12 17:43:49,747 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:43:49,805 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46450 | Status:SYSTEM
+2025-09-12 17:43:49,904 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46450 | Status:SYSTEM
+2025-09-12 17:44:23,060 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46450 | Status:SYSTEM
+2025-09-12 17:44:23,060 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:44:23,132 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46452 | Status:SYSTEM
+2025-09-12 17:44:27,439 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46452 | Status:SYSTEM
+2025-09-12 17:44:54,507 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46452 | Status:SYSTEM
+2025-09-12 17:44:54,508 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:44:56,145 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46454 | Status:SYSTEM
+2025-09-12 17:44:56,539 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46454 | Status:SYSTEM
+2025-09-12 17:45:27,024 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46454 | Status:SYSTEM
+2025-09-12 17:45:27,024 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:45:27,451 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46456 | Status:SYSTEM
+2025-09-12 17:45:28,363 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46456 | Status:SYSTEM
+2025-09-12 17:45:47,795 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46456 | Status:SYSTEM
+2025-09-12 17:45:47,796 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:45:50,940 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46458 | Status:SYSTEM
+2025-09-12 17:45:50,988 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46458 | Status:SYSTEM
+2025-09-12 17:46:18,861 - INFO - Event:RETRY_BATCH | Details:Processing 6 queued records | Status:SYSTEM
+2025-09-12 17:46:21,600 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46458 | Status:SYSTEM
+2025-09-12 17:46:21,600 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:46:21,796 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46460 | Status:SYSTEM
+2025-09-12 17:46:26,224 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46460 | Status:SYSTEM
+2025-09-12 17:46:52,345 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46460 | Status:SYSTEM
+2025-09-12 17:46:52,345 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:46:53,249 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46462 | Status:SYSTEM
+2025-09-12 17:46:53,850 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46462 | Status:SYSTEM
+2025-09-12 17:47:24,239 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46462 | Status:SYSTEM
+2025-09-12 17:47:24,239 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:47:24,916 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46464 | Status:SYSTEM
+2025-09-12 17:47:25,772 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46464 | Status:SYSTEM
+2025-09-12 17:47:55,757 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46464 | Status:SYSTEM
+2025-09-12 17:47:55,757 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:47:56,803 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46466 | Status:SYSTEM
+2025-09-12 17:47:57,038 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46466 | Status:SYSTEM
+2025-09-12 17:48:27,500 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46466 | Status:SYSTEM
+2025-09-12 17:48:27,501 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:48:28,748 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46468 | Status:SYSTEM
+2025-09-12 17:48:28,883 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46468 | Status:SYSTEM
+2025-09-12 17:48:36,679 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:48:39,989 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:48:59,057 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46468 | Status:SYSTEM
+2025-09-12 17:48:59,057 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:48:59,442 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46470 | Status:SYSTEM
+2025-09-12 17:48:59,749 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46470 | Status:SYSTEM
+2025-09-12 17:49:29,958 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46470 | Status:SYSTEM
+2025-09-12 17:49:29,958 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:49:30,059 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46472 | Status:SYSTEM
+2025-09-12 17:49:30,140 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46472 | Status:SYSTEM
+2025-09-12 17:49:34,474 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:49:36,206 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:49:43,472 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:49:45,383 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:49:47,432 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:49:50,700 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:50:01,011 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:46472 | Status:SYSTEM
+2025-09-12 17:50:01,012 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:50:01,610 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:46474 | Status:SYSTEM
+2025-09-12 17:50:01,978 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:46474 | Status:SYSTEM
+2025-09-12 17:50:02,126 - INFO - Event:PROCESSING_BATCH | Details:Processing 3 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-12 17:50:09,077 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-12 17:50:09,078 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-12 17:50:09,097 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM

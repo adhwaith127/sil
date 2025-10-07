@@ -1,0 +1,49 @@
+2025-09-25 09:52:06,468 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-25 09:52:06,468 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-25 09:52:06,469 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:52:06,512 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-25 09:52:06,513 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:52:06,515 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 1 pending records from previous session | Status:SYSTEM
+2025-09-25 09:52:19,845 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-25 09:52:19,845 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-25 09:52:24,202 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-25 09:52:24,202 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-25 09:52:24,202 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:52:24,215 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-25 09:52:24,215 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:52:24,216 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 1 pending records from previous session | Status:SYSTEM
+2025-09-25 09:54:03,184 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:60198 | Status:SYSTEM
+2025-09-25 09:54:03,973 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:60198 | Status:SYSTEM
+2025-09-25 09:54:04,060 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-25 09:54:06,201 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 2 | Status:SYSTEM
+2025-09-25 09:54:09,332 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-25 09:54:09,332 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-25 09:54:09,351 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-25 09:54:10,852 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-25 09:54:10,852 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-25 09:54:10,853 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:54:10,866 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-25 09:54:10,866 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:54:10,867 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 2 pending records from previous session | Status:SYSTEM
+2025-09-25 09:54:11,227 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:60206 | Status:SYSTEM
+2025-09-25 09:54:12,307 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:60206 | Status:SYSTEM
+2025-09-25 09:54:14,784 - INFO - Event:DEVICE_DISCONNECTED | Details:Connection closed: 192.168.0.232:60206 | Status:SYSTEM
+2025-09-25 09:54:14,784 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-25 09:54:17,341 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:60210 | Status:SYSTEM
+2025-09-25 09:54:17,622 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:60210 | Status:SYSTEM
+2025-09-25 09:54:20,498 - INFO - Event:PROCESSING_BATCH | Details:Processing 1 records from device ZXRC21016024 | Status:SYSTEM
+2025-09-25 09:54:20,661 - INFO - Event:QUEUE_SIZE | Details:Current queue size: 3 | Status:SYSTEM
+2025-09-25 09:54:25,948 - INFO - Event:APPLICATION_STOPPED | Details:Server stopped by user | Status:SYSTEM
+2025-09-25 09:54:25,948 - INFO - Event:APPLICATION_SHUTDOWN | Details:Application shutting down | Status:SYSTEM
+2025-09-25 09:54:25,966 - INFO - Event:DEVICE_UNREGISTERED | Details:Device disconnected: ZXRC21016024 | Status:SYSTEM
+2025-09-25 09:54:38,077 - INFO - Event:DATABASE_INIT | Details:SQLite database initialized at /home/silpc-011/Desktop/adwaith/biometricservice/database/attendance_queue.db | Status:SYSTEM
+2025-09-25 09:54:38,077 - INFO - Event:APPLICATION_STARTING | Details:Biometric server application starting | Status:SYSTEM
+2025-09-25 09:54:38,077 - INFO - Event:SERVER_STARTING | Details:WebSocket server starting on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:54:38,090 - INFO - Event:RETRY_TASK_STARTED | Details:Queue retry task started | Status:SYSTEM
+2025-09-25 09:54:38,090 - INFO - Event:SERVER_STARTED | Details:Server listening on 0.0.0.0:8190 | Status:SYSTEM
+2025-09-25 09:54:38,091 - INFO - Event:STARTUP_QUEUE_CHECK | Details:Found 3 pending records from previous session | Status:SYSTEM
+2025-09-25 09:54:38,117 - INFO - Event:DEVICE_CONNECTED | Details:Device connected: 192.168.0.232:33112 | Status:SYSTEM
+2025-09-25 09:54:38,141 - INFO - Event:DEVICE_REGISTERED | Details:Device ZXRC21016024 connected from 192.168.0.232:33112 | Status:SYSTEM
+2025-09-25 09:54:48,627 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-25 09:54:48,875 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM
+2025-09-25 09:54:49,652 - INFO - Event:SHUTDOWN_SIGNAL | Details:Received signal 2, initiating graceful shutdown | Status:SYSTEM

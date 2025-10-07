@@ -14,15 +14,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # ERPNext Configuration
-ERP_URL = "http://erpgulf.softlandindia.net/"
-ERP_API = "/api/method/clean_plus.services.biometric_server_erp2.add_checkin"
+ERP_URL = "http://192.168.0.61:8000"
+ERP_API = "/api/method/sil.test.biometric_to_erp_new.add_checkin"
 
 HOST = "0.0.0.0"
-PORT = 8080
-
+PORT = 8190
 
 class BiometricServer:
-    def __init__(self, host='0.0.0.0', port=8080):
+    def __init__(self, host='0.0.0.0', port=8190):
         self.host = host
         self.port = port
         self.connected_devices: Dict[websockets.WebSocketServerProtocol, str] = {}

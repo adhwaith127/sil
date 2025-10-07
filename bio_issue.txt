@@ -1,0 +1,89 @@
+Now I can see the ACTUAL problem. This websocket system log reveals the root cause.
+The Real Issue: Device Connection Chaos
+From 08:31:15 to 08:35:34, the biometric device is creating multiple simultaneous connections and sending overlapping batches:
+Key Evidence:
+
+08:34:02 - Processing 5 records
+08:34:15 - Processing 6 records (while previous batch still active)
+08:34:18 - Processing 6 records (third overlapping batch)
+08:35:11 - Processing 7 records (fourth overlapping batch)
+
+The device is connecting multiple times simultaneously and sending the same batch of records through different connections.
+What's Actually Happening
+
+08:31:15 - Device sends UNNI's record, times out
+Device panics - starts creating multiple connections rapidly
+08:34:02 onwards - Device sends the same cached batch through multiple simultaneous connections
+Your server processes each connection as separate batches - creating duplicates
+The Bug Logic
+Your server tracks connections like this:
+
+self.connected_devices: Dict[websockets.WebSocketServerProtocol, str] = {}
+
+But when the device creates multiple connections simultaneously:
+
+Connection 1 (port 52544): Sends batch with ARUN, ADHWAITH, etc.
+Connection 2 (port 52548): Sends same batch with same timestamps
+Connection 3 (port 52550): Sends same batch again
+
+Each connection is treated as a separate device session, so your server processes the identical batch multiple times.
+
+The Fix
+You need device-level deduplication, not connection-level:
+class BiometricServer:
+    def __init__(self):
+        # ... existing code ...
+        self.device_recent_batches = {}  # Track recent batches per device ID
+        
+    async def store_attendance(self, records, device_id):
+        import hashlib
+        import time
+        
+        # Create batch fingerprint
+        batch_data = ""
+        for record in sorted(records, key=lambda r: r.get('enrollid', '')):
+            batch_data += f"{record.get('enrollid')}_{record.get('time')}_{record.get('name')}_"
+        
+        batch_hash = hashlib.md5(batch_data.encode()).hexdigest()[:12]
+        current_time = time.time()
+        
+        # Check if this exact batch was processed recently (within 5 minutes)
+        if device_id in self.device_recent_batches:
+            recent_batches = self.device_recent_batches[device_id]
+            
+            # Clean old batches (older than 5 minutes)
+            recent_batches = {h: t for h, t in recent_batches.items() if current_time - t < 300}
+            self.device_recent_batches[device_id] = recent_batches
+            
+            if batch_hash in recent_batches:
+                if self.enhanced_logger:
+                    self.enhanced_logger.log_system_event(
+                        "DUPLICATE_BATCH_BLOCKED",
+                        f"Device {device_id} sent duplicate batch {batch_hash} (originally at {time.ctime(recent_batches[batch_hash])})"
+                    )
+                return {"ret": "sendlog", "result": True, "cloudtime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        else:
+            self.device_recent_batches[device_id] = {}
+        
+        # Mark this batch as processed
+        self.device_recent_batches[device_id][batch_hash] = current_time
+        
+        if self.enhanced_logger:
+            self.enhanced_logger.log_system_event(
+                "NEW_BATCH_ACCEPTED",
+                f"Device {device_id} processing new batch {batch_hash} with {len(records)} records"
+            )
+        
+        # Process the batch normally
+        # ... rest of your existing code
+
+
+The biometric device firmware likely has a bug where:
+
+Network timeout triggers "resend" logic
+Instead of resending on the same connection, it opens new connections
+It sends the cached batch through each new connection
+It doesn't track what was already sent successfully
+
+This is a device firmware issue combined with your server not detecting the duplicate batches across different connections.
+The fix above will solve it by tracking batch content regardless of which connection it comes from.

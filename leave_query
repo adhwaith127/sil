@@ -1,0 +1,66 @@
+import frappe
+from frappe.utils import format_datetime, time_diff_in_hours, today, getdate
+from collections import OrderedDict, defaultdict
+from datetime import datetime, date, timedelta
+import calendar
+from typing import List, Dict, Any, Tuple, Optional   
+
+def _get_leave_and_holiday(from_date,to_date):
+    query="""
+        SELECT em.name,em.employee,
+        h.holiday_date,
+        la.employee, la.from_date AS leave_from_date, la.to_date AS leave_to_date,la.leave_type,la.half_day,la.half_day_date AS half_day_date
+        FROM `tabEmployee` as em
+        LEFT JOIN `tabHoliday` h ON em.holiday_list=h.parent
+            AND h.holiday_date BETWEEN %(from_date)s AND %(to_date)s
+        LEFT JOIN `tabLeave Application` as la on em.name=la.employee
+        WHERE la.status = 'Approved' AND em.status='Active'
+            AND la.docstatus = 1 AND (la.from_date BETWEEN %(from_date)s and %(to_date)s OR
+            la.to_date BETWEEN %(from_date)s and %(to_date)s)
+        ORDER BY em.name
+    """
+    
+    leave_data=frappe.db.sql(query,values={"from_date":from_date,"to_date":to_date},as_dict=True)
+    employee_leaves=defaultdict(lambda:defaultdict(set))
+    for data in leave_data:
+        employee_name=data['name']
+        holiday_date=data['holiday_date']
+        leave_from=data['leave_from_date']
+        leave_to=data['leave_to_date']
+        half_day_date=data['half_day_date']
+        
+        data.pop('name')
+        data.pop('employee')
+        data.pop('leave_from_date')
+        data.pop('leave_to_date')
+        
+        employee_leaves[employee_name]['leave_period'].add((leave_from,leave_to))
+        if half_day_date:
+            employee_leaves[employee_name]['half_day_date'].add(half_day_date)
+        employee_leaves[employee_name]['holiday'].add(holiday_date)
+    
+    return employee_leaves
+
+
+@frappe.whitelist()
+def main_fn(select_date=None):
+    try:
+        if select_date is None:
+            select_date=getdate(today())
+        else:
+            select_date=getdate(select_date)
+
+        month_start=select_date.replace(day=1)
+        _,num_days_in_month=calendar.monthrange(select_date.year,select_date.month)
+        month_end=select_date.replace(day=num_days_in_month)
+        month_end=min(select_date,month_end)
+        num_days_in_period=0
+        current_date=month_start
+        while current_date<=month_end:
+            num_days_in_period+=1
+            current_date+=timedelta(days=1)
+
+        return _get_leave_and_holiday(month_start,month_end)
+
+    except Exception as e:
+        return ("ERROR",str(e))

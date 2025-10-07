@@ -14,8 +14,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # ERPNext Configuration
-ERP_URL = "http://192.168.0.68:8001"
-ERP_API = "/api/method/clean_plus.services.biometric_server_erp.add_checkin"
+ERP_URL = "http://192.168.0.61:8000"
+ERP_API = "/api/method/sil.test.biometric_to_erp.add_checkin"
 
 HOST = "0.0.0.0"
 PORT = 8190

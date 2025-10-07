@@ -1,0 +1,75 @@
+2025-09-12 14:21:08,521 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:11,193 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:13,270 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:16,270 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:18,347 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:23,970 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:26,048 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:28,125 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:40,732 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:42,825 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:44,902 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:46,981 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:21:49,043 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:27:25,561 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:25,714 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:25,885 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:26,045 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:26,208 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:26,378 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:26,533 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:26,668 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:27,044 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:27,177 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:27,319 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:27,454 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:27:27,608 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:30:16,436 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:36:09,106 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:39:38,700 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:39:54,461 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:39:56,555 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:42:09,617 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:42:09,757 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:42:09,893 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:53:37,679 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:53:39,757 - INFO - Operation:ADD | Employee:ARUN SUNDAR S(895) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:53:41,850 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:53:43,928 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:57:09,101 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:57:09,241 - INFO - Operation:REMOVE | Employee:ARUN SUNDAR S(895) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:57:09,377 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:57:09,505 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 14:58:02,626 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:58:27,511 - INFO - Operation:ADD | Employee:ALBIN S(5003) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 14:58:29,589 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:14,138 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:21,260 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:26,319 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:29,813 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:34,634 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:39,447 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:04:51,887 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 15:07:06,716 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:06,848 - INFO - Operation:REMOVE | Employee:ALBIN S(5003) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:06,983 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,114 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,245 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,398 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,518 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,638 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,774 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 15:07:07,911 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 17:39:18,345 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 17:41:21,230 - INFO - Operation:DUPLICATE_SKIP | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Record already queued, skipping | Status:QUEUE
+2025-09-12 17:41:23,312 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 17:42:14,833 - INFO - Operation:ADD | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 17:42:16,911 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 17:42:18,995 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 17:42:21,082 - INFO - Operation:ADD | Employee:MUHAMMED ASHIK A(5017) | Details:Queued due to ERP failure | Status:QUEUE
+2025-09-12 17:46:19,617 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 17:46:19,741 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 17:46:19,881 - INFO - Operation:REMOVE | Employee:ADHWAITH KRISHNAN J.R(5022) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 17:46:20,015 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 17:46:20,140 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE
+2025-09-12 17:46:20,268 - INFO - Operation:REMOVE | Employee:MUHAMMED ASHIK A(5017) | Details:Successfully processed and removed from queue | Status:QUEUE

@@ -1,0 +1,175 @@
+/* ConsumerType.css - tightened widths, spacing between code & name, moderate search */
+
+.consumer-type {
+  width: 100%;
+  max-width: 880px; /* slightly narrower than card to avoid full-width stretch */
+  margin: 0 auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.consumer-type__card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(12,18,28,0.04);
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.consumer-type__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* Row: code and name on same line with spacing */
+.consumer-type__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;       /* smaller gap overall */
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.consumer-type__row-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+/* small spacer element to force extra gap between group pairs */
+.consumer-type__spacer-small {
+  width: 18px;
+  flex: 0 0 auto;
+}
+
+/* Labels */
+.consumer-type__row-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+/* Inputs */
+.consumer-type__row-input {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  background: #fff;
+  box-sizing: border-box;
+  outline: none;
+}
+
+/* Code: compact */
+.consumer-type__row-input--code {
+  width: 84px;
+  max-width: 12%;
+  min-width: 64px;
+}
+
+/* Name: moderate, not full width */
+.consumer-type__row-input--name {
+  width: 260px;
+  max-width: 44%;
+  min-width: 160px;
+}
+
+/* Actions row */
+.consumer-type__actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.consumer-type__button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  transition: background 0.12s;
+}
+
+.consumer-type__button:hover { background: #f3f4f6; }
+
+.consumer-type__button--save {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Search row - moderate width, doesn't hog the card */
+.consumer-type__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.consumer-type__search-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* search input: flexible but limited */
+.consumer-type__search-input {
+  flex: 1 1 360px;   /* preferred width */
+  max-width: 480px;
+  min-width: 180px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+}
+
+/* Table wrapper */
+.consumer-type__table-wrap {
+  overflow: auto;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.consumer-type__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 420px;
+  box-sizing: border-box;
+}
+
+.consumer-type__table th,
+.consumer-type__table td {
+  padding: 10px;
+  border-bottom: 1px solid #f3f4f6;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* highlight and pointer on hover */
+.consumer-type__table tbody tr:hover td {
+  background: #fbfdff;
+  cursor: pointer;
+}
+
+/* Responsive rules */
+@media (max-width: 760px) {
+  .consumer-type__card { padding: 12px; }
+  .consumer-type__row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .consumer-type__spacer-small { display: none; }
+  .consumer-type__row-input--name,
+  .consumer-type__row-input--code { width: 100%; max-width: 100%; }
+  .consumer-type__search { flex-direction: column; align-items: stretch; }
+  .consumer-type__search-input { width: 100%; max-width: 100%; }
+  .consumer-type__actions { justify-content: center; }
+}

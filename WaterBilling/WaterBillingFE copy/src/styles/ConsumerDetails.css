@@ -1,0 +1,116 @@
+/* ConsumerDetails.css - layout that fits available width and wraps gracefully */
+
+.consumer-details {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.consumer-details__card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(12,18,28,0.04);
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.consumer-details__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+/* Form: responsive grid, safe min width */
+.consumer-details__form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.consumer-details__label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #374151;
+  font-size: 13px;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.consumer-details__input,
+.consumer-details__select {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Actions: responsive wrapping */
+.consumer-details__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.consumer-details__btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.consumer-details__btn--primary {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Table: wrapped inside scroll container but cells break long words */
+.consumer-details__table-wrap {
+  overflow: auto;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.consumer-details__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px; /* allow small, but keep table accessible */
+  table-layout: auto;
+  box-sizing: border-box;
+}
+
+.consumer-details__table th,
+.consumer-details__table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  text-align: left;
+  font-size: 14px;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* small screens stack fields */
+@media (max-width: 760px) {
+  .consumer-details__form { grid-template-columns: 1fr; }
+  .consumer-details__actions { justify-content: center; }
+  .consumer-details__table { font-size: 13px; }
+}
